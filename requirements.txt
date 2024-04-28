@@ -12,5 +12,10 @@ geopy==2.4.1
 django-environ==0.11.2
 django-crispy-forms==2.1
 django-cities-light==3.10.1
+django-cors-headers==4.3.1
 folium==0.15.1
 googletrans-py==4.0.0
+django-htmx==1.17.3
+six==1.16.0
+gunicorn==22.0.0
+urllib3==2.2.1
