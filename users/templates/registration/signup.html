@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<div class="container-fluid">
+    <h1 class="my-4">{% trans 'Sign Up' %}</h1>
+
+    <form method="post" class="m-4">
+        {% csrf_token %}
+        <div class="form-group row"> 
+            <div class="col-md-6 my-2">
+                <div>{% trans 'Name' %}:&nbsp</div>
+                <input type="text" name="first_name" maxlength="150" id="id_first_name" class="form-control" required autocomplete="on">
+                {% for error in form.first_name.errors %}
+                    <p class="error">{{ error }}</p>
+                {% endfor %}
+            </div>
+            <div class="col-md-6 my-2">
+                <div>{% trans 'Last Name' %}:&nbsp</div>
+                <input type="text" name="last_name" maxlength="150" id="id_last_name" class="form-control" required autocomplete="on">
+                {% for error in form.last_name.errors %}
+                    <p class="error">{{ error }}</p>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-6 my-2">
+                <div>{% trans 'Birth Date' %}:&nbsp</div>
+                <input type="date" name="date" maxlength="150" id="id_date" class="form-control">
+                {% for error in form.birth.errors %}
+                    <p class="error">{{ error }}</p>
+                {% endfor %}
+            </div>
+            <div class="col-md-6 my-2">
+                <div>{% trans 'Phone Number' %}:&nbsp</div>
+                <input type="tel" name="number" maxlength="150" id="id_number" class="form-control">
+                {% for error in form.number.errors %}
+                    <p class="error">{{ error }}</p>
+                {% endfor %}                
+            </div>
+        </div>
+        <div class="form-group row my-2"> 
+            <div class="col-md-2 col-form-label">{% trans 'Username' %}:&nbsp</div>
+            <div class="col-md-10"><input type="text" name="username" data-url= "{% url 'validate_username' %}" maxlength="150" id="id_username" class="form-control" required></div>
+            <p class="error" id="username_is_taken" style="display:none;">{% trans 'Username already exist' %}</p>
+            {% for error in form.username.errors %}
+                <p class="error">{{ error }}</p>
+            {% endfor %}
+        </div>
+        <div class="form-group row my-2"> 
+            <div class="col-md-2 col-form-label">{% trans 'Email' %}:&nbsp</div>
+            <div class="col-md-10"><input type="email" name="email" data-url= "{% url 'validate_email' %}" maxlength="150" id="id_email" class="form-control" required></div>
+            <p class="error" id="email_is_taken" style="display:none;">{% trans 'There is already an account associated with this email' %}</p>
+            {% for error in form.email.errors %}
+                <p class="error">{{ error }}</p>
+            {% endfor %}
+        </div>
+        <div class="form-group row">
+            <div class="col-md-6 my-2">
+                <div>{% trans 'Password' %}:&nbsp</div>
+                <input type="password" name="password1" maxlength="150" id="id_password1" class="form-control" required>
+            </div>
+            <div class="col-md-6 my-2">
+                <div>{% trans 'Confirm Password' %}:&nbsp</div>
+                <input type="password" name="password2" maxlength="150" id="id_password2" class="form-control" required>
+            </div>
+        </div>
+        <div class="form-group row mx-2 my-4">
+            <div> {% trans 'The password must meet the following requirements' %}: </div>
+                <ul id="errors">
+                    <li id="minChar">{% trans 'At least 8 characters' %}</li>
+                    <li id ="mayMin">{% trans 'At least 1 uppercase letter and 1 lowercase letter' %}</li>
+                    <li id="minNum">{% trans 'At least 1 number' %}</li>
+                    <li id="perInfo">{% trans 'Do not include personal information' %}</li>
+                    <li id="matchPass" style="display:none;color:red;">{% trans 'Passwords do not match' %}</li>
+                </ul>
+            </div>
+        <div class="form-group row">
+            {% for error in form.password2.errors %}
+                {{ error|safe }}
+            {% endfor %}
+        </div>
+        <br>        
+        
+        <br>
+        
+        <div class="form-group row">
+            <div class="col-md-5"> 
+                <button class="btn btn-success" type="submit" id="id_signup">{% trans 'Confirm' %}</button>
+            </div>
+        </div>    
+    </form>
+</div>
+{% endblock %}

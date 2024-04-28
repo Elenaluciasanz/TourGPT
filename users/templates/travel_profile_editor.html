@@ -1,0 +1,230 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+
+<div class="container-fluid">
+    {% if form.title.value == ""%}
+    <h1 class="my-4">{% trans 'New Travel Profile' %}</h1>
+    {% else %}
+    <h1 class="my-4">{% trans 'Travel Profile Editor' %}</h1>
+    {% endif %}
+    <form method="post" class="m-4">
+        {% csrf_token %}
+        <div class="form-group row">
+            <div class="col-md-12">
+                <label class="form-check-label h4" for="id_title">{% trans 'Title' %}&nbsp</label>
+                <input type="text" name="title" maxlength="40" id="id_title" class="form-control" {% if form.title.value %}value="{{ form.title.value }}"{% endif %} required>
+            </div>
+        </div>
+        <br>
+        <div class="form-group row">
+            <div class="col-md-12">
+                <label class="form-check-label h4" for="id_description">{% trans 'Description' %}&nbsp</label>
+                <textarea name="description" rows="5" id="id_description" class="form-control" required>{% if form.description.value %}{{ form.description.value }}{% endif %}</textarea>
+                {% for error in form.description.errors %}
+                    <p class="error">{{ error }}</p>
+                {% endfor %}
+            </div>
+        </div>
+        <br>
+        <hr>
+        
+        <div class="form-group row"> 
+            <div class="col-md-6">
+                <label class="form-check-label h4" for="id_n_adults">{% trans 'Number of Adults' %}&nbsp</label>
+                <input type="number" name="n_adults" id="id_n_adults" class="form-control" {% if form.n_adults.value %}value="{{ form.n_adults.value }}"{% else %}value="0"{% endif %} required>
+                {% for error in form.n_adults.errors %}
+                    <p class="error">{{ error }}</p>
+                {% endfor %}
+            </div>
+            <br>
+            <div class="col-md-6">
+                <label class="form-check-label h4" for="id_n_teenagers">{% trans 'Number of Teenagers' %}&nbsp</label>
+                <input type="number" name="n_teenagers" id="id_n_teenagers" class="form-control" {% if form.n_teenagers.value %}value="{{ form.n_teenagers.value }}"{% else %}value="0"{% endif %} required>
+                {% for error in form.n_teenagers.errors %}
+                    <p class="error">{{ error }}</p>
+                {% endfor %}
+            </div>
+        </div>
+        <br>
+        <div class="form-group row">
+            <div class="col-md-6">
+                <label class="form-check-label h4" for="id_n_children">{% trans 'Number of Children' %}&nbsp</label>
+                <input type="number" name="n_children" id="id_n_children" class="form-control" {% if form.n_children.value %}value="{{ form.n_children.value }}"{% else %}value="0"{% endif %} required>
+                {% for error in form.n_children.errors %}
+                    <p class="error">{{ error }}</p>
+                {% endfor %}
+            </div>
+            <br>
+            <div class="col-md-6">
+                <label class="form-check-label h4" for="id_n_babies">{% trans 'Number of Babies' %}&nbsp</label>
+                <input type="number" name="n_babies" id="id_n_babies" class="form-control" {% if form.n_babies.value %}value="{{ form.n_babies.value }}"{% else %}value="0"{% endif %} required>
+                {% for error in form.n_babies.errors %}
+                    <p class="error">{{ error }}</p>
+                {% endfor %}
+            </div>
+        </div>
+        <br>
+        <div class="form-group row">
+            <div class="col-md-12">
+                <label class="form-check-label h4" for="id_n_elderly">{% trans 'Number of Elderly' %}&nbsp</label>
+                <input type="number" name="n_elderly" id="id_n_elderly" class="form-control" {% if form.n_elderly.value %}value="{{ form.n_elderly.value }}"{% else %}value="0"{% endif %} required>
+                {% for error in form.n_elderly.errors %}
+                    <p class="error">{{ error }}</p>
+                {% endfor %}
+            </div>
+        </div>
+        <br>
+        <hr>
+        <div class="form-group row"> 
+            <label class="form-check-label h4" for="id_reason_selection">{% trans 'Reason' %}&nbsp</label>
+            <div class="form-check" id="id_reason_selection">
+                <div class="container">
+                    <div class="row">
+                        {% for value, descr in REASON_LIST %}
+                            <div class="form-check col-md-6">
+                                <input class="form-check-input" type="checkbox" value="{{ value }}" name ="reason_selection" id="id_reason_selection_{{ value }}"
+                                {% if reasons and value in reasons %} checked {% endif %}>
+                                <label class="form-check-label" for="id_reason_selection_{{ value }}">{{ descr }}</label>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            {% for error in form.reason_selection.errors %}
+                <p class="error">{{ error }}</p>
+            {% endfor %}
+        </div>
+        <br>
+        <hr>
+        <div class="form-group row" style="background-color:azure;"> 
+            <div class="col-md-6">
+                <label class="form-check-label h4" for="id_adventure_level">{% trans 'Adventure Level' %}&nbsp</label>
+                <select name="adventure_level" id="id_adventure_level" class="form-select form-select-md mb-3" aria-label=".form-select-md example" required>
+                    {% for value, descr in ADVENTURE_LEVELS_LIST reversed %}
+                        <option value="{{ value }}" {% if form.adventure_level.value and form.adventure_level.value == value %}selected{% endif %}>{{ descr }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-3">
+                <div class="form-check form-switch">
+                    <label class="form-check-label h4" for="id_reduced_mobility">{% trans 'Reduced Mobility' %}&nbsp</label>
+                    <input class="form-check-input" type="checkbox" id="id_reduced_mobility" name="reduced_mobility"
+                    {% if form.reduced_mobility.value and form.reduced_mobility.value == True %} checked {% endif %}>
+                </div>
+                {% for error in form.reduced_mobility.errors %}
+                    <p class="error">{{ error }}</p>
+                {% endfor %}
+            </div>
+            <div class="col-md-3">
+                <div class="form-check form-switch">
+                    <label class="form-check-label h4" for="id_animals">{% trans 'Animals' %}&nbsp</label>
+                    <input class="form-check-input" type="checkbox" id="id_animals" name="animals"
+                    {% if form.animals.value and form.animals.value == True %} checked {% endif %}>
+                </div>
+                {% for error in form.animals.errors %}
+                    <p class="error">{{ error }}</p>
+                {% endfor %}
+            </div>
+        </div>
+        <br>
+        <hr>
+        <div class="form-group row"> 
+            <div class="col-md-6" style="background-color: #B2F591;">
+                <label class="form-check-label h4" for="id_poi_selection">{% trans 'Points of Interest' %}&nbsp</label>
+                <div class="form-check" id="id_poi_selection">
+                    {% for value, descr in POI_TYPES reversed %}
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="{{ value }}" name ="poi_selection" id="id_poi_selection_{{ value }}"
+                            {% if pref_poi and value in pref_poi %} checked {% endif %}>
+                            <label class="form-check-label" for="id_poi_selection_{{ value }}">{{ descr }}</label>
+                          </div>
+                    {% endfor %}
+                </div>
+                {% for error in form.poi_selection.errors %}
+                    <p class="error">{{ error }}</p>
+                {% endfor %}
+            </div>
+            <br>
+            <div class="col-md-6" style="background-color: #FFCCCC;">
+                <label class="form-check-label h4" for="id_poe_selection">{% trans 'Entertainment Points' %}&nbsp</label>
+                <div class="form-check" id="id_poe_selection">
+                    {% for value, descr in POE_TYPES reversed %}
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="{{ value }}" name ="poe_selection" id="id_poe_selection_{{ value }}"
+                            {% if pref_poe and value in pref_poe %} checked {% endif %}>
+                            <label class="form-check-label" for="id_poe_selection_{{ value }}">{{ descr }}</label>
+                          </div>
+                    {% endfor %}
+                </div>
+                {% for error in form.poe_selection.errors %}
+                    <p class="error">{{ error }}</p>
+                {% endfor %}
+            </div>
+        </div>
+        <br>
+        <div class="form-group row"> 
+            <div class="col-md-6" style="background-color: #B0E2FF;">
+                <label class="form-check-label h4" for="id_pog_selection">{% trans 'Gastronomy Points' %}&nbsp</label>
+                <div class="form-check" id="id_pog_selection">
+                    {% for value, descr in POG_TYPES reversed %}
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="{{ value }}" name ="pog_selection" id="id_pog_selection_{{ value }}"
+                            {% if pref_pog and value in pref_pog %} checked {% endif %}>
+                            <label class="form-check-label" for="id_pog_selection_{{ value }}">{{ descr }}</label>
+                          </div>
+                    {% endfor %}
+                </div>
+                {% for error in form.pog_selection.errors %}
+                    <p class="error">{{ error }}</p>
+                {% endfor %}
+            </div>
+            <div class="col-md-6" style="background-color: #FFDAB9;">
+                <label class="form-check-label h4" for="id_poa_selection">{% trans 'Accomodation Points' %}&nbsp</label>
+                <div class="form-check" id="id_poa_selection">
+                    {% for value, descr in POA_TYPES reversed %}
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="{{ value }}" name ="poa_selection" id="id_poa_selection_{{ value }}"
+                            {% if pref_poa and value in pref_poa %} checked {% endif %}>
+                            <label class="form-check-label" for="id_poa_selection_{{ value }}">{{ descr }}</label>
+                          </div>
+                    {% endfor %}
+                </div>
+                {% for error in form.poa_selection.errors %}
+                    <p class="error">{{ error }}</p>
+                {% endfor %}
+            </div>
+        </div>
+        <br>
+        <div class="form-group row">
+            <div class="col-md-12">
+                <label class="form-check-label h4" for="id_food_restrictions">{% trans 'Food Restrictions' %}&nbsp</label>
+                <textarea name="food_restrictions" rows="5" id="id_food_restrictions" class="form-control" >{% if form.food_restrictions.value %}{{ form.food_restrictions.value }}{% endif %}</textarea>
+                {% for error in form.food_restrictions.errors %}
+                    <p class="error">{{ error }}</p>
+                {% endfor %}
+            </div>
+        </div>
+        <br>
+        <hr>
+        <div class="form-group row">
+            <div class="col-md-12">
+                <label class="form-check-label h4" for="id_observations">{% trans 'Observations' %}&nbsp</label>
+                <textarea name="observations" rows="5" id="id_observations" class="form-control">{% if form.observations.value %}{{ form.observations.value }}{% endif %}</textarea>
+                {% for error in form.observations.errors %}
+                    <p class="error">{{ error }}</p>
+                {% endfor %}
+            </div>
+        </div>
+        <hr>
+        <br>
+        <div class="form-group row">
+            <div class="col-md-5"> 
+                <button class="btn btn-success" type="submit" id="id_new_profile">{% trans 'Confirm' %}</button>
+            </div>
+        </div>          
+    </form>
+</div>
+
+{% endblock %}

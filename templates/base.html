@@ -1,0 +1,104 @@
+{% load static %}
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{% block title %}TourGPT{% endblock %}</title>
+        <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+        <link rel="shortcut icon" href="{% static 'img/logo.jpeg' %}">
+        <script src="{% static 'js/jquery-3.7.1.min.js' %}"></script>
+        <script src="{% static 'js/filter.js' %}"></script>
+        <script src="{% static 'js/favourite.js' %}"></script>
+        <script src="{% static 'js/validation.js' %}"></script>
+        {% load bootstrap5 %}
+        {% bootstrap_css %}
+        {% bootstrap_javascript %}
+        <script src="https://kit.fontawesome.com/607a6f35d0.js" crossorigin="anonymous"></script>
+      </head>
+
+    <body class="m-3">
+        <main>
+            {% block header %} 
+            {% endblock %}
+            {% block menu %}
+            <header class="p-3 bg-primary text-white">
+                <div class="container">
+                  <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                    <img class="rounded-circle" src="{% static 'img/logo.jpeg' %}" alt="TourGPT" width="60" height="60">
+                    <a href="{% url 'home' %}"><span class="px-2 text-light fs-2 fw-bold ">TourGPT</span></a>
+                    <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                      <li><a href="{% url 'home' %}" class="nav-link px-2 text-white">{% trans 'Home' %}</a></li>
+                      <li><a href="{% url 'country_list' %}" class="nav-link px-2 text-white">{% trans 'Countries' %}</a></li>
+                      <li><a href="{% url 'city_list' %}" class="nav-link px-2 text-white">{% trans 'Cities' %}</a></li>
+                      {% if user.is_authenticated %}
+                      <li><a href="{% url 'route_new' %}" class="nav-link px-2 text-white">{% trans 'Planner' %}</a></li>
+                      <li><a href="{% url 'route_list' %}" class="nav-link px-2 text-white">{% trans 'My Routes' %}</a></li>
+                      <li><a href="{% url 'travel_profile_list' user.pk %}" class="nav-link px-2 text-white">{% trans 'My Profiles' %}</a></li>
+                      <li class="align-self-center px-2">
+                        <div class="dropdown text-end">
+                          <a href="#" class="d-block text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                            {% trans 'Favourites' %}
+                          </a>
+                          <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
+                            <li><a class="dropdown-item" href="{% url 'fav_countries' %}">{% trans 'Countries' %}</a></li>
+                            <li><a class="dropdown-item" href="{% url 'fav_cities' %}">{% trans 'Cities' %}</a></li>
+                            <li><a class="dropdown-item" href="{% url 'fav_pois' %}">{% trans 'Interest' %}</a></li>
+                            <li><a class="dropdown-item" href="{% url 'fav_poes' %}">{% trans 'Entertainment' %}</a></li>
+                            <li><a class="dropdown-item" href="{% url 'fav_pogs' %}">{% trans 'Gastronomy' %}</a></li>
+                            <li><a class="dropdown-item" href="{% url 'fav_poas' %}">{% trans 'Accommodation' %}</a></li>
+                          </ul>
+                        </div>
+                      </li>
+                      {% endif %}
+                    </ul>
+            
+                    <div class="text-end">
+                      <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                        <li class="align-self-center px-3">
+                          <div class="dropdown text-end">
+                            <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                              <i class="fa-solid fa-language fa-xl" style="color: #ffffff;"></i>
+                            </a>
+                            <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
+                              {% get_available_languages as languages %}
+                              {% for lang_code, lang_name in languages %}
+                                  {% language lang_code %}
+                                  <li><a class="dropdown-item" href="{% url 'home' %}">{{ lang_name }}</a></li>
+                                  {% endlanguage %}
+                              {% endfor %}
+                            </ul>
+                          </div>
+                        </li>
+                        {% if user.is_authenticated %}                        
+                          <li><a class="btn btn-outline-light me-2 px-2" href="{{ user.get_absolute_url }}">{% trans 'My Account' %}</a></li>
+                          <li><a class="btn btn-outline-light me-2 px-2" href="{% url 'logout' %}">{% trans 'Sing Out' %}</a></li>
+                        {% else %}
+                            <li><a class="btn btn-outline-light me-2 px-2" href="{% url 'login' %}">{% trans 'Sign In' %}</a></li>
+                            <li><a class="btn btn-outline-light me-2 px-2" href="{% url 'signup' %}">{% trans 'Sign Up' %}</a></li>
+                        {% endif %}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </header>
+            {% endblock %}
+
+            <div class="m-4">
+            {% block content %}
+            {% endblock %}
+            </div>
+        </main>
+        <footer>
+        {% block footer %} 
+            <div class="container-fluid bg-primary d-flex justify-content-center">
+                <p class="text-light mb-0 p-2">
+                    {% trans "ChatGPT-based system for personalized tourist trip planning." %} 
+                    &nbsp Elena Lucía González Sanz
+                </p>
+            </div>
+        {% endblock %}
+        </footer>
+    </body>
+</html>

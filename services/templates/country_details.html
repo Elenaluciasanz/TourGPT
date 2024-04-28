@@ -1,0 +1,217 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<nav id="navbar-home" class="navbar navbar-light bg-light px-3">
+    <ul class="nav nav-pills">
+      <li class="nav-item">
+        <a class="nav-link" href="#scrollspyInformation">{% trans 'Information' %}</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#scrollspyCities">{% trans 'Cities' %}</a>
+      </li>
+    </ul>
+</nav>
+
+<div data-bs-spy="scroll" data-bs-target="#navbar-home" data-bs-offset="0" class="scrollspy-example" tabindex="0">
+    <!-------------------------Information----------------------->
+    <div id="scrollspyInformation">
+        <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
+            <div class="col-md-5 p-lg-5 mx-auto my-5">
+                <h1 class="display-4 fw-normal">{{ country.name }}</h1>
+                {% if country.presentation %}
+                    <p class="lead fw-normal">{{ country.presentation|linebreaks }}</p>
+                {% endif %}
+                {% if user.is_authenticated %}
+                <div id="{{ country.slug }}">
+                    <a type="btn" data-slug = "{{ country.slug }}" data-country = "{{ country.country.id }}" data-url='{% url "country_like" %}' class="country_like">
+                        {% if country in user.fav_countries.all %}
+                            <i class="fa-solid fa-heart fa-2xl" style="color: #ff0000;"></i>
+                        {% else %}
+                            <i class="fa-regular fa-heart fa-2xl"></i>
+                        {% endif %}
+                    </a>
+                </div>
+                {% endif %} 
+            </div>
+        </div>
+        
+        {% if country.history %}
+        <div class="d-md-flex flex-md-equal w-100 my-md-3 ps-md-3">
+            <div class="bg-dark me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
+                <div class="my-3 py-3">
+                <h2 class="display-5"><i class="fa-solid fa-landmark fa-xl m-2"></i>{% trans 'History' %}</h2>
+                <p class="lead">{{ country.history|linebreaks }}</p>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        
+        <div class="d-md-flex flex-md-equal w-100 my-md-3 ps-md-3">
+            {% if country.languages or country.currency or country.prefix %}
+            <div class="col bg-light me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
+                <div class="my-3 p-3">
+                    <h2 class="display-5"><i class="fa-solid fa-info fa-lg"></i></h2>
+                    {% if country.languages %}
+                    <h3 class="display-6">{% trans 'Languages' %}</h3>
+                    <p class="lead">{{ country.languages }}</p>
+                    {% endif %}
+                    {% if country.currency %}
+                    <h3 class="display-6">{% trans 'Currency' %}</h3>
+                    <p class="lead">{{ country.currency }}</p>
+                    {% endif %}
+                    {% if country.prefix %}
+                    <h3 class="display-6">{% trans 'Prefix' %}</h3>
+                    <p class="lead">{{ country.prefix }}</p>
+                    {% endif %}
+                </div>
+                <div class="bg-dark shadow-sm mx-auto" style="width: 80%; height: 100px; border-radius: 21px 21px 0 0;"></div>
+            </div>
+            {% endif %}
+
+            {% if country.police or country.firefighter or  country.ambulance %}
+            <div class="col bg-secondary me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
+                <div class="my-3 py-3">
+                    <h2 class="display-5"><i class="fa-solid fa-shield-halved fa-xl"></i></h2>
+                    {% if country.police %}
+                    <h3 class="display-6">{% trans 'Police' %}</h3>
+                    <p class="lead">{{ country.police }}</p>
+                    {% endif %}
+                    {% if country.firefighter %}
+                    <h3 class="display-6">{% trans 'Firefighter' %}</h3>
+                    <p class="lead">{{ country.firefighter }}</p>
+                    {% endif %}
+                    {% if country.ambulance %}
+                    <h3 class="display-6">{% trans 'Ambulance' %}</h3>
+                    <p class="lead">{{ country.ambulance }}</p>
+                    {% endif %}
+                </div>
+                <div class="bg-light shadow-sm mx-auto" style="width: 80%; height: 100px; border-radius: 21px 21px 0 0;"></div>
+            </div>
+            {% endif %}
+        </div>
+        
+        {% if country.curiosities %}
+        <div class="d-md-flex flex-md-equal w-100 my-md-3 ps-md-3">
+            <div class="bg-dark me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
+                <div class="my-3 py-3">
+                <h2 class="display-5"><i class="fa-solid fa-book-open fa-xl m-2"></i>{% trans 'Curiosities' %}</h2>
+                <p class="lead">{{ country.curiosities|linebreaks }}</p>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+
+        <div class="d-md-flex flex-md-equal w-100 my-md-3 ps-md-3">
+            {% if country.population or country.density %}
+            <div class="col bg-secondary me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
+                <div class="my-3 p-3">
+                    <h2 class="display-5"><i class="fa-solid fa-people-group fa-xl"></i></h2>
+                    {% if country.population %}
+                    <h3 class="display-6">{% trans 'Total Population' %}</h3>
+                    <p class="lead">{{ country.population }}</p>
+                    {% endif %}
+                    {% if country.density %}
+                    <h3 class="display-6">{% trans 'Population Density' %}</h3>
+                    <p class="lead">{{ country.density }}</p>
+                    {% endif %}
+                </div>
+                <div class="bg-light shadow-sm mx-auto" style="width: 80%; height: 100px; border-radius: 21px 21px 0 0;"></div>
+            </div>
+            {% endif %}
+
+            {% if country.national_day or country.age_structure %}
+            <div class="col bg-light me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
+                <div class="my-3 py-3">
+                    <h2 class="display-5"><i class="fa-solid fa-flag fa-xl"></i></h2>
+                    {% if country.national_day %}
+                    <h3 class="display-6">{% trans 'National Day' %}</h3>
+                    <p class="lead">{{ country.national_day }}</p>
+                    {% endif %}
+                    {% if country.age_structure %}
+                    <h3 class="display-6">{% trans 'Age Structure' %}</h3>
+                    <p class="lead">{{ country.age_structure }}</p>
+                    {% endif %}
+                </div>
+                <div class="bg-dark shadow-sm mx-auto" style="width: 80%; height: 100px; border-radius: 21px 21px 0 0;"></div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <hr class="hr hr-blurry">
+
+    <!-------------------------Cities----------------------->
+    <div id="scrollspyCities">
+        <div class="accordion" id="accordionCountrySites">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="panelCountryCities">
+                    <button class="accordion-button btn btn-success" type="button" data-bs-toggle="collapse" data-bs-target="#panelCountryCitiesCollapse" aria-expanded="true" aria-controls="panelCountryCitiesCollapse">
+                        {% trans 'Cities of' %}&nbsp{{ country.name }}
+                    </button>
+                </h2>
+                <div id="panelCountryCitiesCollapse" class="accordion-collapse collapse show" aria-labelledby="panelCountryCities">
+                    <div class="accordion-body">
+                        <div class="input-group">
+                            <div class="input-group-text" id="btnGroupAddon"><i class="fa-solid fa-magnifying-glass fa-xl px-3" style="color: #04253e;"></i></div>
+                            <input class="form-control" type="search" id="city_filter" onkeyup="city_filter();" placeholder="{% trans 'Search city' %}...">
+                        </div>
+
+                        <div class="d-grid gap-2 d-md-block my-4" id="cities_list">
+                            {% for c in city_bases %} 
+                                <button class ="city_filter_search btn btn-secondary" style="display:none;">
+                                    <div data-city = "{{ c.id }}" data-url='{% url "city_search" %}' class="city_search">
+                                        {{ c.display_name }}
+                                    </div>
+                                </button>
+                            {% endfor %}
+                        </div>
+
+                        <div id="cities" class="my-4">
+                            <div class="row row-cols-1 row-cols-md-3 g-4">
+                                {% for c in cities %}
+                                    <div class="col city_filter_card" id="{{ c.name }}" data-city="{{ c.city.id }}">
+                                        <div class="card border-secondary mb-3 h-100" 
+                                        style="background-color:
+                                        {% if c.city.country.continent == 'EU' %} lightblue
+                                        {% elif c.city.country.continent == 'NA' or c.country.continent == 'SA' %}thistle
+                                        {% elif c.city.country.continent == 'AS' %} #7FEAC6
+                                        {% elif c.city.country.continent == 'AF' %} palegoldenrod
+                                        {% elif c.city.country.continent == 'OC' %} palegreen
+                                        {% else %} beige
+                                        {% endif %};">
+                                            <div class="card-header d-flex justify-content-center overflow-auto">
+                                                <h5 class="mx-2">{{ c.name }}{% if c.country.name != "" %},&nbsp{{ c.country.name }}{% endif %},&nbsp{{ c.city.country.continent }}</h5>
+                                                {% if user.is_authenticated %}
+                                                <div id="{{ c.slug }}">
+                                                    <a type="btn" data-slug = "{{ c.slug }}" data-city = "{{ c.city.id }}" data-url='{% url "city_like" %}' class="city_like">
+                                                        {% if c in user.fav_cities.all %}
+                                                            <i class="fa-solid fa-heart fa-xl" style="color: #ff0000;"></i>
+                                                        {% else %}
+                                                            <i class="fa-regular fa-heart fa-xl"></i>
+                                                        {% endif %}
+                                                    </a>
+                                                </div>
+                                                {% endif %}  
+                                            </div>
+                                            {% if c.presentation != "" %}
+                                            <div class="card-body">
+                                                <p class="card-text">{{ c.presentation|linebreaks }}</p>
+                                            </div>
+                                            {% endif %}
+                                            <div class="card-footer d-flex justify-content-center">  
+                                                <a href="{{ c.get_absolute_url }}" class="card-link btn btn-primary" role="button">{% trans "More about" %}&nbsp{{ c.name }}</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

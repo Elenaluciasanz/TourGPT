@@ -1,0 +1,174 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+
+<div class="container-fluid">
+    <h1 class="my-4">{% trans 'Travel Profile Details' %}</h1>
+
+    <div class="form-group row">
+        <div class="col-md-12">
+        <label class="form-check-label h4" for="id_title">{% trans 'Title' %}&nbsp</label>
+        <input type="text" name="title" id="id_title" class="form-control" value="{{ object.title }}" readonly>
+        </div>
+    </div>
+    <br>
+    <div class="form-group row">
+        <div class="col-md-12">
+        <label class="form-check-label h4" for="id_description">{% trans 'Description' %}&nbsp</label>
+        <textarea name="description" id="id_description" class="form-control" readonly> {{ object.description }}</textarea>
+        </div>
+    </div>
+    <br>
+    <hr>
+    <div class="form-group row"> 
+        <div class="col-md-6">
+            <label class="form-check-label h4" for="id_n_adults">{% trans 'Number of Adults' %}&nbsp</label>
+            <input type="number" name="n_adults" id="id_n_adults" class="form-control" value="{{ object.n_adults }}" readonly>
+        </div>
+        <br>
+        <div class="col-md-6">
+            <label class="form-check-label h4" for="id_n_teenagers">{% trans 'Number of Teenagers' %}&nbsp</label>
+            <input type="number" name="n_teenagers" id="id_n_teenagers" class="form-control" value="{{ object.n_teenagers }}" readonly>
+        </div>
+    </div>
+    <br>
+    <div class="form-group row"> 
+        <div class="col-md-6">
+            <label class="form-check-label h4" for="id_n_children">{% trans 'Number of Children' %}&nbsp</label>
+            <input type="number" name="n_children" id="id_n_children" class="form-control" value="{{ object.n_children }}" readonly>
+        </div>
+        <br>
+        <div class="col-md-6">
+            <label class="form-check-label h4" for="id_n_babies">{% trans 'Number of Babies' %}&nbsp</label>
+            <input type="number" name="n_babies" id="id_n_babies" class="form-control" value="{{ object.n_babies }}" readonly>
+        </div>
+    </div>
+    <br>
+    <div class="form-group row"> 
+        <div class="col-md-6">
+            <label class="form-check-label h4" for="id_n_elderly">{% trans 'Number of Elderly' %}&nbsp</label>
+            <input type="number" name="n_elderly" id="id_n_elderly" class="form-control" value="{{ object.n_elderly }}" readonly>
+        </div>
+    </div>
+    <br>
+    <hr>
+    <div class="form-group row"> 
+        <label class="form-check-label h4" for="id_reason_selection">{% trans 'Reason' %}&nbsp</label>
+        <div class="form-check" id="id_reason_selection">
+            <div class="container">
+                <div class="row">
+                    {% for value, descr in REASON_LIST %}
+                        <div class="form-check col-md-6">
+                            <input class="form-check-input" type="checkbox" value="{{ value }}" name ="reason_selection" id="id_reason_selection_{{ value }}"
+                            {% if value in reasons %} checked {% endif %} disabled>
+                            <label class="form-check-label" for="id_reason_selection_{{ value }}">{{ descr }}</label>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <hr>
+    <div class="form-group row" style="background-color:azure;"> 
+        <div class="col-md-6">
+            <label class="form-check-label h4" for="id_adventure_level">{% trans 'Adventure Level' %}&nbsp</label>
+            <select name="adventure_level" id="id_adventure_level" class="form-select form-select-sm mb-3" aria-label=".form-select-sm example" disabled>
+                {% for value, descr in ADVENTURE_LEVELS_LIST reversed %}
+                    <option value="{{ value }}" {% if object.adventure_level == value %}selected{% endif %}>{{ descr }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-3">
+            <div class="form-check form-switch">
+                <label class="form-check-label h4" for="id_reduced_mobility">{% trans 'Reduced Mobility' %}&nbsp</label>
+                <input class="form-check-input" type="checkbox" id="id_reduced_mobility" name="reduced_mobility" disabled
+                {% if object.reduced_mobility == True %} checked {% endif %}>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-check form-switch">
+                <label class="form-check-label h4" for="id_animals">{% trans 'Animals' %}&nbsp</label>
+                <input class="form-check-input" type="checkbox" id="id_animals" name="animals" disabled
+                {% if object.animals == True %} checked {% endif %}>
+            </div>
+        </div>
+    </div>
+    <br>
+    <hr>
+    <div class="form-group row"> 
+        <div class="col-md-6" style="background-color: #B2F591;">
+            <label class="form-check-label h4" for="id_poi_selection">{% trans 'Points of Interest' %}&nbsp</label>
+            <div class="form-check" id="id_poi_selection">
+                {% for value, descr in POI_TYPES reversed %}
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="{{ value }}" name ="poi_selection" id="id_poi_selection_{{ value }}"
+                        {% if value in pref_poi %} checked {% endif %} disabled>
+                        <label class="form-check-label" for="id_poi_selection_{{ value }}">{{ descr }}</label>
+                        </div>
+                {% endfor %}
+            </div>
+        </div>
+        <br>
+        <div class="col-md-6" style="background-color: #FFCCCC;">
+            <label class="form-check-label h4" for="id_poe_selection">{% trans 'Entertainment Points' %}&nbsp</label>
+            <div class="form-check" id="id_poe_selection">
+                {% for value, descr in POE_TYPES reversed %}
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="{{ value }}" name ="poe_selection" id="id_poe_selection_{{ value }}"
+                        {% if value in pref_poe %} checked {% endif %} disabled>
+                        <label class="form-check-label" for="id_poe_selection_{{ value }}">{{ descr }}</label>
+                        </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="form-group row"> 
+        <div class="col-md-6" style="background-color: #B0E2FF;">
+            <label class="form-check-label h4" for="id_pog_selection">{% trans 'Gastronomy Points' %}&nbsp</label>
+            <div class="form-check" id="id_pog_selection">
+                {% for value, descr in POG_TYPES reversed %}
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="{{ value }}" name ="pog_selection" id="id_pog_selection_{{ value }}"
+                        {% if value in pref_pog %} checked {% endif %} disabled>
+                        <label class="form-check-label" for="id_pog_selection_{{ value }}">{{ descr }}</label>
+                    </div>
+                {% endfor %}
+            </div>
+
+
+        </div>
+        <div class="col-md-6" style="background-color: #FFDAB9;">
+            <label class="form-check-label h4" for="id_poa_selection">{% trans 'Accomodation Points' %}&nbsp</label>
+            <div class="form-check" id="id_poa_selection">
+                {% for value, descr in POA_TYPES reversed %}
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="{{ value }}" name ="poa_selection" id="id_poa_selection_{{ value }}"
+                        {% if value in pref_poa %} checked {% endif %} disabled>
+                        <label class="form-check-label" for="id_poa_selection_{{ value }}">{{ descr }}</label>
+                        </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="form-group row">
+        <div class="col-md-12">
+            <label class="form-check-label h4" for="id_food_restrictions">{% trans 'Food Restrictions' %}&nbsp</label>
+            <textarea name="food_restrictions" id="id_food_restrictions" class="form-control" readonly>{{ object.food_restrictions }}</textarea>
+        </div>
+    </div>
+    <br>
+    <hr>
+    <div class="form-group row">
+        <div class="col-md-12">
+            <label class="form-check-label h4" for="id_observations">{% trans 'Observations' %}&nbsp</label>
+            <textarea name="observations" id="id_observations" class="form-control" readonly>{{ object.observations }}</textarea>
+        </div>
+    </div>
+          
+</div>
+
+{% endblock %}

@@ -1,0 +1,440 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<nav id="navbar-home" class="navbar navbar-light bg-light px-3">
+    <ul class="nav nav-pills">
+      <li class="nav-item">
+        <a class="nav-link" href="#scrollspyInformation">{% trans 'Information' %}</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#scrollspyPoi">{% trans 'Interest' %}</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#scrollspyPoe">{% trans 'Entertainment' %}</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#scrollspyPog">{% trans 'Gastronomy' %}</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#scrollspyPoa">{% trans 'Accommodation' %}</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#scrollspyCountry">{% trans 'Country' %}</a>
+      </li>
+    </ul>
+</nav>
+
+<div data-bs-spy="scroll" data-bs-target="#navbar-home" data-bs-offset="0" class="scrollspy-example" tabindex="0">
+    <!-------------------------Start Information----------------------->
+    <div id="scrollspyInformation">
+        <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
+            <div class="col-md-5 p-lg-5 mx-auto my-5">
+                <h1 class="display-4 fw-normal">{{ city.name }}</h1>
+                {% if city.presentation != "" %}
+                    <p class="lead fw-normal">{{ city.presentation|linebreaks }}</p>
+                {% endif %}
+                {% if user.is_authenticated %}
+                <div id="{{ city.slug }}">
+                    <a type="btn" data-slug = "{{ city.slug }}" data-city = "{{ city.city.id }}" data-url='{% url "city_like" %}' class="city_like">
+                        {% if city in user.fav_cities.all %}
+                            <i class="fa-solid fa-heart fa-xl" style="color: #ff0000;"></i>
+                        {% else %}
+                            <i class="fa-regular fa-heart fa-xl"></i>
+                        {% endif %}
+                    </a>
+                </div>
+                {% endif %}  
+            </div>
+        </div>
+        
+        {% if city.history %}
+        <div class="d-md-flex flex-md-equal w-100 my-md-3 ps-md-3">
+            <div class="bg-dark me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
+                <div class="my-3 py-3">
+                <h2 class="display-5"><i class="fa-solid fa-landmark fa-xl m-2"></i>{% trans 'History' %}</h2>
+                <p class="lead">{{ city.history|linebreaks }}</p>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        
+        {% if city.curiosities %}
+        <div class="d-md-flex flex-md-equal w-100 my-md-3 ps-md-3">
+            <div class="bg-light me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
+                <div class="my-3 py-3">
+                <h2 class="display-5"><i class="fa-solid fa-book-open fa-xl m-2"></i></i>{% trans 'Curiosities' %}</h2>
+                <p class="lead">{{ city.curiosities|linebreaks }}</p>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        {% if city.languages or city.latitude or city.longitude %}
+        <div class="d-md-flex flex-md-equal w-100 my-md-3 ps-md-3">
+            {% if city.languages %}
+            <div class="col bg-light me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
+                <div class="my-3 p-3">
+                    <h2 class="display-5"><i class="fa-solid fa-info fa-xl"></i></h2>
+                    <h3 class="display-6">{% trans 'Languages' %}</h3>
+                    <p class="lead">{{ city.languages }}</p>
+                </div>
+                <div class="bg-dark shadow-sm mx-auto" style="width: 80%; height: 100px; border-radius: 21px 21px 0 0;"></div>
+            </div>
+            {% endif %}
+
+            {% if city.latitude or city.longitude %}
+            <div class="col bg-secondary me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
+                <div class="my-3 py-3">
+                    <h2 class="display-5"><i class="fa-solid fa-globe fa-xl"></i></h2>
+                    {% if city.latitude %}
+                    <h3 class="display-6">{% trans 'Latitude' %}</h3>
+                    <p class="lead">{{ city.latitude }}</p>
+                    {% endif %}
+                    {% if city.longitude %}
+                    <h3 class="display-6">{% trans 'Longitude' %}</h3>
+                    <p class="lead">{{ city.longitude }}</p>
+                    {% endif %}
+                </div>
+                <div class="bg-light shadow-sm mx-auto" style="width: 80%; height: 100px; border-radius: 21px 21px 0 0;"></div>
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+
+        {% if city.location or map %}
+        <div class="d-md-flex flex-md-equal w-100 my-md-3 ps-md-3">
+            <div class="col bg-dark me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
+                <div class="my-3 py-3">
+                <h2 class="display-5"><i class="fa-solid fa-map fa-xl"></i></h2>
+                {% if city.location and city.location != "NF" %}
+                    <h2 class="display-6">{{ city.location }}</h2>
+                {% endif %}
+                {% if map %}
+                    {{ map | safe }}
+                {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+    </div>
+    <!-------------------------End Information----------------------->
+
+    <hr class="hr hr-blurry">
+
+    <div class="accordion" id="accordionCitySites">
+        <!-------------------------Start Interest----------------------->
+        <div id="scrollspyPoi">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="panelCityPoi">
+                    <button class="accordion-button btn btn-success" type="button" data-bs-toggle="collapse" data-bs-target="#panelCityPoiCollapse" aria-expanded="true" aria-controls="panelCityPoiCollapse">
+                        {% trans 'Interest Points' %}
+                    </button>
+                </h2>
+                <div id="panelCityPoiCollapse" class="accordion-collapse collapse show" aria-labelledby="panelCountryCities">
+                    <div class="accordion-body">
+                        <div class="input-group">
+                            <div class="input-group-text" id="btnGroupAddon"><i class="fa-solid fa-magnifying-glass fa-xl px-3" style="color: #04253e;"></i></div>
+                            <input class="form-control" type="search" id="poi_filter" onkeyup="poi_filter();" placeholder="{% trans 'Search interest point' %}...">
+                            <a id="new_poi" data-url="{% url 'poi_new' slug_country=city.country.slug slug_city=city.slug %}" class="btn btn-success mx-2" role="button">{% trans 'Check new interest points' %}</a>
+                        </div>
+                        
+                        <div id="city_pois" class="my-4">
+                            <div class="row row-cols-1 row-cols-md-3 g-4">
+                                {% for poi in pois %}
+                                    <div class="col poi_filter_card" id="{{ poi.point_name }}" data-poi="{{ poi.point_name }}">
+                                        <div class="card border-secondary mb-3 h-100" style="background-color: #B2F591;">
+                                            <div class="card-header d-flex justify-content-center">
+                                                <h5 class="px-2">{{ poi.complete_name }}</h5>
+                                                {% if user.is_authenticated %}
+                                                <div id="{{ poi.slug }}">
+                                                    <a type="btn" data-slug = "{{ poi.slug }}" data-poi = "{{ poi.point_name }}" data-url='{% url "poi_like" %}' class="poi_like">
+                                                        {% if poi in user.fav_pois.all %}
+                                                            <i class="fa-solid fa-heart fa-xl" style="color: #ff0000;"></i>
+                                                        {% else %}
+                                                            <i class="fa-regular fa-heart fa-xl"></i>
+                                                        {% endif %}
+                                                    </a>
+                                                </div>
+                                                {% endif %}  
+                                            </div>
+                                            {% if poi.type %}
+                                            <h6 class="card-header d-flex justify-content-center">
+                                                {% if poi.type == 'M' %}
+                                                    <i class="fa-solid fa-palette fa-xl m-2"></i>    
+                                                {% elif poi.type == 'E' %}
+                                                    <i class="fa-solid fa-star fa-xl m-2"></i>
+                                                {% elif poi.type == 'P' %}
+                                                    <i class="fa-solid fa-leaf fa-xl m-2"></i>
+                                                {% elif poi.type == 'T' %}
+                                                    <i class="fa-solid fa-theater-masks fa-xl m-2"></i>
+                                                {% elif poi.type == 'C' %}
+                                                    <i class="fa-solid fa-church fa-xl m-2"></i>
+                                                {% elif poi.type == 'S' %}
+                                                    <i class="fa-solid fa-city fa-xl m-2"></i>
+                                                {% else %}
+                                                    <i class="fa-solid fa-landmark fa-xl m-2"></i>
+                                                {% endif %}
+                                            </h6>
+                                            {% endif %}
+                                            {% if poi.presentation != "" %}
+                                            <div class="card-body">
+                                                <p class="card-text">{{ poi.presentation|linebreaks }}</p>
+                                            </div>
+                                            {% endif %}
+                                            <div class="card-footer d-flex justify-content-center">  
+                                                <a href="{{ poi.get_absolute_url }}" class="card-link btn btn-success" role="button">{% trans "More about" %}&nbsp{{ poi.name }}</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-------------------------End Interest----------------------->
+        <!-------------------------Start Entertainment----------------------->
+        <div id="scrollspyPoe">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="panelCityPoe">
+                    <button class="accordion-button btn btn-danger" type="button" data-bs-toggle="collapse" data-bs-target="#panelCityPoeCollapse" aria-expanded="true" aria-controls="panelCityPoeCollapse">
+                        {% trans 'Entertainment Points' %}
+                    </button>
+                </h2>
+                <div id="panelCityPoeCollapse" class="accordion-collapse collapse show" aria-labelledby="panelCountryCities">
+                    <div class="accordion-body">
+                        <div class="input-group">
+                            <div class="input-group-text" id="btnGroupAddon"><i class="fa-solid fa-magnifying-glass fa-xl px-3" style="color: #04253e;"></i></div>
+                            <input class="form-control" type="search" id="poe_filter" onkeyup="poe_filter();" placeholder="{% trans 'Search entertainment point' %}...">
+                            <a id="new_poe" data-url="{% url 'poe_new' slug_country=city.country.slug slug_city=city.slug %}" class="btn btn-danger mx-2" role="button">{% trans 'Check new entertainment points' %}</a>
+                        </div>
+                        
+                        <div id="city_poes" class="my-4">
+                            <div class="row row-cols-1 row-cols-md-3 g-4">
+                                {% for poe in poes %}
+                                    <div class="col poe_filter_card" id="{{ poe.point_name }}" data-poe="{{ poe.point_name }}">
+                                        <div class="card border-secondary mb-3 h-100" style="background-color: #FFCCCC;">
+                                            <div class="card-header d-flex justify-content-center">
+                                                <h5 class="px-2">{{ poe.complete_name }}</h5>
+                                                {% if user.is_authenticated %}
+                                                <div id="{{ poe.slug }}">
+                                                    <a type="btn" data-slug = "{{ poe.slug }}" data-poe = "{{ poe.point_name }}" data-url='{% url "poe_like" %}' class="poe_like">
+                                                        {% if poe in user.fav_poes.all %}
+                                                            <i class="fa-solid fa-heart fa-xl" style="color: #ff0000;"></i>
+                                                        {% else %}
+                                                            <i class="fa-regular fa-heart fa-xl"></i>
+                                                        {% endif %}
+                                                    </a>
+                                                </div>
+                                                {% endif %}  
+                                            </div>
+                                            {% if poe.type %}
+                                            <h6 class="card-header d-flex justify-content-center">
+                                                {% if poe.type == 'C' %}
+                                                    <i class="fa-solid fa-film fa-xl m-2"></i>    
+                                                {% elif poe.type == 'W' %}
+                                                    <i class="fa-solid fa-bowling-ball fa-xl m-2"></i>
+                                                {% elif poe.type == 'N' %}
+                                                    <i class="fa-solid fa-champagne-glasses fa-xl m-2"></i>
+                                                {% elif poe.type == 'M' %}
+                                                    <i class="fa-brands fa-shopify fa-xl m-2"></i>
+                                                {% elif poe.type == 'T' %}
+                                                    <i class="fa-solid fa-ticket-simple fa-xl m-2"></i>
+                                                {% elif poe.type == 'B' %}
+                                                    <i class="fa-solid fa-umbrella-beach fa-xl m-2"></i>
+                                                {% else %}
+                                                    <i class="fa-solid fa-ticket fa-xl m-2"></i>
+                                                {% endif %}
+                                            </h6>
+                                            {% endif %}
+                                            {% if poe.presentation != "" %}
+                                            <div class="card-body">
+                                                <p class="card-text">{{ poe.presentation|linebreaks }}</p>
+                                            </div>
+                                            {% endif %}
+                                            <div class="card-footer d-flex justify-content-center">  
+                                                <a href="{{ poe.get_absolute_url }}" class="card-link btn btn-danger" role="button">{% trans "More about" %}&nbsp{{ poe.name }}</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-------------------------End Entertainment----------------------->
+        <!-------------------------Start Gastronomy----------------------->
+        <div id="scrollspyPog">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="panelCityPog">
+                    <button class="accordion-button btn btn-primary" style="background-color:;" type="button" data-bs-toggle="collapse" data-bs-target="#panelCityPogCollapse" aria-expanded="true" aria-controls="panelCityPogCollapse">
+                        {% trans 'Gastronomy Points' %}
+                    </button>
+                </h2>
+                <div id="panelCityPogCollapse" class="accordion-collapse collapse show" aria-labelledby="panelCountryCities">
+                    <div class="accordion-body">
+                        <div class="input-group">
+                            <div class="input-group-text" id="btnGroupAddon"><i class="fa-solid fa-magnifying-glass fa-xl px-3" style="color: #04253e;"></i></div>
+                            <input class="form-control" type="search" id="pog_filter" onkeyup="pog_filter();" placeholder="{% trans 'Search gastronomy point' %}...">
+                            <a id="new_pog" data-url="{% url 'pog_new' slug_country=city.country.slug slug_city=city.slug %}" class="btn btn-primary mx-2" role="button">{% trans 'Check new gastronomy points' %}</a>
+                        </div>
+                        
+                        <div id="city_pogs" class="my-4">
+                            <div class="row row-cols-1 row-cols-md-3 g-4">
+                                {% for pog in pogs %}
+                                    <div class="col pog_filter_card" id="{{ pog.point_name }}" data-pog="{{ pog.point_name }}">
+                                        <div class="card border-secondary mb-3 h-100" style="background-color: #B0E2FF;">
+                                            <div class="card-header d-flex justify-content-center">
+                                                <h5 class="px-2">{{ pog.complete_name }}</h5>
+                                                {% if user.is_authenticated %}
+                                                <div id="{{ pog.slug }}">
+                                                    <a type="btn" data-slug = "{{ pog.slug }}" data-pog = "{{ pog.point_name }}" data-url='{% url "pog_like" %}' class="pog_like">
+                                                        {% if pog in user.fav_pogs.all %}
+                                                            <i class="fa-solid fa-heart fa-xl" style="color: #ff0000;"></i>
+                                                        {% else %}
+                                                            <i class="fa-regular fa-heart fa-xl"></i>
+                                                        {% endif %}
+                                                    </a>
+                                                </div>
+                                                {% endif %}  
+                                            </div>
+                                            {% if pog.type %}
+                                            <h6 class="card-header d-flex justify-content-center">
+                                                {% if pog.type == 'R' %}
+                                                    <i class="fa-solid fa-kitchen-set fa-xl m-2"></i>    
+                                                {% elif pog.type == 'B' %}
+                                                    <i class="fa-solid fa-beer-mug-empty fa-xl m-2"></i>
+                                                {% elif pog.type == 'C' %}
+                                                    <i class="fa-solid fa-mug-saucer fa-xl m-2"></i>
+                                                {% elif pog.type == 'F' %}
+                                                    <i class="fa-brands fa-burger fa-xl m-2"></i>
+                                                {% elif pog.type == 'T' %}
+                                                    <i class="fa-solid fa-wine-bottle fa-xl m-2"></i>
+                                                {% else %}
+                                                    <i class="fa-solid fa-utensils fa-xl m-2"></i>
+                                                {% endif %}
+                                            </h6>
+                                            {% endif %}
+                                            {% if pog.presentation != "" %}
+                                            <div class="card-body">
+                                                <p class="card-text">{{ pog.presentation|linebreaks }}</p>
+                                            </div>
+                                            {% endif %}
+                                            <div class="card-footer d-flex justify-content-center">  
+                                                <a href="{{ pog.get_absolute_url }}" class="card-link btn btn-primary" role="button">{% trans "More about" %}&nbsp{{ pog.name }}</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-------------------------End Gastronomy----------------------->
+        <!-------------------------Start Accommodation----------------------->
+        <div id="scrollspyPoa">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="panelCityPoa">
+                    <button class="accordion-button btn btn-warning" type="button" data-bs-toggle="collapse" data-bs-target="#panelCityPoaCollapse" aria-expanded="true" aria-controls="panelCityPoaCollapse">
+                        {% trans 'Accommodation Points' %}
+                    </button>
+                </h2>
+                <div id="panelCityPoaCollapse" class="accordion-collapse collapse show" aria-labelledby="panelCountryCities">
+                    <div class="accordion-body">
+                        <div class="input-group">
+                            <div class="input-group-text" id="btnGroupAddon"><i class="fa-solid fa-magnifying-glass fa-xl px-3" style="color: #04253e;"></i></div>
+                            <input class="form-control" type="search" id="poa_filter" onkeyup="poa_filter();" placeholder="{% trans 'Search accommodation point' %}...">
+                            <a id="new_poa" data-url="{% url 'poa_new' slug_country=city.country.slug slug_city=city.slug %}" class="btn btn-warning mx-2" role="button">{% trans 'Check new accommodation points' %}</a>
+                        </div>
+                        
+                        <div id="city_poas" class="my-4">
+                            <div class="row row-cols-1 row-cols-md-3 g-4">
+                                {% for poa in poas %}
+                                    <div class="col poa_filter_card" id="{{ poa.point_name }}" data-poa="{{ poa.point_name }}">
+                                        <div class="card border-secondary mb-3 h-100" style="background-color: #FFDAB9;">
+                                            <div class="card-header d-flex justify-content-center">
+                                                <h5 class="px-2">{{ poa.complete_name }}</h5>
+                                                {% if user.is_authenticated %}
+                                                <div id="{{ poa.slug }}">
+                                                    <a type="btn" data-slug = "{{ poa.slug }}" data-poa = "{{ poa.point_name }}" data-url='{% url "poa_like" %}' class="poa_like">
+                                                        {% if poa in user.fav_poas.all %}
+                                                            <i class="fa-solid fa-heart fa-xl" style="color: #ff0000;"></i>
+                                                        {% else %}
+                                                            <i class="fa-regular fa-heart fa-xl"></i>
+                                                        {% endif %}
+                                                    </a>
+                                                </div>
+                                                {% endif %}  
+                                            </div>
+                                            {% if poa.type %}
+                                            <h6 class="card-header d-flex justify-content-center">
+                                                {% if poa.type == 'HO' %}
+                                                    <i class="fa-solid fa-square-h fa-xl m-2"></i>    
+                                                {% elif poa.type == 'HE' %}
+                                                    <i class="fa-solid fa-bed fa-xl m-2"></i>
+                                                {% elif poa.type == 'C' %}
+                                                    <i class="fa-solid fa-campground fa-xl m-2"></i>
+                                                {% elif poa.type == 'R' %}
+                                                    <i class="fa-brands fa-tree fa-xl m-2"></i>
+                                                {% elif poa.type == 'S' %}
+                                                    <i class="fa-solid fa-tent fa-xl m-2"></i>
+                                                {% else %}
+                                                    <i class="fa-solid fa-house fa-xl m-2"></i>
+                                                {% endif %}
+                                            </h6>
+                                            {% endif %}
+                                            {% if poa.presentation != "" %}
+                                            <div class="card-body">
+                                                <p class="card-text">{{ poa.presentation|linebreaks }}</p>
+                                            </div>
+                                            {% endif %}
+                                            <div class="card-footer d-flex justify-content-center">  
+                                                <a href="{{ poa.get_absolute_url }}" class="card-link btn btn-warning" role="button">{% trans "More about" %}&nbsp{{ poa.name }}</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-------------------------End Accommodation----------------------->
+    </div>
+
+    <!-------------------------Start Country----------------------->
+    <div id="scrollspyCountry" class="my-4">
+        <div class="bg-dark me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
+            <div class="my-3 py-3">
+                <h2 class="display-5"><i class="fa-solid fa-flag fa-xl m-2"></i>{% trans 'Country' %}</h2>
+                <h2 class="display-6">{{ city.country.name }}</h2>
+                {% if city.country.presentation != "" %}
+                    <p class="lead fw-normal">{{ city.country.presentation|linebreaks }}</p>
+                {% endif %}
+                {% if user.is_authenticated %}
+                <div id="{{ city.country.slug }}">
+                    <a type="btn" data-slug = "{{ city.country.slug }}" data-country = "{{ city.country.country.id }}" data-url='{% url "country_like" %}' class="country_like">
+                        {% if city.country in user.fav_countries.all %}
+                            <i class="fa-solid fa-heart fa-2xl" style="color: #ff0000;"></i>
+                        {% else %}
+                            <i class="fa-regular fa-heart fa-2xl"></i>
+                        {% endif %}
+                    </a>
+                </div>
+                {% endif %} 
+                <div><a href="{{ city.country.get_absolute_url }}" class="btn btn-secondary my-3" role="button">{% trans "More about" %}&nbsp{{ city.country.name }}</a></div>
+            </div>
+        </div>
+    </div>
+    <!-------------------------End Country----------------------->
+</div>
+
+{% endblock %}

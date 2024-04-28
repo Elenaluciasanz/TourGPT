@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+
+<h3 class="my-4">{% trans "My Favoutite Entertainment Points" %}</h3>
+
+<div class="input-group my-4">
+    <div class="input-group-text" id="btnGroupAddon"><i class="fa-solid fa-magnifying-glass fa-xl px-3" style="color: #04253e;"></i></div>
+    <input class="form-control" type="search" id="poe_filter" onkeyup="poe_filter();" placeholder="{% trans 'Search entertainment point' %}...">
+</div>
+
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    {% for poe in poes %}
+        <div class="col poe_filter_card" id="{{ poe.point_name }}" data-poe="{{ poe.point_name }}">
+            <div class="card border-secondary mb-3 h-100" style="background-color: #FFCCCC;">
+                <div class="card-header d-flex justify-content-center">
+                    <h5 class="px-2">{{ poe.complete_name }}</h5>
+                    {% if user.is_authenticated %}
+                    <div id="{{ poe.slug }}">
+                        <a type="btn" data-slug = "{{ poe.slug }}" data-poe = "{{ poe.point_name }}" data-url='{% url "poe_like" %}' class="poe_like">
+                            {% if poe in user.fav_poes.all %}
+                                <i class="fa-solid fa-circle-minus fa-xl" style="color: #ff0000;"></i>
+                            {% else %}
+                                <i class="fa-regular fa-heart fa-xl"></i>
+                            {% endif %}
+                        </a>
+                    </div>
+                    {% endif %}  
+                </div>
+                {% if poe.type %}
+                <h6 class="card-header d-flex justify-content-center">
+                    {% if poe.type == 'C' %}
+                        <i class="fa-solid fa-film fa-xl m-2"></i>    
+                    {% elif poe.type == 'W' %}
+                        <i class="fa-solid fa-bowling-ball fa-xl m-2"></i>
+                    {% elif poe.type == 'N' %}
+                        <i class="fa-solid fa-champagne-glasses fa-xl m-2"></i>
+                    {% elif poe.type == 'M' %}
+                        <i class="fa-brands fa-shopify fa-xl m-2"></i>
+                    {% elif poe.type == 'T' %}
+                        <i class="fa-solid fa-ticket-simple fa-xl m-2"></i>
+                    {% elif poe.type == 'B' %}
+                        <i class="fa-solid fa-umbrella-beach fa-xl m-2"></i>
+                    {% else %}
+                        <i class="fa-solid fa-ticket fa-xl m-2"></i>
+                    {% endif %}
+                </h6>
+                {% endif %}
+                {% if poe.presentation != "" %}
+                <div class="card-body">
+                    <p class="card-text">{{ poe.presentation|linebreaks }}</p>
+                </div>
+                {% endif %}
+                <div class="card-footer d-flex justify-content-center">  
+                    <a href="{{ poe.get_absolute_url }}" class="card-link btn btn-danger" role="button">{% trans "More about" %}&nbsp{{ poe.name }}</a>
+                </div>
+            </div>
+        </div>
+    {% empty %}
+        <div class="row">
+            <h4 class="my-3">{% trans 'No favorite entertainment points' %}<h4>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}
+

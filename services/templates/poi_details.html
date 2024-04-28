@@ -1,0 +1,178 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+
+
+<div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center" style="background-color: #B2F591;">
+    <div class="col-md-5 p-lg-5 mx-auto my-5">
+        <h1 class="display-4 fw-normal">{{ poi.name }}</h1>
+        {% if poi.type %}
+            <h6 class="card-header d-flex justify-content-center">
+                {% if poi.type == 'M' %}
+                    <i class="fa-solid fa-palette fa-xl m-2"></i> 
+                    {% trans 'Museum' %}
+                {% elif poi.type == 'E' %}
+                    <i class="fa-solid fa-star fa-xl m-2"></i>
+                    {% trans 'Emblematic Site' %}
+                {% elif poi.type == 'P' %}
+                    <i class="fa-solid fa-leaf fa-xl m-2"></i>
+                    {% trans 'Park/Garden' %}
+                {% elif poi.type == 'T' %}
+                    <i class="fa-solid fa-theater-masks fa-xl m-2"></i>
+                    {% trans 'Theater' %}
+                {% elif poi.type == 'C' %}
+                    <i class="fa-solid fa-church fa-xl m-2"></i>
+                    {% trans 'Church' %}
+                {% elif poi.type == 'S' %}
+                    <i class="fa-solid fa-city fa-xl m-2"></i>
+                    {% trans 'Street/Square' %}
+                {% else %}
+                    <i class="fa-solid fa-landmark fa-xl m-2"></i>
+                    {% trans 'Interest Point' %} 
+                {% endif %}
+            </h6>
+        {% endif %}
+        {% if poi.presentation != "" %}
+            <p class="lead fw-normal">{{ poi.presentation|linebreaks }}</p>
+        {% endif %}
+        {% if user.is_authenticated %}
+        <div id="{{ poi.slug }}">
+            <a type="btn" data-slug = "{{ poi.slug }}" data-poi = "{{ poi.point_name }}" data-url='{% url "poi_like" %}' class="poi_like">
+                {% if poi in user.fav_pois.all %}
+                    <i class="fa-solid fa-heart fa-xl" style="color: #ff0000;"></i>
+                {% else %}
+                    <i class="fa-regular fa-heart fa-xl"></i>
+                {% endif %}
+            </a>
+        </div>
+        {% endif %}  
+    </div>
+</div>
+
+{% if poi.history %}
+<div class="d-md-flex flex-md-equal w-100 my-md-3 ps-md-3"> 
+    <div class="me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden" style="background-color: #63954A;">
+        <div class="my-3 py-3">
+        <h2 class="display-5"><i class="fa-solid fa-landmark fa-xl m-2"></i>{% trans 'History' %}</h2>
+        <p class="lead">{{ poi.history|linebreaks }}</p>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% if poi.shedule_avg or poi.price_avg %}
+<div class="d-md-flex flex-md-equal w-100 my-md-3 ps-md-3">
+    {% if poi.shedule_avg %}
+    <div class="col me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden" style="background-color: #B2F591;">
+        <div class="my-3 p-3">
+            <h2 class="display-5"><i class="fa-solid fa-clock fa-xl"></i></h2>
+            <h3 class="display-6">{% trans 'Schedule' %}</h3>
+            <p class="lead">{{ poi.shedule_avg }}</p>
+        </div>
+        <div class="bg-dark shadow-sm mx-auto" style="width: 80%; height: 100px; border-radius: 21px 21px 0 0;"></div>
+    </div>
+    {% endif %}
+
+    {% if poi.price_avg %}
+    <div class="col me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden" style="background-color: #63954A;">
+        <div class="my-3 p-3">
+            <h2 class="display-5"><i class="fa-solid fa-money-bill-wave fa-xl"></i></h2>
+            <h3 class="display-6">{% trans 'Price' %}</h3>
+            <p class="lead">{{ poi.price_avg }}</p>
+        </div>
+        <div class="bg-light shadow-sm mx-auto" style="width: 80%; height: 100px; border-radius: 21px 21px 0 0;"></div>
+    </div>
+    {% endif %}
+</div>
+{% endif %}
+
+{% if poi.latitude or poi.longitude %}
+<div class="d-md-flex flex-md-equal w-100 my-md-3 ps-md-3">
+    <div class="col me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden" style="background-color: #B2F591;">
+        <div class="my-3 py-3">
+            <h2 class="display-5"><i class="fa-solid fa-globe fa-xl"></i></h2>
+            {% if poi.latitude %}
+            <h3 class="display-6">{% trans 'Latitude' %}</h3>
+            <p class="lead">{{ poi.latitude }}</p>
+            {% endif %}
+            {% if poi.longitude %}
+            <h3 class="display-6">{% trans 'Longitude' %}</h3>
+            <p class="lead">{{ poi.longitude }}</p>
+            {% endif %}
+        </div>
+    </div>
+</div>  
+{% endif %}
+
+{% if poi.location and map %}
+<div class="d-md-flex flex-md-equal w-100 my-md-3 ps-md-3">
+    <div class="col me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden" style="background-color: #63954A;">
+        <div class="my-3 py-3">
+        <h2 class="display-5"><i class="fa-solid fa-map fa-xl"></i></h2>
+        {% if poi.location and poi.location != "NF" %}
+        <h2 class="display-6">{{ poi.location }}</h2>
+        {% endif %}
+        {% if map %}
+        {{ map | safe }}
+        {% endif %}
+        </div>
+    </div>
+</div>
+{% endif %}
+
+
+
+{% if poi.city.country or poi.city %}
+<div class="d-md-flex flex-md-equal w-100 my-md-3 ps-md-3">
+    {% if poi.city.country %}
+    <div class="col me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden" style="background-color: #63954A;">
+        <div class="my-3 p-3">
+            <h2 class="display-5"><i class="fa-solid fa-flag fa-xl m-2"></i>{% trans 'Country' %}</h2>
+            <h3 class="display-6">{{ poi.city.country.name }}</h3>
+            {% if poi.city.country.presentation != "" %}
+                <p class="lead fw-normal">{{ poi.city.country.presentation|linebreaks }}</p>
+            {% endif %}
+            {% if user.is_authenticated %}
+            <div id="{{ poi.city.country.slug }}">
+                <a type="btn" data-slug = "{{ poi.city.country.slug }}" data-country = "{{ poi.city.country.country.id }}" data-url='{% url "country_like" %}' class="country_like">
+                    {% if poi.city.country in user.fav_countries.all %}
+                        <i class="fa-solid fa-heart fa-2xl" style="color: #ff0000;"></i>
+                    {% else %}
+                        <i class="fa-regular fa-heart fa-2xl"></i>
+                    {% endif %}
+                </a>
+            </div>
+            {% endif %} 
+            <div><a href="{{ poi.city.country.get_absolute_url }}" class="btn btn-light  my-3" role="button">{% trans "More about" %}&nbsp{{ poi.city.country.name }}</a></div>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if poi.city %}
+    <div class="col me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden" style="background-color: #B2F591;">
+        <div class="my-3 p-3">
+            <h2 class="display-5"><i class="fa-solid fa-city fa-xl m-2"></i>{% trans 'City' %}</h2>
+            <h3 class="display-6 my-3">{{ poi.city.name }}</h3>
+            {% if poi.city.presentation != "" %}
+                <p class="lead fw-normal">{{ poi.city.presentation|linebreaks }}</p>
+            {% endif %}
+            {% if user.is_authenticated %}
+            <div id="{{ poi.city.slug }}">
+                <a type="btn" data-slug = "{{ poi.city.slug }}" data-city = "{{ poi.city.city.id }}" data-url='{% url "city_like" %}' class="city_like">
+                    {% if poi.city in user.fav_cities.all %}
+                        <i class="fa-solid fa-heart fa-2xl" style="color: #ff0000;"></i>
+                    {% else %}
+                        <i class="fa-regular fa-heart fa-2xl"></i>
+                    {% endif %}
+                </a>
+            </div>
+            {% endif %} 
+            <div><a href="{{ poi.city.get_absolute_url }}" class="btn btn-dark my-3" role="button">{% trans "More about" %}&nbsp{{ poi.city.name }}</a></div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endif %}
+
+{% endblock %}

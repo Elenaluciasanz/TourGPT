@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+
+<h3 class="my-4">{% trans "My Routes" %}</h3>
+
+<div class="d-flex bd-highlight mb-3 align-items-center">
+    <div class="me-auto p-2 bd-highlight">
+        <a href="{% url 'route_new' %}" class="btn btn-info px-2 text-white my-3">{% trans 'Plan New Route' %}</a>
+    </div>
+    <div class="p-2 bd-highlight">
+        <div class="d-flex align-items-center">
+            <input class="form-check-input" type="checkbox" id="show_canceled_routes">
+            <label class="form-check-label mx-3" for="show_canceled_routes">{% trans 'Show cancelled routes' %}</label>
+        </div>
+    </div>
+  </div>
+
+{% for route in routes %}
+<table class="table table-striped {% if route.state == 'C' %}canceled_route{% endif %}">
+    <thead>
+        <tr class="table-primary">
+            <th scope="col" colspan="2">{{ route.title }}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{{ route.description }}</td>
+            <td>
+                {% if route.state == 'P' %}
+                <div class="text-info">
+                    {% trans 'Planned' %}
+                    <i class="fa-solid fa-paper-plane fa-xl"></i>
+                </div>
+                {% elif route.state == 'I' %}
+                <div class="text-warning">
+                    {% trans 'In Progress' %} &nbsp
+                    <i class="fa-solid fa-list-check fa-xl"></i>
+                </div>
+                {% elif route.state == 'F' %}
+                <div class="text-success">
+                    {% trans 'Finished' %} &nbsp
+                    <i class="fa-solid fa-calendar-check fa-xl"></i>
+                </div>
+                {% elif route.state == 'C' %}
+                <div class="text-danger">
+                    {% trans 'Cancelled' %} &nbsp
+                    <i class="fa-solid fa-calendar-xmark fa-xl"></i>
+                </div>
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <i class="fa-solid fa-location-dot fa-xl" style="color: #7b00bd;"></i>
+                {% trans 'Origin' %}:&nbsp {{ route.origin.name }}
+            </td>
+
+            <td>
+                <i class="fa-solid fa-location-dot fa-xl" style="color: #e00000;"></i>
+                {% trans 'Destination' %}:&nbsp {{ route.destination.name }}
+            </td> 
+        </tr>
+        <tr>
+            <td>
+                <i class="fa-solid fa-play fa-xl"></i>
+                {% trans 'From' %}:&nbsp {{ route.start_date }}
+            </td>
+            <td>
+                <i class="fa-solid fa-flag-checkered fa-xl"></i>
+                {% trans 'To' %}:&nbsp {{ route.end_date }}
+            </td> 
+        </tr>
+        <tr>
+            {% if route.state != 'C' %}
+                <td><a href="{{ route.get_absolute_url }}" class="btn btn-primary">{% trans 'More details' %}</a></td>
+                <td><a href="{% url 'route_cancel' route.pk %}"" class="btn btn-danger">{% trans 'Cancel Route'%}</a></td>
+            {% else %}
+                <td colspan="2"><a href="{{ route.get_absolute_url }}" class="btn btn-primary">{% trans 'More details' %}</a></td>
+            {% endif %}
+        </tr>
+    </tbody>
+</table>
+
+{% empty %}
+    <div>
+        <h4 class="my-3">{% trans 'No routes planned' %}<h4>
+    </div>
+{% endfor %}
+{% endblock %}

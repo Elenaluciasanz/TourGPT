@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+
+<h1 class="m-4">{% trans 'Travel Profiles' %}</h1>
+
+<table class="table table-striped">
+    <thead>
+        <tr class="table-primary">
+            <th scope="col" colspan="4">{% trans 'Title' %}</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for profile in travel_profiles %}
+        <tr>
+            <td> {{ profile.title }} </td>
+            <td><a href="{% url 'travel_profile_details' pk=profile.pk acc=user.pk %}"><i class="fa-solid fa-eye fa-xl"></i></a></td>
+            <td><a href="{% url 'travel_profile_update' pk=profile.pk acc=user.pk %}" style="color:green;"><i class="fa-solid fa-pen-to-square fa-xl"></i></a></td>
+            <td><a href="{% url 'travel_profile_delete' pk=profile.pk acc=user.pk %}" style="color:crimson;"><i class="fa-solid fa-trash fa-xl"></i></a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<br>
+<div class="row col-6">
+    <form action="{% url 'travel_profile_new' pk=user.pk %}">
+        <input class="btn btn-primary" type="submit" value="{% trans 'Add Travel Profile' %}">
+    </form> 
+</div>
+   
+{% endblock %}

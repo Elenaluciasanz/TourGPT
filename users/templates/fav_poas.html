@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+
+<h3 class="my-4">{% trans "My Favoutite Accommodation Points" %}</h3>
+
+<div class="input-group my-4">
+    <div class="input-group-text" id="btnGroupAddon"><i class="fa-solid fa-magnifying-glass fa-xl px-3" style="color: #04253e;"></i></div>
+    <input class="form-control" type="search" id="poa_filter" onkeyup="poa_filter();" placeholder="{% trans 'Search accommodation point' %}...">
+</div>
+
+<div id="cities" class="my-4">
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for poa in poas %}
+            <div class="col poa_filter_card" id="{{ poa.point_name }}" data-poa="{{ poa.point_name }}">
+                <div class="card border-secondary mb-3 h-100" style="background-color: #FFDAB9;">
+                    <div class="card-header d-flex justify-content-center">
+                        <h5 class="px-2">{{ poa.complete_name }}</h5>
+                        {% if user.is_authenticated %}
+                        <div id="{{ poa.slug }}">
+                            <a type="btn" data-slug = "{{ poa.slug }}" data-poa = "{{ poa.point_name }}" data-url='{% url "poa_like" %}' class="poa_like">
+                                {% if poa in user.fav_poas.all %}
+                                    <i class="fa-solid fa-circle-minus fa-xl" style="color: #ff0000;"></i>
+                                {% else %}
+                                    <i class="fa-regular fa-heart fa-xl"></i>
+                                {% endif %}
+                            </a>
+                        </div>
+                        {% endif %}  
+                    </div>
+                    {% if poa.type %}
+                    <h6 class="card-header d-flex justify-content-center">
+                        {% if poa.type == 'HO' %}
+                            <i class="fa-solid fa-square-h fa-xl m-2"></i>    
+                        {% elif poa.type == 'HE' %}
+                            <i class="fa-solid fa-bed fa-xl m-2"></i>
+                        {% elif poa.type == 'C' %}
+                            <i class="fa-solid fa-campground fa-xl m-2"></i>
+                        {% elif poa.type == 'R' %}
+                            <i class="fa-brands fa-tree fa-xl m-2"></i>
+                        {% elif poa.type == 'S' %}
+                            <i class="fa-solid fa-tent fa-xl m-2"></i>
+                        {% else %}
+                            <i class="fa-solid fa-house fa-xl m-2"></i>
+                        {% endif %}
+                    </h6>
+                    {% endif %}
+                    {% if poa.presentation != "" %}
+                    <div class="card-body">
+                        <p class="card-text">{{ poa.presentation|linebreaks }}</p>
+                    </div>
+                    {% endif %}
+                    <div class="card-footer d-flex justify-content-center">  
+                        <a href="{{ poa.get_absolute_url }}" class="card-link btn btn-warning" role="button">{% trans "More about" %}&nbsp{{ poa.name }}</a>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <div class="row">
+                <h4 class="my-3">{% trans 'No favorite accommodation points' %}<h4>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

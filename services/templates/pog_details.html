@@ -1,0 +1,175 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+
+
+<div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center" style="background-color: #B0E2FF;">
+    <div class="col-md-5 p-lg-5 mx-auto my-5">
+        <h1 class="display-4 fw-normal">{{ pog.name }}</h1>
+        {% if pog.type %}
+            <h6 class="card-header d-flex justify-content-center">
+                {% if pog.type == 'R' %}
+                    <i class="fa-solid fa-kitchen-set fa-xl m-2"></i>   
+                    {% trans 'Restaurant' %} 
+                {% elif pog.type == 'B' %}
+                    <i class="fa-solid fa-beer-mug-empty fa-xl m-2"></i>
+                    {% trans 'Bar' %}
+                {% elif pog.type == 'C' %}
+                    <i class="fa-solid fa-mug-saucer fa-xl m-2"></i>
+                    {% trans 'Cafeteria' %}
+                {% elif pog.type == 'F' %}
+                    <i class="fa-brands fa-burger fa-xl m-2"></i>
+                    {% trans 'Fast Food' %}
+                {% elif pog.type == 'T' %}
+                    <i class="fa-solid fa-wine-bottle fa-xl m-2"></i>
+                    {% trans 'Tabern' %}
+                {% else %}
+                    <i class="fa-solid fa-utensils fa-xl m-2"></i>
+                    {% trans 'Gastronomy Point' %}
+                {% endif %}
+            </h6>
+        {% endif %}
+        {% if pog.presentation != "" %}
+            <p class="lead fw-normal">{{ pog.presentation|linebreaks }}</p>
+        {% endif %}
+        {% if user.is_authenticated %}
+        <div id="{{ pog.slug }}">
+            <a type="btn" data-slug = "{{ pog.slug }}" data-pog = "{{ pog.point_name }}" data-url='{% url "pog_like" %}' class="pog_like">
+                {% if pog in user.fav_pogs.all %}
+                    <i class="fa-solid fa-heart fa-xl" style="color: #ff0000;"></i>
+                {% else %}
+                    <i class="fa-regular fa-heart fa-xl"></i>
+                {% endif %}
+            </a>
+        </div>
+        {% endif %}  
+    </div>
+</div>
+
+{% if pog.description %}
+<div class="d-md-flex flex-md-equal w-100 my-md-3 ps-md-3"> 
+    <div class="me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden" style="background-color: #2471A3 ;">
+        <div class="my-3 py-3">
+        <h2 class="display-5"><i class="fa-solid fa-info fa-xl m-2"></i></h2>
+        <p class="lead">{{ pog.description|linebreaks }}</p>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% if pog.shedule_avg or pog.price_avg %}
+<div class="d-md-flex flex-md-equal w-100 my-md-3 ps-md-3">
+    {% if pog.shedule_avg %}
+    <div class="col me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden" style="background-color: #B0E2FF;">
+        <div class="my-3 p-3">
+            <h2 class="display-5"><i class="fa-solid fa-clock fa-xl"></i></h2>
+            <h3 class="display-6">{% trans 'Schedule' %}</h3>
+            <p class="lead">{{ pog.shedule_avg }}</p>
+        </div>
+        <div class="bg-dark shadow-sm mx-auto" style="width: 80%; height: 100px; border-radius: 21px 21px 0 0;"></div>
+    </div>
+    {% endif %}
+
+    {% if pog.price_avg %}
+    <div class="col me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden" style="background-color: #2471A3 ;">
+        <div class="my-3 p-3">
+            <h2 class="display-5"><i class="fa-solid fa-money-bill-wave fa-xl"></i></h2>
+            <h3 class="display-6">{% trans 'Price' %}</h3>
+            <p class="lead">{{ pog.price_avg }}</p>
+        </div>
+        <div class="bg-light shadow-sm mx-auto" style="width: 80%; height: 100px; border-radius: 21px 21px 0 0;"></div>
+    </div>
+    {% endif %}
+</div>
+{% endif %}
+
+{% if pog.latitude or pog.longitude %}
+<div class="d-md-flex flex-md-equal w-100 my-md-3 ps-md-3">
+    <div class="col me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden" style="background-color: #B0E2FF;">
+        <div class="my-3 py-3">
+            <h2 class="display-5"><i class="fa-solid fa-globe fa-xl"></i></h2>
+            {% if pog.latitude %}
+            <h3 class="display-6">{% trans 'Latitude' %}</h3>
+            <p class="lead">{{ pog.latitude }}</p>
+            {% endif %}
+            {% if pog.longitude %}
+            <h3 class="display-6">{% trans 'Longitude' %}</h3>
+            <p class="lead">{{ pog.longitude }}</p>
+            {% endif %}
+        </div>
+    </div>
+</div>  
+{% endif %}
+
+{% if pog.location and map %}
+<div class="d-md-flex flex-md-equal w-100 my-md-3 ps-md-3">
+    <div class="col me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden" style="background-color: #2471A3 ;">
+        <div class="my-3 py-3">
+        <h2 class="display-5"><i class="fa-solid fa-map fa-xl"></i></h2>
+        {% if pog.location and pog.location != "NF" %}
+        <h2 class="display-6">{{ pog.location }}</h2>
+        {% endif %}
+        {% if map %}
+        {{ map | safe }}
+        {% endif %}
+        </div>
+    </div>
+</div>
+{% endif %}
+
+
+
+{% if pog.city.country or pog.city %}
+<div class="d-md-flex flex-md-equal w-100 my-md-3 ps-md-3">
+    {% if pog.city.country %}
+    <div class="col me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden" style="background-color: #2471A3;">
+        <div class="my-3 p-3">
+            <h2 class="display-5"><i class="fa-solid fa-flag fa-xl m-2"></i>{% trans 'Country' %}</h2>
+            <h3 class="display-6">{{ pog.city.country.name }}</h3>
+            {% if pog.city.country.presentation != "" %}
+                <p class="lead fw-normal">{{ pog.city.country.presentation|linebreaks }}</p>
+            {% endif %}
+            {% if user.is_authenticated %}
+            <div id="{{ pog.city.country.slug }}">
+                <a type="btn" data-slug = "{{ pog.city.country.slug }}" data-country = "{{ pog.city.country.country.id }}" data-url='{% url "country_like" %}' class="country_like">
+                    {% if pog.city.country in user.fav_countries.all %}
+                        <i class="fa-solid fa-heart fa-2xl" style="color: #ff0000;"></i>
+                    {% else %}
+                        <i class="fa-regular fa-heart fa-2xl"></i>
+                    {% endif %}
+                </a>
+            </div>
+            {% endif %} 
+            <div><a href="{{ pog.city.country.get_absolute_url }}" class="btn btn-light my-3" role="button">{% trans "More about" %}&nbsp{{ pog.city.country.name }}</a></div>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if pog.city %}
+    <div class="col me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden" style="background-color: #B0E2FF;">
+        <div class="my-3 p-3">
+            <h2 class="display-5"><i class="fa-solid fa-city fa-xl m-2"></i>{% trans 'City' %}</h2>
+            <h3 class="display-6 my-3">{{ pog.city.name }}</h3>
+            {% if pog.city.presentation != "" %}
+                <p class="lead fw-normal">{{ pog.city.presentation|linebreaks }}</p>
+            {% endif %}
+            {% if user.is_authenticated %}
+            <div id="{{ pog.city.slug }}">
+                <a type="btn" data-slug = "{{ pog.city.slug }}" data-city = "{{ pog.city.city.id }}" data-url='{% url "city_like" %}' class="city_like">
+                    {% if pog.city in user.fav_cities.all %}
+                        <i class="fa-solid fa-heart fa-2xl" style="color: #ff0000;"></i>
+                    {% else %}
+                        <i class="fa-regular fa-heart fa-2xl"></i>
+                    {% endif %}
+                </a>
+            </div>
+            {% endif %} 
+            <div><a href="{{ pog.city.get_absolute_url }}" class="btn btn-dark my-3" role="button">{% trans "More about" %}&nbsp{{ pog.city.name }}</a></div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endif %}
+
+{% endblock %}

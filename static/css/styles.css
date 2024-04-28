@@ -1,0 +1,37 @@
+html{
+    height: 100%;
+}
+
+body{
+    height: 100%; 
+    display: flex;
+    flex-direction: column;
+}
+main {
+    flex: 1;
+}
+
+.error {
+    color: red;
+}
+
+.help_text {
+    color:grey;
+}
+
+#countries_list{
+    list-style:none;
+    width: 100%;
+}
+
+.country_filter_search{
+    list-style:none;
+}
+
+#cities_list{
+    list-style:none;
+}
+
+.city_filter_search{
+    list-style:none;
+}

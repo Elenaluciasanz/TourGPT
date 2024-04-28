@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+
+<h3 class="my-4">{% trans "My Favoutite Gastronomy Points" %}</h3>
+
+<div class="input-group my-4">
+    <div class="input-group-text" id="btnGroupAddon"><i class="fa-solid fa-magnifying-glass fa-xl px-3" style="color: #04253e;"></i></div>
+    <input class="form-control" type="search" id="pog_filter" onkeyup="pog_filter();" placeholder="{% trans 'Search gastronomy point' %}...">
+</div>
+
+<div id="cities" class="my-4">
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for pog in pogs %}
+            <div class="col pog_filter_card" id="{{ pog.point_name }}" data-pog="{{ pog.point_name }}">
+                <div class="card border-secondary mb-3 h-100" style="background-color: #B0E2FF;">
+                    <div class="card-header d-flex justify-content-center">
+                        <h5 class="px-2">{{ pog.complete_name }}</h5>
+                        {% if user.is_authenticated %}
+                        <div id="{{ pog.slug }}">
+                            <a type="btn" data-slug = "{{ pog.slug }}" data-pog = "{{ pog.point_name }}" data-url='{% url "pog_like" %}' class="pog_like">
+                                {% if pog in user.fav_pogs.all %}
+                                    <i class="fa-solid fa-circle-minus fa-xl" style="color: #ff0000;"></i>
+                                {% else %}
+                                    <i class="fa-regular fa-heart fa-xl"></i>
+                                {% endif %}
+                            </a>
+                        </div>
+                        {% endif %}  
+                    </div>
+                    {% if pog.type %}
+                    <h6 class="card-header d-flex justify-content-center">
+                        {% if pog.type == 'R' %}
+                            <i class="fa-solid fa-kitchen-set fa-xl m-2"></i>    
+                        {% elif pog.type == 'B' %}
+                            <i class="fa-solid fa-beer-mug-empty fa-xl m-2"></i>
+                        {% elif pog.type == 'C' %}
+                            <i class="fa-solid fa-mug-saucer fa-xl m-2"></i>
+                        {% elif pog.type == 'F' %}
+                            <i class="fa-brands fa-burger fa-xl m-2"></i>
+                        {% elif pog.type == 'T' %}
+                            <i class="fa-solid fa-wine-bottle fa-xl m-2"></i>
+                        {% else %}
+                            <i class="fa-solid fa-utensils fa-xl m-2"></i>
+                        {% endif %}
+                    </h6>
+                    {% endif %}
+                    {% if pog.presentation != "" %}
+                    <div class="card-body">
+                        <p class="card-text">{{ pog.presentation|linebreaks }}</p>
+                    </div>
+                    {% endif %}
+                    <div class="card-footer d-flex justify-content-center">  
+                        <a href="{{ pog.get_absolute_url }}" class="card-link btn btn-primary" role="button">{% trans "More about" %}&nbsp{{ pog.name }}</a>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <div class="row">
+                <h4 class="my-3">{% trans 'No favorite gastronomy points' %}<h4>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+    
+{% endblock %}

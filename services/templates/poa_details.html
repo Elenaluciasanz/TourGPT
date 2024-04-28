@@ -1,0 +1,175 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+
+
+<div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center" style="background-color: #FFDAB9;">
+    <div class="col-md-5 p-lg-5 mx-auto my-5">
+        <h1 class="display-4 fw-normal">{{ poa.name }}</h1>
+        {% if poa.type %}
+            <h6 class="card-header d-flex justify-content-center">
+                {% if poa.type == 'HO' %}
+                    <i class="fa-solid fa-square-h fa-xl m-2"></i>
+                    {% trans 'Hotel' %}    
+                {% elif poa.type == 'HE' %}
+                    <i class="fa-solid fa-bed fa-xl m-2"></i>
+                    {% trans 'Hostel' %} 
+                {% elif poa.type == 'C' %}
+                    <i class="fa-solid fa-campground fa-xl m-2"></i>
+                    {% trans 'Camping' %} 
+                {% elif poa.type == 'R' %}
+                    <i class="fa-brands fa-tree fa-xl m-2"></i>
+                    {% trans 'Rural House' %} 
+                {% elif poa.type == 'S' %}
+                    <i class="fa-solid fa-tent fa-xl m-2"></i>
+                    {% trans 'Shelter' %} 
+                {% else %}
+                    <i class="fa-solid fa-house fa-xl m-2"></i>
+                    {% trans 'Accommodation Point' %}
+                {% endif %}
+            </h6>
+        {% endif %}
+        {% if poa.presentation != "" %}
+            <p class="lead fw-normal">{{ poa.presentation|linebreaks }}</p>
+        {% endif %}
+        {% if user.is_authenticated %}
+        <div id="{{ poa.slug }}">
+            <a type="btn" data-slug = "{{ poa.slug }}" data-poa = "{{ poa.point_name }}" data-url='{% url "poa_like" %}' class="poa_like">
+                {% if poa in user.fav_poas.all %}
+                    <i class="fa-solid fa-heart fa-xl" style="color: #ff0000;"></i>
+                {% else %}
+                    <i class="fa-regular fa-heart fa-xl"></i>
+                {% endif %}
+            </a>
+        </div>
+        {% endif %}  
+    </div>
+</div>
+
+{% if poa.description %}
+<div class="d-md-flex flex-md-equal w-100 my-md-3 ps-md-3"> 
+    <div class="me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden" style="background-color: #E67E22 ;">
+        <div class="my-3 py-3">
+        <h2 class="display-5"><i class="fa-solid fa-info fa-xl m-2"></i></h2>
+        <p class="lead">{{ poa.description|linebreaks }}</p>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% if poa.shedule_avg or poa.price_avg %}
+<div class="d-md-flex flex-md-equal w-100 my-md-3 ps-md-3">
+    {% if poa.shedule_avg %}
+    <div class="col me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden" style="background-color: #FFDAB9;">
+        <div class="my-3 p-3">
+            <h2 class="display-5"><i class="fa-solid fa-clock fa-xl"></i></h2>
+            <h3 class="display-6">{% trans 'Schedule' %}</h3>
+            <p class="lead">{{ poa.shedule_avg }}</p>
+        </div>
+        <div class="bg-dark shadow-sm mx-auto" style="width: 80%; height: 100px; border-radius: 21px 21px 0 0;"></div>
+    </div>
+    {% endif %}
+
+    {% if poa.price_avg %}
+    <div class="col me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden" style="background-color: #E67E22;">
+        <div class="my-3 p-3">
+            <h2 class="display-5"><i class="fa-solid fa-money-bill-wave fa-xl"></i></h2>
+            <h3 class="display-6">{% trans 'Price' %}</h3>
+            <p class="lead">{{ poa.price_avg }}</p>
+        </div>
+        <div class="bg-light shadow-sm mx-auto" style="width: 80%; height: 100px; border-radius: 21px 21px 0 0;"></div>
+    </div>
+    {% endif %}
+</div>
+{% endif %}
+
+{% if poa.latitude or poa.longitude %}
+<div class="d-md-flex flex-md-equal w-100 my-md-3 ps-md-3">
+    <div class="col me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden" style="background-color: #FFDAB9;">
+        <div class="my-3 py-3">
+            <h2 class="display-5"><i class="fa-solid fa-globe fa-xl"></i></h2>
+            {% if poa.latitude %}
+            <h3 class="display-6">{% trans 'Latitude' %}</h3>
+            <p class="lead">{{ poa.latitude }}</p>
+            {% endif %}
+            {% if poa.longitude %}
+            <h3 class="display-6">{% trans 'Longitude' %}</h3>
+            <p class="lead">{{ poa.longitude }}</p>
+            {% endif %}
+        </div>
+    </div>
+</div>  
+{% endif %}
+
+{% if poa.location and map %}
+<div class="d-md-flex flex-md-equal w-100 my-md-3 ps-md-3">
+    <div class="col me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden" style="background-color: #E67E22 ;">
+        <div class="my-3 py-3">
+        <h2 class="display-5"><i class="fa-solid fa-map fa-xl"></i></h2>
+        {% if poa.location and poa.location != "NF" %}
+        <h2 class="display-6">{{ poa.location }}</h2>
+        {% endif %}
+        {% if map %}
+        {{ map | safe }}
+        {% endif %}
+        </div>
+    </div>
+</div>
+{% endif %}
+
+
+
+{% if poa.city.country or poa.city %}
+<div class="d-md-flex flex-md-equal w-100 my-md-3 ps-md-3">
+    {% if poa.city.country %}
+    <div class="col me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden" style="background-color: #E67E22;">
+        <div class="my-3 p-3">
+            <h2 class="display-5"><i class="fa-solid fa-flag fa-xl m-2"></i>{% trans 'Country' %}</h2>
+            <h3 class="display-6">{{ poa.city.country.name }}</h3>
+            {% if poa.city.country.presentation != "" %}
+                <p class="lead fw-normal">{{ poa.city.country.presentation|linebreaks }}</p>
+            {% endif %}
+            {% if user.is_authenticated %}
+            <div id="{{ poa.city.country.slug }}">
+                <a type="btn" data-slug = "{{ poa.city.country.slug }}" data-country = "{{ poa.city.country.country.id }}" data-url='{% url "country_like" %}' class="country_like">
+                    {% if poa.city.country in user.fav_countries.all %}
+                        <i class="fa-solid fa-heart fa-2xl" style="color: #ff0000;"></i>
+                    {% else %}
+                        <i class="fa-regular fa-heart fa-2xl"></i>
+                    {% endif %}
+                </a>
+            </div>
+            {% endif %} 
+            <div><a href="{{ poa.city.country.get_absolute_url }}" class="btn btn-light my-3" role="button">{% trans "More about" %}&nbsp{{ poa.city.country.name }}</a></div>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if poa.city %}
+    <div class="col me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden" style="background-color: #FFDAB9;">
+        <div class="my-3 p-3">
+            <h2 class="display-5"><i class="fa-solid fa-city fa-xl m-2"></i>{% trans 'City' %}</h2>
+            <h3 class="display-6 my-3">{{ poa.city.name }}</h3>
+            {% if poa.city.presentation != "" %}
+                <p class="lead fw-normal">{{ poa.city.presentation|linebreaks }}</p>
+            {% endif %}
+            {% if user.is_authenticated %}
+            <div id="{{ poa.city.slug }}">
+                <a type="btn" data-slug = "{{ poa.city.slug }}" data-city = "{{ poa.city.city.id }}" data-url='{% url "city_like" %}' class="city_like">
+                    {% if poa.city in user.fav_cities.all %}
+                        <i class="fa-solid fa-heart fa-2xl" style="color: #ff0000;"></i>
+                    {% else %}
+                        <i class="fa-regular fa-heart fa-2xl"></i>
+                    {% endif %}
+                </a>
+            </div>
+            {% endif %} 
+            <div><a href="{{ poa.city.get_absolute_url }}" class="btn btn-dark my-3" role="button">{% trans "More about" %}&nbsp{{ poa.city.name }}</a></div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endif %}
+
+{% endblock %}

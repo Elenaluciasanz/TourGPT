@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+
+<h1 class="m-4">{% trans 'Account Details' %}</h1>
+
+    <div class="m-4">
+        <br>
+        <div class="form-group row my-4"> 
+            <div class="col-md-4 h4">{% trans 'Username' %}:&nbsp</div>
+            <div class="col-md-8"><input type="text" name="username" maxlength="150" id="username" class="form-control" value="{{ object.username }}" readonly></div>
+        </div>
+    
+        <div class="form-group row my-4"> 
+            <div class="col-md-4 h4">{% trans 'Email' %}:&nbsp</div>
+            <div class="col-md-8"><input type="email" name="email" maxlength="150" id="email" class="form-control" value="{{ object.email }}" readonly></div>
+        </div>
+
+        
+        <div class="form-group row my-4"> 
+            <div class="col-md-6 my-2">
+                <div class="h4">{% trans 'Name' %}:&nbsp</div>
+                <input type="text" name="first_name" maxlength="150" id="first_name" class="form-control" value="{{ object.first_name }}" readonly>
+            </div>
+            <br>
+            <div class="col-md-6 my-2">
+                <div class="h4">{% trans 'Last Name' %}:&nbsp</div>
+                <input type="text" name="last_name" maxlength="150" id="last_name" class="form-control" value="{{ object.last_name }}" readonly>
+            </div>
+        </div>
+        <div class="form-group row my-4">
+            <div class="col-md-6 my-2">
+                <div class="h4">{% trans 'Birth Date' %}:&nbsp</div>
+                <input type="text" name="birth" maxlength="150" id="birth" class="form-control" value="{{ object.birth }}" readonly>
+            </div>
+            <div class="col-md-6 my-2">
+                <div class="h4">{% trans 'Phone Number' %}:&nbsp</div>
+                <input type="tel" name="number" maxlength="150" id="number" class="form-control" value="{{ object.number }}" readonly>             
+            </div>
+        </div>
+        <br>
+        <hr>
+        <br>
+        <div class="h4">{% trans 'Travel Profiles'%}:&nbsp</div>
+        <table class="table table-striped">
+            <thead>
+                <tr class="table-primary">
+                    <th scope="col" colspan="4">{% trans 'Title' %}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for profile in travel_profiles %}
+                <tr>
+                    <td> {{ profile.title }} </td>
+                    <td><a href="{% url 'travel_profile_details' pk=profile.pk acc=object.id %}"><i class="fa-solid fa-eye fa-xl"></i></a></td>
+                    <td><a href="{% url 'travel_profile_update' pk=profile.pk acc=object.id %}" style="color:green;"><i class="fa-solid fa-pen-to-square fa-xl"></i></a></td>
+                    <td><a href="{% url 'travel_profile_delete' pk=profile.pk acc=object.id %}" style="color:crimson;"><i class="fa-solid fa-trash fa-xl"></i></a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <br>
+        <div class="row col-6">
+            <form action="{% url 'travel_profile_new' pk=object.id %}">
+                <input class="btn btn-primary" type="submit" value="{% trans 'Add Travel Profile' %}">
+            </form> 
+        </div>
+    </div>
+</div>
+
+{% endblock %}
