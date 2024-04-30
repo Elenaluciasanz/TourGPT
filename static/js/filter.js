@@ -158,7 +158,7 @@ $(document).on('click', '#show_canceled_routes', function(e){
     var routes = document.querySelectorAll(".canceled_route")
     if (this.checked == true){
         routes.forEach(route =>{
-            route.style.display = 'block';
+            route.style.display = '';
         });
     }
     else{
