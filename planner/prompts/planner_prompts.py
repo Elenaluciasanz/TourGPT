@@ -138,6 +138,7 @@ def planner_route(route: Route):
 
     output = chat_gpt(input.to_string())
     
+    print(output)
     
     if output != "":
         try:
@@ -215,6 +216,7 @@ def planner_route(route: Route):
         except Exception as e:
             print("Error while parsing route planner response")
             print(e)
+            route.delete()
             return False
         
     return True

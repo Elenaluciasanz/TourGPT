@@ -36,7 +36,9 @@ def route_new(request):
         res = planner_route(route = r)
         
         if res == False:
-            render(request, 'route.html', {'city_bases': city_bases, 'profiles': profiles, 'error': 'T'})
+            profiles = TravelProfile.objects.filter(user = request.user)
+            city_bases = CityBase.objects.all()
+            return render(request, 'route.html', {'city_bases': city_bases, 'profiles': profiles, 'error': 'T'})
         
         return redirect('route_details', pk = r.pk)
     
