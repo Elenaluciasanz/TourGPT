@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-30 01:22+0000\n"
+"POT-Creation-Date: 2024-04-30 21:54+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -852,12 +852,11 @@ msgid "My Account"
 msgstr "Mi Cuenta"
 
 #: templates/base.html:76
-msgid "Sing Out"
+msgid "Log Out"
 msgstr "Cerrar Sesión"
 
-#: templates/base.html:78 users/templates/registration/login.html:6
-#: users/templates/registration/login.html:26
-msgid "Sign In"
+#: templates/base.html:78
+msgid "Log In"
 msgstr "Iniciar Sesión"
 
 #: templates/base.html:79 users/templates/registration/signup.html:6
@@ -1150,6 +1149,11 @@ msgstr "Mis Puntos de Interés Favoritos"
 #: users/templates/fav_pois.html:63
 msgid "No favorite interest points"
 msgstr "Sin puntos de interés favoritos"
+
+#: users/templates/registration/login.html:6
+#: users/templates/registration/login.html:26
+msgid "Sign In"
+msgstr "Iniciar Sesión"
 
 #: users/templates/registration/login.html:15
 #: users/templates/registration/signup.html:60

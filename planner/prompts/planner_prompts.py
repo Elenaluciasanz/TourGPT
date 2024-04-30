@@ -138,8 +138,6 @@ def planner_route(route: Route):
 
     output = chat_gpt(input.to_string())
     
-    print(output)
-    
     if output != "":
         try:
             resp = json.loads(output)
