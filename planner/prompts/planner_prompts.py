@@ -8,6 +8,7 @@ from services.prompts.poe_prompts import poe_get_or_create, get_hist_poe
 from services.prompts.poa_prompts import poa_get_or_create, get_hist_poa
 from services.prompts.pog_prompts import pog_get_or_create, get_hist_pog
 from googletrans import Translator
+from django.db import transaction
 import json
 
 template_route = None
@@ -20,25 +21,36 @@ def init_template_route():
     ex_city = "Madrid, Spain"
     example = """
     {
-        "accommodation": "Hotel Ritz Madrid??HO",
+        "accommodation": {
+            "point": "Hotel Ritz Madrid",
+            "subclass": "HO"  
+        },
         "route": {
             "1": {
                 "presentation": "Arrival and Exploration",
                 "morning": {
                     "activity": "Start your day with a visit to the Royal Palace of Madrid to explore its stunning architecture and history",
-                    "point": "Royal Palace of Madrid??I??E"
+                    "point": "Royal Palace of Madrid",
+                    "class": "I",
+                    "subclass": "E"
                 },
                 "afternoon": {
                     "activity": "Enjoy traditional Spanish dishes in a historic setting",
-                    "point": "La Carmencita??G??R"
+                    "point": "La Carmencita",
+                    "class": "G",
+                    "subclass": "R"
                 },
                 "evening": {
                     "activity": "Enjoy a leisurely stroll through Retiro Park, where you can relax by the lake or wander through the beautiful gardens",
-                    "point": "Retiro Park??I??P"
+                    "point": "Retiro Park",
+                    "class": "I",
+                    "subclass": "P"
                 },
                 "night": {
                     "activity": "Have dinner at a Michelin-starred restaurant for a memorable dining experience",
-                    "point": "DiverXO??G??R"
+                    "point": "DiverXO",
+                    "class": "G",
+                    "subclass": "R"
                 }
             },
             "2": {
@@ -48,11 +60,15 @@ def init_template_route():
                 },
                 "afternoon": {
                     "activity": "Casa Revuelta - Try their famous cod fritters and other traditional Spanish tapas",
-                    "point": "Casa Revuelta??G??R"
+                    "point": "Casa Revuelta",
+                    "class": "G",
+                    "subclass": "R"
                 },
                 "evening": {
                     "activity": "Enjoy a game of bowling at Bowling Chamartín, a popular bowling alley in Madrid",
-                    "point": "Bowling Chamartín??E??B"
+                    "point": "Bowling Chamartín",
+                    "class": "E",
+                    "subclass": "B"
                 },
                 "night": {
                     "activity": "Head back to your accommodation to pack and prepare for your departure the next day"
@@ -69,11 +85,11 @@ def init_template_route():
         Each day is divided into 4 parts: morning, afternoon, evening, and night.
         Each part includes a suggested activity and, if applicable, the name of the point to visit.
         Each point is classified as either an interest site (I) or an experience/Entertainment (E) or a gastronomic site (G).
-        Each interest site is classified  as {poi_types}.
-        Each entertainment site is classified as {poe_types}.
-        Each gastronomic site is classified as {pog_types}.
+        Each interest site is subclassified  as {poi_types}.
+        Each entertainment site is subclassified as {poe_types}.
+        Each gastronomic site is subclassified as {pog_types}.
         Suggest an accommodation point for the full duration of the route.
-        The accommodation point is classified as {poa_types}.
+        The accommodation point is subclassified as {poa_types}.
         Point's name should unique, so if the point already exists, return the name of the existing point.
         Previous points of interest: {hist_poi}, entertainment: {hist_poe}, gastronomy: {hist_pog}, accommodation: {hist_poa}.
         {travel_profile}
@@ -121,69 +137,87 @@ def planner_route(route: Route):
                                          travel_profile = travel_profile)
 
     output = chat_gpt(input.to_string())
-
+    
+    
     if output != "":
         try:
             resp = json.loads(output)
-            
-            accommodation = resp["accommodation"]
-            accommodation = accommodation.split("??")
-            poa_en, poa_es = poa_get_or_create(accommodation[0], city, accommodation[1])
-            route.poa_en = poa_en
-            route.poa_es = poa_es
-            route.save()
-            
-            for day in resp["route"]:
-                d = RouteDay(route = route, date = route.start_date + timedelta(days = int(day) - 1), day = int(day), presentation = resp["route"][day]["presentation"])
-                d.presentation_es = trans.translate(d.presentation, src = 'en', dest = 'es').text
-                d.save()
-                         
-                for moment in [('morning', 'M'), ('afternoon', 'A'), ('evening','E'), ('night','N')]:
-                    activity = resp["route"][day][moment[0]]["activity"]
-                    act = trans.translate(activity, src = 'en', dest = 'es').text
-                    
-                    if "point" in resp["route"][day][moment[0]]:
-                        point = resp["route"][day][moment[0]]["point"]
-                        point = point.split("??")
-                        point_name = point[0]
-                        type = point[1]
-                        type_point = point[2]
-
-                        # Punto de Interés
-                        if type == 'I':
-                            poi_en, poi_es = poi_get_or_create(point_name, city, type_point)
-                            RouteDayActivityInterest(route_day = d, activity = activity, moment = moment[1], type = 'I', lang = 'en', point = poi_en).save()
-                            RouteDayActivityInterest(route_day = d, activity = act, moment = moment[1], type = 'I', lang = 'es', point = poi_es).save()
-                            
-                        # Punto de Entretenimiento   
-                        elif type == 'E':
-                            poe_en, poe_es = poe_get_or_create(point_name, city, type_point)
-                            RouteDayActivityEntertainment(route_day = d, activity = activity, moment = moment[1], type = 'E', lang = 'en', point = poe_en).save()
-                            RouteDayActivityEntertainment(route_day = d, activity = act, moment = moment[1], type = 'E', lang = 'es', point = poe_es).save()
-                        
-                        # Punto Gastronómico
-                        elif type == 'G':
-                            pog_en, pog_es = pog_get_or_create(point_name, city, type_point)
-                            RouteDayActivityGastronomy(route_day = d, activity = activity, moment = moment[1], type = 'G', lang = 'en', point = pog_en).save() 
-                            RouteDayActivityGastronomy(route_day = d, activity = act, moment = moment[1], type = 'G', lang = 'es', point = pog_es).save()
+            with transaction.atomic():
+                if "accommodation" in resp:                
+                    if "point" in resp["accommodation"]:
+                        point = resp["accommodation"]["point"]
+                        if "subclass" in resp["accommodation"]:
+                            subclass = resp["accommodation"]["subclass"]
                         else:
-                            RouteDayActivity(route_day = d, activity = activity, moment = moment[1], type = 'O', lang = 'en').save() 
-                            RouteDayActivity(route_day = d, activity = act, moment = moment[1], type = 'O', lang = 'es').save()
+                            subclass = "O"
+                        
+                        poa_en, poa_es = poa_get_or_create(point, city, subclass)
                     
-                    # Actividad Genérica    
+                        route.poa_en = poa_en
+                        route.poa_es = poa_es
+                        route.save()
+                
+                for day in resp["route"]:
+                    if "presentation" in resp["route"][day]:
+                        presentation = resp["route"][day]["presentation"]
                     else:
-                        RouteDayActivity(route_day = d, activity = activity, moment = moment[1], type = 'O', lang = 'en').save() 
-                        RouteDayActivity(route_day = d, activity = act, moment = moment[1], type = 'O', lang = 'es').save()
-        
+                        presentation = "Day " + day 
+                    d = RouteDay(route = route, date = route.start_date + timedelta(days = int(day) - 1), day = int(day), presentation = presentation)
+                    d.presentation_es = trans.translate(d.presentation, src = 'en', dest = 'es').text
+                    d.save()
+                            
+                    for moment in [('morning', 'M'), ('afternoon', 'A'), ('evening','E'), ('night','N')]:
+                        if moment[0] in resp["route"][day] and "activity" in resp["route"][day][moment[0]]:
+                        
+                            activity = resp["route"][day][moment[0]]["activity"]
+                            act = trans.translate(activity, src = 'en', dest = 'es').text
+                            
+                            if "point" in resp["route"][day][moment[0]]:
+                                point_name = resp["route"][day][moment[0]]["point"]
+                                
+                                if "class" in resp["route"][day][moment[0]]:
+                                    type = resp["route"][day][moment[0]]["class"]
+                                    
+                                    if "subclass" in resp["route"][day][moment[0]]:
+                                        type_point = resp["route"][day][moment[0]]["subclass"]
+                                    else:
+                                        type_point = "O"
+                                else:
+                                    type = "O"
+                                    type_point = "O"
+                                
+                                # Punto de Interés
+                                if type == "I":
+                                    poi_en, poi_es = poi_get_or_create(point_name, city, type_point)
+                                    RouteDayActivityInterest(route_day = d, activity = activity, moment = moment[1], type = 'I', lang = 'en', point = poi_en).save()
+                                    RouteDayActivityInterest(route_day = d, activity = act, moment = moment[1], type = 'I', lang = 'es', point = poi_es).save()
+                                    
+                                # Punto de Entretenimiento   
+                                elif type == "E":
+                                    poe_en, poe_es = poe_get_or_create(point_name, city, type_point)
+                                    RouteDayActivityEntertainment(route_day = d, activity = activity, moment = moment[1], type = 'E', lang = 'en', point = poe_en).save()
+                                    RouteDayActivityEntertainment(route_day = d, activity = act, moment = moment[1], type = 'E', lang = 'es', point = poe_es).save()
+                                
+                                # Punto Gastronómico
+                                elif type == "G":
+                                    pog_en, pog_es = pog_get_or_create(point_name, city, type_point)
+                                    RouteDayActivityGastronomy(route_day = d, activity = activity, moment = moment[1], type = 'G', lang = 'en', point = pog_en).save() 
+                                    RouteDayActivityGastronomy(route_day = d, activity = act, moment = moment[1], type = 'G', lang = 'es', point = pog_es).save()
+                                else:
+                                    RouteDayActivity(route_day = d, activity = activity, moment = moment[1], type = 'O', lang = 'en').save() 
+                                    RouteDayActivity(route_day = d, activity = act, moment = moment[1], type = 'O', lang = 'es').save()
+                            
+                            # Actividad Genérica    
+                            else:
+                                RouteDayActivity(route_day = d, activity = activity, moment = moment[1], type = 'O', lang = 'en').save() 
+                                RouteDayActivity(route_day = d, activity = act, moment = moment[1], type = 'O', lang = 'es').save()
+                
         except Exception as e:
             print("Error while parsing route planner response")
             print(e)
-    
-    
-def check_route_info():
-    # Comprobar info pais, ciudades y puntos de la ruta
-    pass
-
+            return False
+        
+    return True
      
 # Inicializar plantilla
 init_template_route()

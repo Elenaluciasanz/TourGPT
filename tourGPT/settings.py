@@ -30,9 +30,15 @@ env.read_env(os.path.join(BASE_DIR, '.env'))
 SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+#DEBUG = False
 
-ALLOWED_HOSTS = ['tourgpt-kvas.onrender.com', 'tourgpt.onrender.com', '127.0.0.1']
+if  env('DEBUG', default = 'True') == 'False':
+    DEBUG = False
+
+else:
+    DEBUG = True
+
+ALLOWED_HOSTS = ['tourGPT.onrender.com', '127.0.0.1']
 
 
 # Application definition
@@ -92,39 +98,27 @@ WSGI_APPLICATION = 'tourGPT.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-"""
 DATABASES = {}
 
-POSTGRESQL_URL = 'postgres://alumnodb:alumnodb@localhost/tourGPT'
-
-if 'TESTING' in os.environ:
-    db_from_env = {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME':'testTourGPT',
-        'USER':'alumnodb',
-        'PASSWORD':'alumnodb',
-        'HOST':'localhost',
-        'PORT':'',
+if  env('DEBUG', default = 'True') == 'False':
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': env('PGDATABASE'),
+            'USER': env('PGUSER'),
+            'PASSWORD': env('PGPASSWORD'),
+            'HOST': env('PGHOST'),
+            'PORT': 5432,
+            'OPTIONS': {
+            'sslmode': 'require',
+            },
+        }
     }
-else :
+else:
+    POSTGRESQL_URL = 'postgres://alumnodb:alumnodb@localhost/tourGPT'
     db_from_env = dj_database_url.config(default=POSTGRESQL_URL, conn_max_age =500)
+    DATABASES['default'] = db_from_env
 
-DATABASES['default'] = db_from_env
-"""
-
-DATABASES = {
-  'default': {
-    'ENGINE': 'django.db.backends.postgresql',
-    'NAME': env('PGDATABASE'),
-    'USER': env('PGUSER'),
-    'PASSWORD': env('PGPASSWORD'),
-    'HOST': env('PGHOST'),
-    'PORT': 5432,
-    'OPTIONS': {
-      'sslmode': 'require',
-    },
-  }
-}
 
 
 # Password validation
@@ -169,15 +163,15 @@ LOCALE_PATHS = [
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-# PRE 
-# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-# PRO
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+if  env('DEBUG', default = 'True') == 'False':
+    STATIC_ROOT = BASE_DIR / 'staticfiles'
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+else: 
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-
-# PRO
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
 # Default primary key field type
@@ -202,4 +196,3 @@ if MODEL is None or MODEL == "":
 
 CITIES_LIGHT_TRANSLATION_LANGUAGES = ['es']
 CITIES_LIGHT_INCLUDE_CITY_TYPES = ['PPLA', 'PPLA2', 'PPLC']
-

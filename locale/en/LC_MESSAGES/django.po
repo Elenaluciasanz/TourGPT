@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-28 01:38+0000\n"
+"POT-Creation-Date: 2024-04-30 01:22+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -82,7 +82,7 @@ msgstr ""
 #: users/templates/account_details.html:49
 #: users/templates/travel_profile_details.html:11
 #: users/templates/travel_profile_editor.html:16
-#: users/templates/travel_profile_list.html:11
+#: users/templates/travel_profile_list.html:12
 msgid "Title"
 msgstr ""
 
@@ -274,12 +274,20 @@ msgstr ""
 msgid "Confirm"
 msgstr ""
 
-#: planner/templates/route.html:105
+#: planner/templates/route.html:106
 msgid "Generating route"
 msgstr ""
 
-#: planner/templates/route.html:105
+#: planner/templates/route.html:106
 msgid "This may take several minutes. Please wait."
+msgstr ""
+
+#: planner/templates/route.html:115
+msgid "An error has occurred"
+msgstr ""
+
+#: planner/templates/route.html:115
+msgid "Please try again"
 msgstr ""
 
 #: planner/templates/route_details.html:51
@@ -860,11 +868,11 @@ msgstr ""
 msgid "ChatGPT-based system for personalized tourist trip planning."
 msgstr ""
 
-#: tourGPT/settings.py:155
+#: tourGPT/settings.py:149
 msgid "English"
 msgstr ""
 
-#: tourGPT/settings.py:156
+#: tourGPT/settings.py:150
 msgid "Spanish"
 msgstr ""
 
@@ -1081,7 +1089,7 @@ msgid "Travel Profiles"
 msgstr ""
 
 #: users/templates/account_details.html:66
-#: users/templates/travel_profile_list.html:28
+#: users/templates/travel_profile_list.html:33
 msgid "Add Travel Profile"
 msgstr ""
 
@@ -1206,6 +1214,10 @@ msgstr ""
 
 #: users/templates/travel_profile_editor.html:10
 msgid "Travel Profile Editor"
+msgstr ""
+
+#: users/templates/travel_profile_list.html:27
+msgid "No registered travel profiles"
 msgstr ""
 
 #~ msgid "hello"

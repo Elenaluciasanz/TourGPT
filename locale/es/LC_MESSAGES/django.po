@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-28 01:38+0000\n"
+"POT-Creation-Date: 2024-04-30 01:22+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -82,7 +82,7 @@ msgstr "Otro"
 #: users/templates/account_details.html:49
 #: users/templates/travel_profile_details.html:11
 #: users/templates/travel_profile_editor.html:16
-#: users/templates/travel_profile_list.html:11
+#: users/templates/travel_profile_list.html:12
 msgid "Title"
 msgstr "Título"
 
@@ -274,13 +274,21 @@ msgstr "Buscar destino"
 msgid "Confirm"
 msgstr "Confirmar"
 
-#: planner/templates/route.html:105
+#: planner/templates/route.html:106
 msgid "Generating route"
 msgstr "Generando ruta"
 
-#: planner/templates/route.html:105
+#: planner/templates/route.html:106
 msgid "This may take several minutes. Please wait."
 msgstr "Esto puede llevar unos minutos. Espere por favor."
+
+#: planner/templates/route.html:115
+msgid "An error has occurred"
+msgstr "Ha ocurrido un error"
+
+#: planner/templates/route.html:115
+msgid "Please try again"
+msgstr "Por favor vuelva a intentarlo"
 
 #: planner/templates/route_details.html:51
 msgid "Start Day"
@@ -862,11 +870,11 @@ msgstr ""
 "Sistema basado en ChatGPT para planificación personalizada de viajes "
 "turísticos."
 
-#: tourGPT/settings.py:155
+#: tourGPT/settings.py:149
 msgid "English"
 msgstr "Inglés"
 
-#: tourGPT/settings.py:156
+#: tourGPT/settings.py:150
 msgid "Spanish"
 msgstr "Español"
 
@@ -1083,7 +1091,7 @@ msgid "Travel Profiles"
 msgstr "Perfiles de Viaje"
 
 #: users/templates/account_details.html:66
-#: users/templates/travel_profile_list.html:28
+#: users/templates/travel_profile_list.html:33
 msgid "Add Travel Profile"
 msgstr "Añadir Perfil de Viaje"
 
@@ -1210,8 +1218,6 @@ msgstr "Nuevo Perfil de Viaje"
 msgid "Travel Profile Editor"
 msgstr "Editar Perfil de Viaje"
 
-#~ msgid "Preferred Currency"
-#~ msgstr "Moneda Preferida"
-
-#~ msgid "Preferred Languages"
-#~ msgstr "Idiomas Preferidos"
+#: users/templates/travel_profile_list.html:27
+msgid "No registered travel profiles"
+msgstr "No existen perfiles de viaje registrados"

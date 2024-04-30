@@ -5,10 +5,10 @@
 {% block content %}
 <script src="{% static 'js/planner.js' %}"></script>
 
-<h2>
+<h1>
     <b>{% trans 'New Route' %}</b>
     <i class="fa-solid fa-route fa-flip-horizontal fa-xl"></i>
-</h2>
+</h1>
 
 <br>
 
@@ -102,9 +102,19 @@
 </form>
 
 <div class="alert alert-primary alert-dismissible fade show my-3" role="alert" id="route_alert" style="display:none">
+    <i class="fa-solid fa-circle-info fa-xl"></i>
     <strong class=mx-2>{% trans 'Generating route' %}.&nbsp</strong> {% trans 'This may take several minutes. Please wait.'%}
     <div class="spinner-border text-primary mx-2" role="status"></div>
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-  </div>
+</div>
+
+
+{% if error == "T" %}
+<div class="alert alert-danger alert-dismissible fade show my-3" role="alert" id="route_error">
+    <i class="fa-solid fa-triangle-exclamation fa-xl"></i>
+    <strong class=mx-2>{% trans 'An error has occurred' %}.&nbsp</strong> {% trans 'Please try again'%}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endif %}
 
 {% endblock %}

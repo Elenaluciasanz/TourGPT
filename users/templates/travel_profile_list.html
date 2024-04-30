@@ -5,6 +5,7 @@
 
 <h1 class="m-4">{% trans 'Travel Profiles' %}</h1>
 
+{% if travel_profiles %}
 <table class="table table-striped">
     <thead>
         <tr class="table-primary">
@@ -22,11 +23,17 @@
         {% endfor %}
     </tbody>
 </table>
+{% else %}
+    <h4 class="my-3">{% trans 'No registered travel profiles' %}<h4>
+{% endif %}
+
 <br>
 <div class="row col-6">
     <form action="{% url 'travel_profile_new' pk=user.pk %}">
         <input class="btn btn-primary" type="submit" value="{% trans 'Add Travel Profile' %}">
     </form> 
 </div>
+
+
    
 {% endblock %}
