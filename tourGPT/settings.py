@@ -38,7 +38,7 @@ if  env('DEBUG', default = 'True') == 'False':
 else:
     DEBUG = True
 
-ALLOWED_HOSTS = ['tourGPT.onrender.com', '127.0.0.1']
+ALLOWED_HOSTS = ['tourgpt-kvas.onrender.com', '127.0.0.1']
 
 
 # Application definition
