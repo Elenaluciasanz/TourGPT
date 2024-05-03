@@ -35,7 +35,7 @@ def template_poa(parser, example, ex_city, ex_num, classification):
 def init_template_recommendations():
     global template_recommendations, parser_recommendations
     
-    example = "[Hotel Wellington??HO, Cats Hostel Madrid Sol??HE, Camping Osuna??C]"
+    example = "`Hotel Wellington??HO, Cats Hostel Madrid Sol??HE, Camping Osuna??C`"
     classification = poa_types()
     
     parser_recommendations = CommaSeparatedListOutputParser()

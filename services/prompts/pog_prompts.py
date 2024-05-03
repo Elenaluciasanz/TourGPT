@@ -35,7 +35,7 @@ def template_pog(parser, example, ex_city, ex_num, classification):
 def init_template_recommendations():
     global template_recommendations, parser_recommendations
     
-    example = "[DiverXO??R, Taberna La Concha??T, Intruso Bar??B]"
+    example = "`DiverXO??R, Taberna La Concha??T, Intruso Bar??B`"
     classification = pog_types()
     
     parser_recommendations = CommaSeparatedListOutputParser()

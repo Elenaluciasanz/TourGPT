@@ -36,7 +36,7 @@ def template_poe(parser, example, ex_city, ex_num, classification):
 def init_template_recommendations():
     global template_recommendations, parser_recommendations
     
-    example = "[La Vaguada??M, Parque Warner??T, Cines Callao??C]"
+    example = "`La Vaguada??M, Parque Warner??T, Cines Callao??C`"
     classification = poe_types()
     
     parser_recommendations = CommaSeparatedListOutputParser()

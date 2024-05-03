@@ -115,7 +115,10 @@ if  env('DEBUG', default = 'True') == 'False':
         }
     }
 else:
-    POSTGRESQL_URL = 'postgres://alumnodb:alumnodb@localhost/tourGPT'
+    user = env('PGUSER_DEBUG')
+    pasw = env('PGPASSWORD_DEBUG')
+    name = env('PGDATABASE_DEBUG')
+    POSTGRESQL_URL = f'postgres://{user}:{pasw}@localhost/{name}'
     db_from_env = dj_database_url.config(default=POSTGRESQL_URL, conn_max_age =500)
     DATABASES['default'] = db_from_env
 

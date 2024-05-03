@@ -35,7 +35,7 @@ def template_poi(parser, example, ex_city, ex_num, classification):
 def init_template_recommendations():
     global template_recommendations, parser_recommendations
     
-    example = "[Museo del Prado??M, Parque del Retiro??P, Plaza Mayor??S]"
+    example = "`Museo del Prado??M, Parque del Retiro??P, Plaza Mayor??S`"
     classification = poi_types()
     
     parser_recommendations = CommaSeparatedListOutputParser()
