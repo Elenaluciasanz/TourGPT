@@ -40,6 +40,8 @@ class Route(models.Model):
     destination = models.ForeignKey(CityBase, on_delete = models.CASCADE, related_name = 'destination', verbose_name=_('Destination'))
     poa_en = models.ForeignKey(Poa, on_delete = models.CASCADE, related_name = 'poa_en', verbose_name=_('Accommodation Point EN'), null = True, blank = True)
     poa_es = models.ForeignKey(Poa, on_delete = models.CASCADE, related_name = 'poa_es', verbose_name=_('Accommodation Point ES'), null = True, blank = True)
+    explanation_es = models.TextField(verbose_name=_('Explanation ES'), null = True, blank = True)
+    explanation_en = models.TextField(verbose_name=_('Explanation EN'), null = True, blank = True)
     
     def __str__(self):
         return self.title

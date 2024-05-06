@@ -26,7 +26,7 @@
         <div class="form-group row">
             <div class="col-md-6 my-2">
                 <div>{% trans 'Birth Date' %}:&nbsp</div>
-                <input type="date" name="date" maxlength="150" id="id_date" class="form-control">
+                <input type="date" name="birth" maxlength="150" id="id_date" class="form-control">
                 {% for error in form.birth.errors %}
                     <p class="error">{{ error }}</p>
                 {% endfor %}

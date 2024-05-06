@@ -37,27 +37,40 @@
     <div class="row gy-5">
         <div class="col">
             <i class="fa-solid fa-location-dot fa-xl" style="color: #7b00bd;"></i>
-            {% trans 'From' %}:&nbsp{{ route.origin.name }}
+            <strong>{% trans 'From' %}:</strong>&nbsp{{ route.origin.name }}
         </div>
         <div class="col">
             <i class="fa-solid fa-location-dot fa-xl" style="color: #e00000;"></i>
-            {% trans 'To' %}:&nbsp{{ route.destination.name }}
+            <strong>{% trans 'To' %}:</strong>&nbsp{{ route.destination.name }}
         </div>
     </div>
     <br>
     <div class="row">
         <div class="col">
             <i class="fa-solid fa-play fa-xl"></i>
-            {% trans 'Start Day' %}:&nbsp{{ route.start_date}}
+            <strong>{% trans 'Start Day' %}:</strong>&nbsp{{ route.start_date}}
         </div>
         <div class="col">
             <i class="fa-solid fa-flag-checkered fa-xl"></i>
-            {% trans 'End Day' %}:&nbsp{{ route.end_date }}
+            <strong>{% trans 'End Day' %}:</strong>&nbsp{{ route.end_date }}
         </div>
     </div>
+    {% if route.travel_profile %}
+    <br>
+    <div class="row">
+        <div class="col">
+            <i class="fa-solid fa-id-card-clip fa-xl" style="color: #26889c;"></i>
+            <strong>{% trans 'Travel Profile' %}:</strong>&nbsp{{ route.travel_profile.title }}
+        </div>
+        <div class="col">    
+            {{ route.travel_profile.description }}
+        </div>
+    </div>
+    {% endif %}
 </div>
 
-<div class="my-5">
+
+<div class="m-5">
     <p class="lead text-secondary">
         {{ route.description }}
     </p>
@@ -134,8 +147,6 @@
                                     {% elif act.type == 'G' %}btn-primary
                                     {% else %}btn-secondary
                                     {% endif %} w-100">{{ act.point }}</a>
-                                {% else %}
-                                    --
                                 {% endif %}  
                             </td>
                         </tr>
@@ -160,9 +171,7 @@
                                     {% elif act.type == 'G' %}btn-primary
                                     {% else %}btn-secondary
                                     {% endif %} w-100">{{ act.point }}</a>
-                                {% else %}
-                                    --
-                                {% endif %}  
+                                    {% endif %}  
                             </td>
                         </tr>
                     {% endfor %}
@@ -186,9 +195,7 @@
                                     {% elif act.type == 'G' %}btn-primary
                                     {% else %}btn-secondary
                                     {% endif %} w-100">{{ act.point }}</a>
-                                {% else %}
-                                    --
-                                {% endif %}  
+                                    {% endif %}  
                             </td>
                         </tr>
                     {% endfor %}
@@ -212,8 +219,6 @@
                                     {% elif act.type == 'G' %}btn-primary
                                     {% else %}btn-secondary
                                     {% endif %} w-100">{{ act.point }}</a>
-                                {% else %}
-                                    --
                                 {% endif %}  
                             </td>
                         </tr>
@@ -348,6 +353,18 @@
     {% endfor %}
 </div>
 <!-- End accordion small devices-->
+
+{% if explanation %}
+<div class="my-4 mx-2 border border-info"> 
+    <div class="d-flex justify-content-center m-2 my-4">
+        <h1>{% trans 'Why this route?' %}</h1>
+    </div>
+
+    <div class="row m-2">
+        <p>{{ explanation }}</p>
+    </div>
+</div>
+{% endif %}
 
 <!-- Start Origin Info -->
 <div class="d-flex justify-content-center m-2 my-4">

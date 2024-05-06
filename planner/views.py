@@ -122,8 +122,10 @@ def route_details(request, pk):
         
     if get_language() == 'es':
         poa = route.poa_es
+        explanation = route.explanation_es
     else:
         poa = route.poa_en
+        explanation = route.explanation_en
         
     origin = City.objects.filter(city_id = route.origin.id, lang = get_language())
     if len(origin) <= 0:
@@ -148,6 +150,7 @@ def route_details(request, pk):
     context = {'route': route, 
                'route_info': route_info,
                'poa': poa,
+               'explanation': explanation,
                'origin': origin,
                 'destination': destination,
                }

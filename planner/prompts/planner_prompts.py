@@ -19,6 +19,17 @@ def init_template_route():
 
     ex_days = 2
     ex_city = "Madrid, Spain"
+    ex_profile = """
+    Adults: 2
+    Children: 1
+    Reason: Family Vacation, Turism
+    Adventure Level: Medium
+    Favorite interest points: Emblematic Site, Park/Garden
+    Favorite entertainment points: Bowling Alley
+    Favorite gastronomy points: Restaurant
+    Favorite accommodation points: Hotel
+    Observations: We love spending time outdoors and enjoying nature. We would like to visit historical places and try local cuisine.
+    """
     example = """
     {
         "accommodation": {
@@ -74,7 +85,8 @@ def init_template_route():
                     "activity": "Head back to your accommodation to pack and prepare for your departure the next day"
                 }
             }
-        }
+        },
+        "explanation": "This itinerary is perfect for a family of two adults and one child, offering a mix of cultural experiences, family-friendly activities, and culinary delights. Retiro Park provides ample space for the kids to run around while you enjoy the tranquil surroundings. A visit to the Royal Palace of Madrid adds a touch of royalty to your trip, with its grandeur and picturesque gardens. In addition, both children and adults would enjoy an afternoon with the family playing bowling."
     }
     """
     
@@ -92,8 +104,9 @@ def init_template_route():
         The accommodation point is subclassified as {poa_types}.
         Point's name should unique, so if the point already exists, return the name of the existing point.
         Previous points of interest: {hist_poi}, entertainment: {hist_poe}, gastronomy: {hist_pog}, accommodation: {hist_poa}.
-        {travel_profile}
-        An example of the JSON object for {ex_days} in {ex_city} is provided below.
+        If a travel profile is given, choose points based on the profile and include in the json an explanation of why the itinerary is perfect for the profile.
+        Travel Profile: {travel_profile}
+        An example of the JSON object for {ex_days} in {ex_city} and the travel profile: {ex_profile} ,is provided below.
         {example}""",
         input_variables = ["hist_poi", "hist_poe", "hist_pog", "hist_poa", "days", "city", "travel_profile"],
         partial_variables = {"poi_types": poi_types(),
@@ -102,6 +115,7 @@ def init_template_route():
                             "poa_types": poa_types(),
                             "ex_days": ex_days,
                             "ex_city": ex_city,
+                            "ex_profile": ex_profile,
                             "example": example}
     )
     
@@ -123,13 +137,12 @@ def planner_route(route: Route):
     
     hist_poi, hist_poe, hist_pog, hist_poa = get_hist_points(city)
     
+    travel_profile=""
     if route.travel_profile is not None:
-        travel_profile = "Choose points based on the following travel profile:\n"
-        travel_profile += str(route.travel_profile )
-        travel_profile += ".\n"
+        travel_profile += str(route.travel_profile)
   
     else:
-        travel_profile = ""
+        travel_profile = "No travel profile."
     
     
     input = template_route.format_prompt(hist_poi = hist_poi, hist_poe = hist_poe, hist_pog = hist_pog, 
@@ -211,6 +224,11 @@ def planner_route(route: Route):
                                 RouteDayActivity(route_day = d, activity = activity, moment = moment[1], type = 'O', lang = 'en').save() 
                                 RouteDayActivity(route_day = d, activity = act, moment = moment[1], type = 'O', lang = 'es').save()
                 
+                if "explanation" in resp:
+                    route.explanation_en = resp["explanation"]
+                    route.explanation_es = trans.translate(resp["explanation"], src = 'en', dest = 'es').text
+                    route.save()
+                    
         except Exception as e:
             print("Error while parsing route planner response")
             print(e)

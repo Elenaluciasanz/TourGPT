@@ -14,14 +14,16 @@
         <div class="form-group row">
             <div class="col-md-12">
                 <label class="form-check-label h4" for="id_title">{% trans 'Title' %}&nbsp</label>
-                <input type="text" name="title" maxlength="40" id="id_title" class="form-control" {% if form.title.value %}value="{{ form.title.value }}"{% endif %} required>
+                <input type="text" name="title" maxlength="40" id="id_title" class="form-control" {% if form.title.value %}value="{{ form.title.value }}"{% endif %} required 
+                placeholder="{% trans 'Title to identify the profile. Ex.: Family, Adventure Profile, Lucia and Elena' %}">
             </div>
         </div>
         <br>
         <div class="form-group row">
             <div class="col-md-12">
                 <label class="form-check-label h4" for="id_description">{% trans 'Description' %}&nbsp</label>
-                <textarea name="description" rows="5" id="id_description" class="form-control" required>{% if form.description.value %}{{ form.description.value }}{% endif %}</textarea>
+                <textarea name="description" rows="5" id="id_description" class="form-control" required
+                placeholder="{% trans 'Brief description about the profile. It wont be taken into account in the generated routes&#10Ex.: Profile for family summer trips, for discover gastronomy around the world, for leisure trips' %}">{% if form.description.value %}{{ form.description.value }}{% endif %}</textarea>
                 {% for error in form.description.errors %}
                     <p class="error">{{ error }}</p>
                 {% endfor %}
@@ -200,7 +202,8 @@
         <div class="form-group row">
             <div class="col-md-12">
                 <label class="form-check-label h4" for="id_food_restrictions">{% trans 'Food Restrictions' %}&nbsp</label>
-                <textarea name="food_restrictions" rows="5" id="id_food_restrictions" class="form-control" >{% if form.food_restrictions.value %}{{ form.food_restrictions.value }}{% endif %}</textarea>
+                <textarea name="food_restrictions" rows="5" id="id_food_restrictions" class="form-control" 
+                placeholder="{% trans 'Food restrictions that must be taken into account when selecting gastronomy points.&#10Ex.: celiac, nut allergy.' %}">{% if form.food_restrictions.value %}{{ form.food_restrictions.value }}{% endif %}</textarea>
                 {% for error in form.food_restrictions.errors %}
                     <p class="error">{{ error }}</p>
                 {% endfor %}
@@ -211,7 +214,8 @@
         <div class="form-group row">
             <div class="col-md-12">
                 <label class="form-check-label h4" for="id_observations">{% trans 'Observations' %}&nbsp</label>
-                <textarea name="observations" rows="5" id="id_observations" class="form-control">{% if form.observations.value %}{{ form.observations.value }}{% endif %}</textarea>
+                <textarea name="observations" rows="5" id="id_observations" class="form-control"
+                placeholder="{% trans 'Plans, places or anything you want to take into account to generate a route.&#10Ex.: We love spending time outdoors and enjoying nature &#10I want to see a sunset on the beach&#10Im looking to try local food&#10We want to visit historical sites' %}">{% if form.observations.value %}{{ form.observations.value }}{% endif %}</textarea>
                 {% for error in form.observations.errors %}
                     <p class="error">{{ error }}</p>
                 {% endfor %}
