@@ -93,10 +93,7 @@ class TravelProfile(models.Model):
     
     reduced_mobility = models.BooleanField(default = False, verbose_name=_('Reduced Mobility'))
     animals = models.BooleanField(default = False, verbose_name=_('Animals'))
-    
-    reason = models.CharField(verbose_name=_('Reason'), default='[]')
-    adventure_level = models.CharField(choices = ADVENTURE_LEVELS_LIST, default = 'N', verbose_name=_('Adventure Level'))
-    
+     
     pref_poi = models.CharField(verbose_name=_('Point of Interest'), default = '[]')
     pref_poe = models.CharField(verbose_name=_('Point of Entertainment'), default = '[]')
     pref_pog = models.CharField(verbose_name=_('Point of Gastronomy'), default = '[]')
