@@ -144,13 +144,12 @@ def planner_route(route: Route):
     else:
         travel_profile = "No travel profile."
     
-    
     input = template_route.format_prompt(hist_poi = hist_poi, hist_poe = hist_poe, hist_pog = hist_pog, 
                                          hist_poa = hist_poa, days = days, city = city.display_name,
                                          travel_profile = travel_profile)
 
     output = chat_gpt(input.to_string())
-    
+        
     if output != "":
         try:
             resp = json.loads(output)

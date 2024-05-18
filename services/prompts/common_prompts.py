@@ -8,8 +8,6 @@ def chat_gpt(prompt: str) -> str:
             model = settings.MODEL,
             messages = [{"role": "user", "content": prompt}]
         )
-        print(response)
-        
         finish_reason = response.choices[0].finish_reason
         if finish_reason == "stop":
             return response.choices[0].message.content
