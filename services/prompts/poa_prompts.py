@@ -78,7 +78,7 @@ def poa_recommendations(num: int, c_en, c_oth):
 
 def poa_description(p_en, p_oth): 
     global trans 
-    description = chat_gpt(f"Give a brief description, activities and facilities of the accomodation point {p_en.complete_name} of 300 characters")
+    description = chat_gpt(f"Give a brief description, activities and facilities of the entertainment point {p_en.complete_name} of 300 characters")
     p_en.description = description
     p_en.save()
     
