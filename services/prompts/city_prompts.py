@@ -14,7 +14,10 @@ def city_languages(c_en, c_oth):
     
     if c_en.presentation != "":
         for c in c_oth:
-            c.languages = trans.translate(c_en.languages, src = c_en.lang, dest = c.lang).text
+            try:
+                c.languages = trans.translate(c_en.languages, src = c_en.lang, dest = c.lang).text
+            except Exception as e:
+                c.languages = c_en.languages
             c.save()
 
 def city_presentation(c_en, c_oth):
@@ -25,7 +28,10 @@ def city_presentation(c_en, c_oth):
     
     if c_en.presentation != "":
         for c in c_oth:
-            c.presentation = trans.translate(c_en.presentation, src = c_en.lang, dest = c.lang).text
+            try:
+                c.presentation = trans.translate(c_en.presentation, src = c_en.lang, dest = c.lang).text
+            except Exception as e:
+                c.presentation = c_en.presentation
             c.save()
 
 def city_history(c_en, c_oth):
@@ -36,7 +42,10 @@ def city_history(c_en, c_oth):
     
     if c_en.history != "":
         for c in c_oth:
-            c.history = trans.translate(c_en.history, src = c_en.lang, dest = c.lang).text
+            try:
+                c.history = trans.translate(c_en.history, src = c_en.lang, dest = c.lang).text
+            except Exception as e:
+                c.history = c_en.history
             c.save()
     
 def city_curiosities(c_en, c_oth):
@@ -47,7 +56,10 @@ def city_curiosities(c_en, c_oth):
     
     if c_en.curiosities != "":
         for c in c_oth:
-            c.curiosities = trans.translate(c_en.curiosities, src = c_en.lang, dest = c.lang).text
+            try:
+                c.curiosities = trans.translate(c_en.curiosities, src = c_en.lang, dest = c.lang).text
+            except Exception as e:
+                c.curiosities = c_en.curiosities
             c.save()
 
 def city_get_or_create(city_id: int):

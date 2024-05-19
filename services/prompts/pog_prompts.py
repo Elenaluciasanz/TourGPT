@@ -67,7 +67,10 @@ def pog_recommendations(num: int, c_en, c_oth):
                 hist_recommendations[c_en.id].append(pog_split[0])
                 
                 for c in c_oth:
-                    name = trans.translate(p.point_name, src = p.lang, dest = 'es').text
+                    try:
+                        name = trans.translate(p.point_name, src = p.lang, dest = 'es').text
+                    except Exception as e:
+                        name = p.point_name
                     p = Pog(point_name = pog_split[0], name = name, type = pog_split[1] , city = c, lang = c.lang)
                     p.save()
                 
@@ -84,7 +87,10 @@ def pog_description(p_en, p_oth):
     
     if p_en.description != "":
         for p in p_oth:
-            p.description = trans.translate(p_en.description, src = p_en.lang, dest = p.lang).text
+            try:
+                p.description = trans.translate(p_en.description, src = p_en.lang, dest = p.lang).text
+            except Exception as e:
+                p.description = p_en.description
             p.save()
 
 def pog_get_or_create(point_name: str, city: CityBase, type: str = 'O'):

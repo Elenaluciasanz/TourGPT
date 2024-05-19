@@ -12,8 +12,6 @@ def chat_gpt(prompt: str) -> str:
         if finish_reason == "stop":
             return response.choices[0].message.content
         
-        elif finish_reason == "length":
-            print("Maximum token limit exceeded")
         return ""
 
     except Exception as e:

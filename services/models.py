@@ -117,7 +117,10 @@ class Country(models.Model):
         super(Country, self).save(*args, **kwargs) # Para inicializar self.id
         self.slug = slugify(self.country.name) + "-" + str(self.pk)
         t = Translator()
-        self.name = t.translate(self.country.name, src = 'en', dest = self.lang).text
+        try:       
+            self.name = t.translate(self.country.name, src = 'en', dest = self.lang).text
+        except Exception as e:
+            self.name = self.country.name
         super(Country, self).save(*args, **kwargs)
     
     def get_absolute_url(self):
@@ -166,7 +169,10 @@ class City(models.Model):
         super(City, self).save(*args, **kwargs)
         self.slug = slugify(self.city.name) + "-" + str(self.pk)
         t = Translator()
-        self.name = t.translate(self.city.name, src = 'en', dest = self.lang).text
+        try: 
+            self.name = t.translate(self.city.name, src = 'en', dest = self.lang).text
+        except Exception as e:
+            self.name = self.city.name
         super(City, self).save(*args, **kwargs)
     
     def get_absolute_url(self):
@@ -206,7 +212,10 @@ class PointInfo(models.Model):
         super(PointInfo, self).save(*args, **kwargs)
         self.slug = slugify(self.point_name) + "-" + str(self.pk)
         t = Translator()
-        self.name = t.translate(self.point_name, src = 'en', dest = self.lang).text
+        try: 
+            self.name = t.translate(self.point_name, src = 'en', dest = self.lang).text
+        except Exception as e:
+            self.name = self.point_name
         super(PointInfo, self).save(*args, **kwargs)
         
     class Meta:

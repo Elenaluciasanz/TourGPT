@@ -71,10 +71,22 @@ def country_population(c_en, c_oth):
             
             if c_en.national_day != "":
                 for c in c_oth:
-                    c.national_day = trans.translate(c_en.national_day, src = c_en.lang, dest = c.lang).text
-                    c.population = trans.translate(c_en.population, src = c_en.lang, dest = c.lang).text
-                    c.density = trans.translate(c_en.density, src = c_en.lang, dest = c.lang).text
-                    c.age_structure = trans.translate(c_en.age_structure, src = c_en.lang, dest = c.lang).text
+                    try:
+                        c.national_day = trans.translate(c_en.national_day, src = c_en.lang, dest = c.lang).text
+                    except Exception as e:
+                        c.national_day = c_en.national_day
+                    try:
+                        c.population = trans.translate(c_en.population, src = c_en.lang, dest = c.lang).text
+                    except Exception as e:
+                        c.population = c_en.population
+                    try:
+                        c.density = trans.translate(c_en.density, src = c_en.lang, dest = c.lang).text
+                    except Exception as e:
+                        c.density = c_en.density
+                    try:
+                        c.age_structure = trans.translate(c_en.age_structure, src = c_en.lang, dest = c.lang).text
+                    except Exception as e:
+                        c.age_structure = c_en.age_structure
                     c.save()
             
         except Exception as e:
@@ -114,8 +126,14 @@ def country_info(c_en, c_oth):
             c_en.save()
             if c_en.languages != "":
                 for c in c_oth:
-                    c.languages = trans.translate(c_en.languages, src = c_en.lang, dest = c.lang).text
-                    c.currency = trans.translate(c_en.currency, src = c_en.lang, dest = c.lang).text
+                    try:
+                        c.languages = trans.translate(c_en.languages, src = c_en.lang, dest = c.lang).text
+                    except Exception as e:
+                        c.languages = c_en.languages
+                    try:
+                        c.currency = trans.translate(c_en.currency, src = c_en.lang, dest = c.lang).text
+                    except Exception as e:
+                       c.currency = c_en.currency 
                     c.save()
         except Exception as e:
             print("Error while parsing country_info response")
@@ -158,9 +176,18 @@ def country_security(c_en, c_oth):
             
             if c_en.police != "":
                 for c in c_oth:
-                    c.police = trans.translate(c_en.police, src = c_en.lang, dest = c.lang).text
-                    c.firefighter = trans.translate(c_en.firefighter, src = c_en.lang, dest = c.lang).text
-                    c.ambulance = trans.translate(c_en.ambulance, src = c_en.lang, dest = c.lang).text
+                    try:
+                        c.police = trans.translate(c_en.police, src = c_en.lang, dest = c.lang).text
+                    except Exception as e:
+                        c.police = c_en.police
+                    try:
+                        c.firefighter = trans.translate(c_en.firefighter, src = c_en.lang, dest = c.lang).text
+                    except Exception as e:
+                        c.firefighter = c_en.firefighter
+                    try:
+                        c.ambulance = trans.translate(c_en.ambulance, src = c_en.lang, dest = c.lang).text
+                    except Exception as e:
+                        c.ambulance = c_en.ambulance
                     c.save()
             
         except Exception as e:
@@ -176,7 +203,10 @@ def country_presentation(c_en, c_oth):
     
     if c_en.presentation != "":
         for c in c_oth:
-            c.presentation = trans.translate(c_en.presentation, src = c_en.lang, dest = c.lang).text
+            try:
+                c.presentation = trans.translate(c_en.presentation, src = c_en.lang, dest = c.lang).text
+            except Exception as e:
+                c.presentation = c_en.presentation
             c.save()
 
 def country_history(c_en, c_oth):
@@ -187,7 +217,10 @@ def country_history(c_en, c_oth):
     
     if c_en.history != "":
         for c in c_oth:
-            c.history = trans.translate(c_en.history, src = c_en.lang, dest = c.lang).text
+            try:
+                c.history = trans.translate(c_en.history, src = c_en.lang, dest = c.lang).text
+            except Exception as e:
+                c.history = c_en.history
             c.save()
     
 def country_curiosities(c_en, c_oth):
@@ -198,7 +231,10 @@ def country_curiosities(c_en, c_oth):
     
     if c_en.curiosities != "":
         for c in c_oth:
-            c.curiosities = trans.translate(c_en.curiosities, src = c_en.lang, dest = c.lang).text
+            try:
+                c.curiosities = trans.translate(c_en.curiosities, src = c_en.lang, dest = c.lang).text
+            except Exception as e:
+                c.curiosities = c_en.curiosities
             c.save()
    
 def country_get_or_create(country_id: int):

@@ -67,7 +67,10 @@ def poa_recommendations(num: int, c_en, c_oth):
                 hist_recommendations[c_en.id].append(poa_split[0])
                 
                 for c in c_oth:
-                    name = trans.translate(p.point_name, src = p.lang, dest = 'es').text
+                    try:
+                        name = trans.translate(p.point_name, src = p.lang, dest = 'es').text
+                    except Exception as e:
+                        name = p.point_name
                     p = Poa(point_name = poa_split[0], name = name, type = poa_split[1] , city = c, lang = c.lang)
                     p.save()
         
@@ -84,7 +87,10 @@ def poa_description(p_en, p_oth):
     
     if p_en.description != "":
         for p in p_oth:
-            p.description = trans.translate(p_en.description, src = p_en.lang, dest = p.lang).text
+            try:
+                p.description = trans.translate(p_en.description, src = p_en.lang, dest = p.lang).text
+            except Exception as e:
+                p.description = p_en.description
             p.save()
     
     

@@ -67,7 +67,10 @@ def poi_recommendations(num: int, c_en, c_oth):
                 hist_recommendations[c_en.id].append(poi_split[0])
                 
                 for c in c_oth:
-                    name = trans.translate(p.point_name, src = p.lang, dest = 'es').text
+                    try:
+                        name = trans.translate(p.point_name, src = p.lang, dest = 'es').text
+                    except Exception as e:
+                        name = p.point_name
                     p = Poi(point_name = poi_split[0], name = name, type = poi_split[1] , city = c, lang = c.lang)
                     p.save()
                       
@@ -84,7 +87,10 @@ def poi_history(p_en, p_oth):
     
     if p_en.history != "":
         for p in p_oth:
-            p.history = trans.translate(p_en.history, src = p_en.lang, dest = p.lang).text
+            try:
+                p.history = trans.translate(p_en.history, src = p_en.lang, dest = p.lang).text
+            except Exception as e:
+                p.history = p_en.history
             p.save()
             
     

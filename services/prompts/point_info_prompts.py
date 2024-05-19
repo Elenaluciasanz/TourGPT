@@ -14,7 +14,10 @@ def point_info_location(p_en, p_oth):
             p_en.latitude = location.latitude
             p_en.save()            
             for p in p_oth:
-                p.location = trans.translate(p_en.location, src = p_en.lang, dest = p.lang).text
+                try:
+                    p.location = trans.translate(p_en.location, src = p_en.lang, dest = p.lang).text
+                except Exception as e:
+                    p.location = p_en.location
                 p.longitude = p_en.longitude
                 p.latitude = p_en.latitude
                 p.save()        
@@ -35,7 +38,10 @@ def point_info_presentation(p_en, p_oth):
     
     if p_en.presentation != "":
         for p in p_oth:
-            p.presentation = trans.translate(p_en.presentation, src = p_en.lang, dest = p.lang).text
+            try:
+                p.presentation = trans.translate(p_en.presentation, src = p_en.lang, dest = p.lang).text
+            except Exception as e:
+                p.presentation = p_en.presentation
             p.save()
 
 def point_info_price_avg(p_en, p_oth): 
@@ -45,7 +51,10 @@ def point_info_price_avg(p_en, p_oth):
     
     if p_en.price_avg != "":
         for p in p_oth:
-            p.price_avg = trans.translate(p_en.price_avg, src = p_en.lang, dest = p.lang).text
+            try:
+                p.price_avg = trans.translate(p_en.price_avg, src = p_en.lang, dest = p.lang).text
+            except Exception as e:
+                p.price_avg = p_en.price_avg
             p.save()
     
 def point_info_shedule_avg(p_en, p_oth): 
@@ -55,7 +64,10 @@ def point_info_shedule_avg(p_en, p_oth):
     
     if p_en.shedule_avg != "":
         for p in p_oth:
-            p.shedule_avg = trans.translate(p_en.shedule_avg, src = p_en.lang, dest = p.lang).text
+            try:
+                p.shedule_avg = trans.translate(p_en.shedule_avg, src = p_en.lang, dest = p.lang).text
+            except Exception as e:
+                p.shedule_avg = p_en.shedule_avg
             p.save()
 
 def check_point_info_presentation(p_en, p_oth):
