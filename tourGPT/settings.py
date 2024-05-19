@@ -32,14 +32,11 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 #DEBUG = False
 
-"""
 if  env('DEBUG', default = 'True') == 'False':
     DEBUG = False
 
 else:
-"""
-
-DEBUG = True
+    DEBUG = True
 
 ALLOWED_HOSTS = ['tourgpt-kvas.onrender.com', '127.0.0.1']
 
@@ -103,7 +100,6 @@ WSGI_APPLICATION = 'tourGPT.wsgi.application'
 
 DATABASES = {}
 
-"""
 if  env('DEBUG', default = 'True') == 'False':
     DATABASES = {
         'default': {
@@ -125,21 +121,7 @@ else:
     POSTGRESQL_URL = f'postgres://{user}:{pasw}@localhost/{name}'
     db_from_env = dj_database_url.config(default=POSTGRESQL_URL, conn_max_age =500)
     DATABASES['default'] = db_from_env
-"""
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': env('PGDATABASE'),
-        'USER': env('PGUSER'),
-        'PASSWORD': env('PGPASSWORD'),
-        'HOST': env('PGHOST'),
-        'PORT': 5432,
-        'OPTIONS': {
-        'sslmode': 'require',
-        },
-    }
-}
 
 
 # Password validation
@@ -184,16 +166,12 @@ LOCALE_PATHS = [
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-"""
+
 if  env('DEBUG', default = 'True') == 'False':
     STATIC_ROOT = BASE_DIR / 'staticfiles'
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 else: 
     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-"""
-
-STATIC_ROOT = BASE_DIR / 'staticfiles'
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
