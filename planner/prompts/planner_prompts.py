@@ -102,6 +102,7 @@ def init_template_route():
         Each gastronomic site is subclassified as {pog_types}.
         Suggest an accommodation point for the full duration of the route.
         The accommodation point is subclassified as {poa_types}.
+        Take into account the distances between the suggested points, especially within the same day.
         Point's name should unique, so if the point already exists, return the name of the existing point.
         Previous points of interest: {hist_poi}, entertainment: {hist_poe}, gastronomy: {hist_pog}, accommodation: {hist_poa}.
         If a travel profile is given, choose points based on the profile and include in the json an explanation of why the itinerary is perfect for the profile.
@@ -174,14 +175,20 @@ def planner_route(route: Route):
                     else:
                         presentation = "Day " + day 
                     d = RouteDay(route = route, date = route.start_date + timedelta(days = int(day) - 1), day = int(day), presentation = presentation)
-                    d.presentation_es = trans.translate(d.presentation, src = 'en', dest = 'es').text
+                    try:
+                        d.presentation_es = trans.translate(d.presentation, src = 'en', dest = 'es').text
+                    except Exception as e:
+                        d.presentation_es = d.presentation
                     d.save()
                             
                     for moment in [('morning', 'M'), ('afternoon', 'A'), ('evening','E'), ('night','N')]:
                         if moment[0] in resp["route"][day] and "activity" in resp["route"][day][moment[0]]:
                         
                             activity = resp["route"][day][moment[0]]["activity"]
-                            act = trans.translate(activity, src = 'en', dest = 'es').text
+                            try:
+                                act = trans.translate(activity, src = 'en', dest = 'es').text
+                            except Exception as e:
+                                act = activity
                             
                             if "point" in resp["route"][day][moment[0]]:
                                 point_name = resp["route"][day][moment[0]]["point"]
@@ -224,8 +231,10 @@ def planner_route(route: Route):
                                 RouteDayActivity(route_day = d, activity = act, moment = moment[1], type = 'O', lang = 'es').save()
                 
                 if "explanation" in resp:
-                    route.explanation_en = resp["explanation"]
-                    route.explanation_es = trans.translate(resp["explanation"], src = 'en', dest = 'es').text
+                    try:
+                        route.explanation_es = trans.translate(resp["explanation"], src = 'en', dest = 'es').text
+                    except Exception as e:
+                        route.explanation_es = resp["explanation"]
                     route.save()
                     
         except Exception as e:

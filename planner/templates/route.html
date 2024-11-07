@@ -12,7 +12,7 @@
 
 <br>
 
-<form method="post" action="{% url 'route_new' %}">
+<form method="post" action="{% url 'route_new' %}"z>
     {% csrf_token %}
     <div class="form-group row"> 
         <div class="col-md-2 col-form-label">{% trans 'Title' %}:&nbsp</div>
@@ -51,6 +51,7 @@
         <div class="col-md-2 col-form-label h6"><i class="fa-solid fa-hourglass-end fa-xl"></i>&nbsp{% trans 'To' %}:&nbsp</div>
         <div class="col-md-4"><input type="date" name="end_date" id="end_date" class="form-control"></div>
     </div>
+    <div id="msgError5Days"style="color:red" hidden class="col-md-12 col-form-label">{% trans 'The route cannot last more than 5 days' %}</div>
     <br>
     <div class="form-group row">
         <div class="col-md-2 col-form-label">

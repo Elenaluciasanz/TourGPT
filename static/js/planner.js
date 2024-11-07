@@ -40,6 +40,8 @@ function validate_start_end_date(){
     var end_date = $('#end_date').val();
     var error = false;
 
+    $('#msgError5Days').attr("hidden",true);
+
     if (start_date != "" ){
         $("#start_date").css('border-color', 'green');
     } else{
@@ -57,11 +59,21 @@ function validate_start_end_date(){
     const start = new Date(start_date);
     const end = new Date(end_date);
     if (start_date != ""  && end_date != ""){
+        var diff = end.getTime() - start.getTime();
+        var days = Math.round(diff / (1000 * 60 * 60 * 24));
         if(start > end){
             $("#start_date").css('border-color', 'red');
             $("#end_date").css('border-color', 'red');
             error = true;
-        } else{
+        } 
+        else if (days > 4){
+            $("#start_date").css('border-color', 'red');
+            $("#end_date").css('border-color', 'red');
+            $('#msgError5Days').attr("hidden",false);
+            error = true;
+
+        }
+        else {
             $("#start_date").css('border-color', 'green');
             $("#end_date").css('border-color', 'green');
         }

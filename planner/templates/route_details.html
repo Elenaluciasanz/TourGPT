@@ -366,6 +366,10 @@
 </div>
 {% endif %}
 
+{% if map %}
+    {{ map | safe }}
+{% endif %}
+
 <!-- Start Origin Info -->
 <div class="d-flex justify-content-center m-2 my-4">
     <h1> {% trans 'About the origin' %}</h1>
