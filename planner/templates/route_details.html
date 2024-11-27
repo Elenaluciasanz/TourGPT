@@ -89,7 +89,8 @@
                     {{ poa.name }}
                 </td>
                 <td>
-                    <a href="{{ poa.get_absolute_url }}" class="btn btn btn-warning w-100">{% trans 'More Details' %}</a>
+                    <button class="btn btn btn-warning w-100" data-bs-toggle="modal" data-bs-target="#infoModal" onclick="loadData('{% url 'poa_modal' slug_country=poa.city.country.slug slug_city=poa.city.slug slug=poa.slug %}', 'poa')">{% trans 'More Details' %}</button>
+                    <!--<a href="{{ poa.get_absolute_url }}" class="btn btn btn-warning w-100">{% trans 'More Details' %}</a> -->
                 </td>
             </tr>
         </tbody>
@@ -141,12 +142,19 @@
                             </td>
                             <td>
                                 {% if act.point %}
-                                    <a href="{{ act.point.get_absolute_url }}" class="btn 
+                                    <!--<a href="{{ act.point.get_absolute_url }}" class="btn 
                                     {% if act.type == 'I' %}btn-success
                                     {% elif act.type == 'E' %}btn-danger
                                     {% elif act.type == 'G' %}btn-primary
                                     {% else %}btn-secondary
-                                    {% endif %} w-100">{{ act.point }}</a>
+                                    {% endif %} w-100">{{ act.point }}</a>-->
+                                    {% if act.type == 'I' %}
+                                    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#infoModal" onclick="loadData('{% url 'poi_modal' slug_country=act.point.city.country.slug slug_city=act.point.city.slug slug=act.point.slug %}', 'poi')">{{ act.point }}</button>
+                                    {% elif act.type == 'E' %}
+                                    <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#infoModal" onclick="loadData('{% url 'poe_modal' slug_country=act.point.city.country.slug slug_city=act.point.city.slug slug=act.point.slug %}', 'poe')">{{ act.point }}</button>
+                                    {% elif act.type == 'G' %}
+                                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#infoModal" onclick="loadData('{% url 'pog_modal' slug_country=act.point.city.country.slug slug_city=act.point.city.slug slug=act.point.slug %}', 'pog')">{{ act.point }}</button>
+                                    {% endif %}
                                 {% endif %}  
                             </td>
                         </tr>
@@ -165,13 +173,20 @@
                             </td>
                             <td>
                                 {% if act.point %}
-                                    <a href="{{ act.point.get_absolute_url }}" class="btn 
+                                    <!-- <a href="{{ act.point.get_absolute_url }}" class="btn 
                                     {% if act.type == 'I' %}btn-success
                                     {% elif act.type == 'E' %}btn-danger
                                     {% elif act.type == 'G' %}btn-primary
                                     {% else %}btn-secondary
                                     {% endif %} w-100">{{ act.point }}</a>
-                                    {% endif %}  
+                                    {% endif %} -->
+                                    {% if act.type == 'I' %}
+                                    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#infoModal" onclick="loadData('{% url 'poi_modal' slug_country=act.point.city.country.slug slug_city=act.point.city.slug slug=act.point.slug %}', 'poi')">{{ act.point }}</button>
+                                    {% elif act.type == 'E' %}
+                                    <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#infoModal" onclick="loadData('{% url 'poe_modal' slug_country=act.point.city.country.slug slug_city=act.point.city.slug slug=act.point.slug %}', 'poe')">{{ act.point }}</button>
+                                    {% elif act.type == 'G' %}
+                                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#infoModal" onclick="loadData('{% url 'pog_modal' slug_country=act.point.city.country.slug slug_city=act.point.city.slug slug=act.point.slug %}', 'pog')">{{ act.point }}</button>
+                                    {% endif %}
                             </td>
                         </tr>
                     {% endfor %}
@@ -189,13 +204,20 @@
                             </td>
                             <td>
                                 {% if act.point %}
-                                    <a href="{{ act.point.get_absolute_url }}" class="btn 
+                                    <!-- <a href="{{ act.point.get_absolute_url }}" class="btn 
                                     {% if act.type == 'I' %}btn-success
                                     {% elif act.type == 'E' %}btn-danger
                                     {% elif act.type == 'G' %}btn-primary
                                     {% else %}btn-secondary
                                     {% endif %} w-100">{{ act.point }}</a>
-                                    {% endif %}  
+                                    {% endif %}  -->
+                                    {% if act.type == 'I' %}
+                                    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#infoModal" onclick="loadData('{% url 'poi_modal' slug_country=act.point.city.country.slug slug_city=act.point.city.slug slug=act.point.slug %}', 'poi')">{{ act.point }}</button>
+                                    {% elif act.type == 'E' %}
+                                    <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#infoModal" onclick="loadData('{% url 'poe_modal' slug_country=act.point.city.country.slug slug_city=act.point.city.slug slug=act.point.slug %}', 'poe')">{{ act.point }}</button>
+                                    {% elif act.type == 'G' %}
+                                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#infoModal" onclick="loadData('{% url 'pog_modal' slug_country=act.point.city.country.slug slug_city=act.point.city.slug slug=act.point.slug %}', 'pog')">{{ act.point }}</button>
+                                    {% endif %}
                             </td>
                         </tr>
                     {% endfor %}
@@ -213,12 +235,20 @@
                             </td>
                             <td>
                                 {% if act.point %}
-                                    <a href="{{ act.point.get_absolute_url }}" class="btn 
+                                    <!-- <a href="{{ act.point.get_absolute_url }}" class="btn 
                                     {% if act.type == 'I' %}btn-success
                                     {% elif act.type == 'E' %}btn-danger
                                     {% elif act.type == 'G' %}btn-primary
                                     {% else %}btn-secondary
-                                    {% endif %} w-100">{{ act.point }}</a>
+                                    {% endif %} w-100">{{ act.point }}</a> -->
+
+                                    {% if act.type == 'I' %}
+                                    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#infoModal" onclick="loadData('{% url 'poi_modal' slug_country=act.point.city.country.slug slug_city=act.point.city.slug slug=act.point.slug %}', 'poi')">{{ act.point }}</button>
+                                    {% elif act.type == 'E' %}
+                                    <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#infoModal" onclick="loadData('{% url 'poe_modal' slug_country=act.point.city.country.slug slug_city=act.point.city.slug slug=act.point.slug %}', 'poe')">{{ act.point }}</button>
+                                    {% elif act.type == 'G' %}
+                                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#infoModal" onclick="loadData('{% url 'pog_modal' slug_country=act.point.city.country.slug slug_city=act.point.city.slug slug=act.point.slug %}', 'pog')">{{ act.point }}</button>
+                                    {% endif %}
                                 {% endif %}  
                             </td>
                         </tr>
@@ -268,12 +298,19 @@
                             <td>
                                 <div style="display:block;">{{ act.activity }}</div>
                                 {% if act.point %}
-                                    <a href="{{ act.point.get_absolute_url }}" class="btn 
+                                    <!-- <a href="{{ act.point.get_absolute_url }}" class="btn 
                                     {% if act.type == 'I' %}btn-success
                                     {% elif act.type == 'E' %}btn-danger
                                     {% elif act.type == 'G' %}btn-primary
                                     {% else %}btn-secondary
-                                    {% endif %};">{{ act.point }}</a>
+                                    {% endif %};">{{ act.point }}</a> -->
+                                    {% if act.type == 'I' %}
+                                    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#infoModal" onclick="loadData('{% url 'poi_modal' slug_country=act.point.city.country.slug slug_city=act.point.city.slug slug=act.point.slug %}', 'poi')">{{ act.point }}</button>
+                                    {% elif act.type == 'E' %}
+                                    <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#infoModal" onclick="loadData('{% url 'poe_modal' slug_country=act.point.city.country.slug slug_city=act.point.city.slug slug=act.point.slug %}', 'poe')">{{ act.point }}</button>
+                                    {% elif act.type == 'G' %}
+                                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#infoModal" onclick="loadData('{% url 'pog_modal' slug_country=act.point.city.country.slug slug_city=act.point.city.slug slug=act.point.slug %}', 'pog')">{{ act.point }}</button>
+                                    {% endif %}
                                 {% endif %} 
                             </td>
                         </tr>
@@ -290,12 +327,20 @@
                             <td>
                                 <div style="display:block;">{{ act.activity }}</div>
                                 {% if act.point %}
-                                    <a href="{{ act.point.get_absolute_url }}" class="btn 
+                                    <!--<a href="{{ act.point.get_absolute_url }}" class="btn 
                                     {% if act.type == 'I' %}btn-success
                                     {% elif act.type == 'E' %}btn-danger
                                     {% elif act.type == 'G' %}btn-primary
                                     {% else %}btn-secondary
-                                    {% endif %};">{{ act.point }}</a>
+                                    {% endif %};">{{ act.point }}</a>-->
+
+                                    {% if act.type == 'I' %}
+                                    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#infoModal" onclick="loadData('{% url 'poi_modal' slug_country=act.point.city.country.slug slug_city=act.point.city.slug slug=act.point.slug %}', 'poi')">{{ act.point }}</button>
+                                    {% elif act.type == 'E' %}
+                                    <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#infoModal" onclick="loadData('{% url 'poe_modal' slug_country=act.point.city.country.slug slug_city=act.point.city.slug slug=act.point.slug %}', 'poe')">{{ act.point }}</button>
+                                    {% elif act.type == 'G' %}
+                                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#infoModal" onclick="loadData('{% url 'pog_modal' slug_country=act.point.city.country.slug slug_city=act.point.city.slug slug=act.point.slug %}', 'pog')">{{ act.point }}</button>
+                                    {% endif %}
                                 {% endif %}  
                             </td>
                         </tr>
@@ -312,12 +357,20 @@
                             <td>
                                 <div style="display:block;">{{ act.activity }}</div>
                                 {% if act.point %}
-                                    <a href="{{ act.point.get_absolute_url }}" class="btn 
+                                    <!--<a href="{{ act.point.get_absolute_url }}" class="btn 
                                     {% if act.type == 'I' %}btn-success
                                     {% elif act.type == 'E' %}btn-danger
                                     {% elif act.type == 'G' %}btn-primary
                                     {% else %}btn-secondary
-                                    {% endif %};">{{ act.point }}</a>
+                                    {% endif %};">{{ act.point }}</a> -->
+
+                                    {% if act.type == 'I' %}
+                                    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#infoModal" onclick="loadData('{% url 'poi_modal' slug_country=act.point.city.country.slug slug_city=act.point.city.slug slug=act.point.slug %}', 'poi')">{{ act.point }}</button>
+                                    {% elif act.type == 'E' %}
+                                    <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#infoModal" onclick="loadData('{% url 'poe_modal' slug_country=act.point.city.country.slug slug_city=act.point.city.slug slug=act.point.slug %}', 'poe')">{{ act.point }}</button>
+                                    {% elif act.type == 'G' %}
+                                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#infoModal" onclick="loadData('{% url 'pog_modal' slug_country=act.point.city.country.slug slug_city=act.point.city.slug slug=act.point.slug %}', 'pog')">{{ act.point }}</button>
+                                    {% endif %}
                                 {% endif %}  
                             </td>
                         </tr>
@@ -335,12 +388,20 @@
                                 <div style="display:block;">{{ act.activity }}<div>
 
                                 {% if act.point %}
-                                    <a href="{{ act.point.get_absolute_url }}" class="btn 
+                                    <!--<a href="{{ act.point.get_absolute_url }}" class="btn 
                                     {% if act.type == 'I' %}btn-success
                                     {% elif act.type == 'E' %}btn-danger
                                     {% elif act.type == 'G' %}btn-primary
                                     {% else %}btn-secondary
-                                    {% endif %};">{{ act.point }}</a>
+                                    {% endif %};">{{ act.point }}</a> -->
+
+                                    {% if act.type == 'I' %}
+                                    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#infoModal" onclick="loadData('{% url 'poi_modal' slug_country=act.point.city.country.slug slug_city=act.point.city.slug slug=act.point.slug %}', 'poi')">{{ act.point }}</button>
+                                    {% elif act.type == 'E' %}
+                                    <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#infoModal" onclick="loadData('{% url 'poe_modal' slug_country=act.point.city.country.slug slug_city=act.point.city.slug slug=act.point.slug %}', 'poe')">{{ act.point }}</button>
+                                    {% elif act.type == 'G' %}
+                                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#infoModal" onclick="loadData('{% url 'pog_modal' slug_country=act.point.city.country.slug slug_city=act.point.city.slug slug=act.point.slug %}', 'pog')">{{ act.point }}</button>
+                                    {% endif %}
                                 {% endif %}
                             </td>
                         </tr>
@@ -481,5 +542,85 @@
 </div>
 {% endif %}
 <!-- End Destination Info -->
+
+<!-- <Img src="{{ image }}" class="img-fluid" alt="{{ destination.name }}"/> -->
+
+
+<!-- Modal -->
+<div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <!--<h5 class="modal-title" id="modalLabel">Información del Servidor</h5>-->
+                <h1 class="display-4 fw-normal" id="modal_point_name"></h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="resetModal()"></button>
+            </div>
+            <div class="modal-body">
+                <div id="modalContentLoading">
+                    Cargando información...
+                    <div class="spinner-border text-primary mx-2" role="status"></div>
+                </div>
+                <div id="modalContent" hidden>
+                    <p class="lead fw-normal" id="modal_point_presentation"></p>
+                    <h6 class="card-header d-flex justify-content-center">
+                        <i class="" id="modal_point_icon"></i>
+                        <div id="modal_point_type"></div>
+                    </h6>
+                    <div class="d-md-flex flex-md-equal w-100 my-md-3 ps-md-3"> 
+                        <div class="me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden" id="modal_point_description_color" style="background-color: #63954A;">
+                            <div class="my-3 py-3">
+                            <h2 class="display-5"><i class="fa-solid fa-landmark fa-xl m-2"></i>{% trans 'Description' %}</h2>
+                            <p class="lead" id="modal_point_description"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-md-flex flex-md-equal w-100 my-md-3 ps-md-3"> 
+                        <div class="me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden" id="modal_point_shedule_color" style="background-color: #B2F591;">
+                            <div class="my-3 p-3">
+                                <h2 class="display-5"><i class="fa-solid fa-clock fa-xl"></i></h2>
+                                <h3 class="display-6">{% trans 'Schedule' %}</h3>
+                                <p class="lead" id="modal_point_shedule_avg"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-md-flex flex-md-equal w-100 my-md-3 ps-md-3"> 
+                        <div class="me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden" id="modal_point_price_color" style="background-color: #63954A;">
+                            <div class="my-3 p-3">
+                                <h2 class="display-5"><i class="fa-solid fa-money-bill-wave fa-xl"></i></h2>
+                                <h3 class="display-6">{% trans 'Price' %}</h3>
+                                <p class="lead" id="modal_point_price_avg"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-md-flex flex-md-equal w-100 my-md-3 ps-md-3">
+                        <div class="col me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden" id="modal_point_coord_color" style="background-color: #B2F591;">
+                            <div class="my-3 py-3">
+                                <h2 class="display-5"><i class="fa-solid fa-globe fa-xl"></i></h2>
+                                <h3 class="display-6">{% trans 'Latitude' %}</h3>
+                                <p class="lead" id="modal_point_latitude"></p>
+                                <h3 class="display-6">{% trans 'Longitude' %}</h3>
+                                <p class="lead" id="modal_point_longitude"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-md-flex flex-md-equal w-100 my-md-3 ps-md-3">
+                        <div class="col me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden" id="modal_point_location_color" style="background-color: #63954A;">
+                            <div class="my-3 py-3">
+                            <h2 class="display-5"><i class="fa-solid fa-map fa-xl"></i></h2>
+                            <div class="display-6" id="modal_point_map"></div>
+                            <p class="display-6" id="modal_point_location"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close" onclick="resetModal()">{% trans 'Cerrar' %}</button>
+            </div>
+        </div>     
+    </div>
+</div>
+
+
 
 {% endblock %}

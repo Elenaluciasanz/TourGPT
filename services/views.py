@@ -239,3 +239,190 @@ class PoaDetails(DetailView):
         context['map'] = map
         return context
     
+
+
+def get_poi_modal(request, slug_country, slug_city, slug):
+    response = { }
+    if request.method == "GET":
+        p = Poi.objects.get(slug = slug)  
+        poi_pr.check_poi_info(p.point_name)
+        p = Poi.objects.get(slug = slug)
+        map = None
+        if p.latitude and p.longitude:
+            map = folium.Map(location = (p.latitude, p.longitude),zoom_start=10)
+            folium.Marker((p.latitude, p.longitude), popup = p.name, icon=folium.Icon(color='green',prefix='fa', icon='landmark')).add_to(map)
+            map = map._repr_html_()
+        
+        if p.type == "M":
+            icon = "fa-solid fa-palette fa-xl m-2"
+            type = _("Museum")
+        elif p.type == "E":
+            icon = "fa-solid fa-star fa-xl m-2"
+            type = _("Emblematic Site")
+        elif p.type == "P":
+            icon = "fa-solid fa-leaf fa-xl m-2"
+            type = _("Park/Garden")
+        elif p.type == "T":
+            icon = "fa-solid fa-theater-masks fa-xl m-2"
+            type = _("Theater")
+        elif p.type == "C":
+            icon = "fa-solid fa-church fa-xl m-2"
+            type = _("Church")
+        elif p.type == "S":
+            icon = "fa-solid fa-city fa-xl m-2"
+            type = _("Street/Square")
+        else:
+            icon = "fa-solid fa-landmark fa-xl m-2"
+            type = _("Interest Point")
+            
+        response['name'] = p.name
+        response['presentation'] = p.presentation
+        response['icon'] = icon
+        response['type'] = type
+        response['history'] = p.history
+        response['shedule_avg'] = p.shedule_avg
+        response['price_avg'] = p.price_avg
+        response['latitude'] = p.latitude
+        response['longitude'] = p.longitude
+        response['location'] = p.location
+        response['map'] = map
+
+        return JsonResponse(response)
+    
+def get_poe_modal(request, slug_country, slug_city, slug):
+    response = { }
+    if request.method == "GET":
+        p = Poe.objects.get(slug = slug)  
+        poe_pr.check_poe_info(p.point_name)
+        p = Poe.objects.get(slug = slug)
+        map = None
+        if p.latitude and p.longitude:
+            map = folium.Map(location = (p.latitude, p.longitude),zoom_start=10)
+            folium.Marker((p.latitude, p.longitude), popup = p.name, icon=folium.Icon(color='red',prefix='fa', icon='ticket')).add_to(map)
+            map = map._repr_html_()
+        
+        if p.type == "C":
+            icon = "fa-solid fa-film fa-xl m-2"
+            type = _("Cinema")
+        elif p.type == "W":
+            icon = "fa-solid fa-bowling-ball fa-xl m-2"
+            type = _("Bowling Alley")
+        elif p.type == "N":
+            icon = "fa-solid fa-champagne-glasses fa-xl m-2"
+            type = _("Nightclub")
+        elif p.type == "M":
+            icon = "fa-brands fa-shopify fa-xl m-2"
+            type = _("Mall/Shop")
+        elif p.type == "T":
+            icon = "fa-solid fa-ticket-simple fa-xl m-2"
+            type = _("Theme Park")
+        elif p.type == "B":
+            icon = "fa-solid fa-umbrella-beach fa-xl m-2"
+            type = _("Beach")
+        else:
+            icon = "fa-solid fa-ticket fa-xl m-2"
+            type = _("Entertainment Point")
+            
+        response['name'] = p.name
+        response['presentation'] = p.presentation
+        response['icon'] = icon
+        response['type'] = type
+        response['description'] = p.description
+        response['shedule_avg'] = p.shedule_avg
+        response['price_avg'] = p.price_avg
+        response['latitude'] = p.latitude
+        response['longitude'] = p.longitude
+        response['location'] = p.location
+        response['map'] = map
+
+        return JsonResponse(response)
+    
+def get_pog_modal(request, slug_country, slug_city, slug):
+    response = { }
+    if request.method == "GET":
+        p = Pog.objects.get(slug = slug)  
+        pog_pr.check_pog_info(p.point_name)
+        p = Pog.objects.get(slug = slug)
+        map = None
+        if p.latitude and p.longitude:
+            map = folium.Map(location = (p.latitude, p.longitude),zoom_start=10)
+            folium.Marker((p.latitude, p.longitude), popup = p.name, icon=folium.Icon(color='blue',prefix='fa', icon='utensils')).add_to(map)
+            map = map._repr_html_()
+        
+        if p.type == "R":
+            icon = "fa-solid fa-kitchen-set fa-xl m-2"
+            type = _("Restaurant")
+        elif p.type == "B":
+            icon = "fa-solid fa-beer-mug-empty fa-xl m-2"
+            type = _("Bar")
+        elif p.type == "C":
+            icon = "fa-solid fa-mug-saucer fa-xl m-2"
+            type = _("Cafeteria")
+        elif p.type == "F":
+            icon = "fa-brands fa-burger fa-xl m-2"
+            type = _("Fast Food")
+        elif p.type == "T":
+            icon = "fa-solid fa-wine-bottle fa-xl m-2"
+            type = _("Tabern")
+        else:
+            icon = "fa-solid fa-utensils fa-xl m-2"
+            type = _("Gastronomy Point")
+            
+        response['name'] = p.name
+        response['presentation'] = p.presentation
+        response['icon'] = icon
+        response['type'] = type
+        response['description'] = p.description
+        response['shedule_avg'] = p.shedule_avg
+        response['price_avg'] = p.price_avg
+        response['latitude'] = p.latitude
+        response['longitude'] = p.longitude
+        response['location'] = p.location
+        response['map'] = map
+
+        return JsonResponse(response)
+
+def get_poa_modal(request, slug_country, slug_city, slug):
+    response = { }
+    if request.method == "GET":
+        p = Poa.objects.get(slug = slug)  
+        poa_pr.check_poa_info(p.point_name)
+        p = Poa.objects.get(slug = slug)
+        map = None
+        if p.latitude and p.longitude:
+            map = folium.Map(location = (p.latitude, p.longitude),zoom_start=10)
+            folium.Marker((p.latitude, p.longitude), popup = p.name, icon=folium.Icon(color='orange',prefix='fa', icon='house')).add_to(map)
+            map = map._repr_html_()
+            
+        if p.type == "HO":
+            icon = "fa-solid fa-square-h fa-xl m-2"
+            type = _("Hotel")
+        elif p.type == "HE":
+            icon = "fa-solid fa-bed fa-xl m-2"
+            type = _("Hostel")
+        elif p.type == "C":
+            icon = "fa-solid fa-campground fa-xl m-2"
+            type = _("Camping")
+        elif p.type == "R":
+            icon = "fa-brands fa-tree fa-xl m-2"
+            type = _("Rural House")
+        elif p.type == "S":
+            icon = "fa-solid fa-tent fa-xl m-2"
+            type = _("Shelter")
+        else:
+            icon = "fa-solid fa-house fa-xl m-2"
+            type = _("Accommodation Point")
+            
+        response['name'] = p.name
+        response['presentation'] = p.presentation
+        response['icon'] = icon
+        response['type'] = type
+        response['description'] = p.description
+        response['shedule_avg'] = p.shedule_avg
+        response['price_avg'] = p.price_avg
+        response['latitude'] = p.latitude
+        response['longitude'] = p.longitude
+        response['location'] = p.location
+        response['map'] = map
+
+        return JsonResponse(response)

@@ -196,6 +196,14 @@ def route_details(request, pk):
                 info_day['night'].append(act)
         
         route_info.append(info_day)
+        
+    colors = [
+        '#0000FF',
+        '#FF0000',
+        '#00FF00', 
+        '#FF00FF',
+        '#00FFFF',
+    ]
           
     for day in point_locations.items():
         distance = 0
@@ -208,7 +216,7 @@ def route_details(request, pk):
         
         folium.PolyLine(
         locations=day[1],
-        color="#FF0000",
+        color=colors[(day[0] - 1) % 5],
         weight=5,
         tooltip=_("Day") + " " + str(day[0]) + ". " + _("Distance") + " " + str(round(distance, 2)) + " " + "Km").add_to(map)
         
@@ -220,7 +228,7 @@ def route_details(request, pk):
         poa = route.poa_en
         explanation = route.explanation_en
         
-    if (poa and poa.latitude != None and poa.longitude != None):
+    if (poa != None and poa.latitude != None and poa.longitude != None):
         folium.Marker((poa.latitude, poa.longitude), popup = poa.name, icon=folium.Icon(color='orange',prefix='fa', icon='house')).add_to(map)
                 
     context = {'route': route, 

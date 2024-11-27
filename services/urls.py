@@ -17,4 +17,8 @@ urlpatterns = [
     path('countries/<str:slug_country>/cities/<str:slug_city>/poe/<str:slug>/', views.PoeDetails.as_view(), name='poe_details'),
     path('countries/<str:slug_country>/cities/<str:slug_city>/pog/<str:slug>/', views.PogDetails.as_view(), name='pog_details'),
     path('countries/<str:slug_country>/cities/<str:slug_city>/poa/<str:slug>/', views.PoaDetails.as_view(), name='poa_details'),
+    path('countries/<str:slug_country>/cities/<str:slug_city>/poi/<str:slug>/modal', views.get_poi_modal, name='poi_modal'),
+    path('countries/<str:slug_country>/cities/<str:slug_city>/poe/<str:slug>/modal', views.get_poe_modal, name='poe_modal'),
+    path('countries/<str:slug_country>/cities/<str:slug_city>/pog/<str:slug>/modal', views.get_pog_modal, name='pog_modal'),
+    path('countries/<str:slug_country>/cities/<str:slug_city>/poa/<str:slug>/modal', views.get_poa_modal, name='poa_modal'),
 ]
