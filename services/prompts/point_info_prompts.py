@@ -1,6 +1,8 @@
+from services.constants import SPARQL_ENDPOINT
 from .common_prompts import chat_gpt
 from geopy.geocoders import Nominatim
 from googletrans import Translator
+import requests
 
 trans = Translator()
 
@@ -70,12 +72,52 @@ def point_info_shedule_avg(p_en, p_oth):
                 p.shedule_avg = p_en.shedule_avg
             p.save()
 
+def point_info_image_url(p_en, p_oth): 
+    dbpedia_url = chat_gpt(f"Give me the dbpedia URL of the resource associated with {p_en.complete_name}. Provide only the URL. Do not provide any additional text to the URL.")
+    print(dbpedia_url)
+    
+    dbpedia_url = dbpedia_url.replace("page", "resource")
+    
+    # Consulta SPARQL para obtener la entidad y la imagen
+    query = """
+    SELECT ?thumbnail WHERE {            
+        <""" + dbpedia_url + """> dbo:thumbnail ?thumbnail.
+    }
+    """
+    # Parámetros para la consulta
+    params = {
+        'query': query,
+        'format': 'application/json'
+    }
+    
+    # Realizamos la consulta SPARQL
+    response = requests.get(SPARQL_ENDPOINT, params=params)
+        
+    if response.status_code == 200:
+        data = response.json()
+        if data['results']['bindings']:
+            # Si encontramos un resultado, extraemos la URI de la entidad y la URL de la imagen
+            # entidad_uri = data['results']['bindings'][0]['entity']['value']
+            image_url = data['results']['bindings'][0]['thumbnail']['value']
+       
+            if image_url:
+                p_en.image_url = image_url
+                p_en.save()
+            
+                for p in p_oth:
+                    p.image_url = image_url
+                    p.save()
+    
+
 def check_point_info_presentation(p_en, p_oth):
     if p_en.location == "":
         point_info_location(p_en, p_oth)
         
     if p_en.presentation == "":
         point_info_presentation(p_en, p_oth)
+    
+    if p_en.image_url == None or p_en.image_url == "":
+        point_info_image_url(p_en, p_oth)
 
    
 def check_point_info_info(p_en, p_oth):

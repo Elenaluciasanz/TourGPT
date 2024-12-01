@@ -277,6 +277,7 @@ def get_poi_modal(request, slug_country, slug_city, slug):
             
         response['name'] = p.name
         response['presentation'] = p.presentation
+        response['image'] = p.image_url
         response['icon'] = icon
         response['type'] = type
         response['history'] = p.history
@@ -325,6 +326,7 @@ def get_poe_modal(request, slug_country, slug_city, slug):
             
         response['name'] = p.name
         response['presentation'] = p.presentation
+        response['image'] = p.image_url
         response['icon'] = icon
         response['type'] = type
         response['description'] = p.description
@@ -370,6 +372,7 @@ def get_pog_modal(request, slug_country, slug_city, slug):
             
         response['name'] = p.name
         response['presentation'] = p.presentation
+        response['image'] = p.image_url
         response['icon'] = icon
         response['type'] = type
         response['description'] = p.description
@@ -415,6 +418,7 @@ def get_poa_modal(request, slug_country, slug_city, slug):
             
         response['name'] = p.name
         response['presentation'] = p.presentation
+        response['image'] = p.image_url
         response['icon'] = icon
         response['type'] = type
         response['description'] = p.description

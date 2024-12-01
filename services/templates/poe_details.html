@@ -47,6 +47,11 @@
             </a>
         </div>
         {% endif %}  
+        {% if poe.image_url %}
+        <div class="my-3">
+            <img src="{{ poe.image_url }}" class="img-fluid" alt="{{ poe.name }}">
+        </div>
+        {% endif %} 
     </div>
 </div>
 

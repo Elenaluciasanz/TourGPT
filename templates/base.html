@@ -5,7 +5,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>{% block title %}TourGPT{% endblock %}</title>
+        <title>{% block title %}GPTTP{% endblock %}</title>
         <link rel="stylesheet" href="{% static 'css/styles.css' %}">
         <link rel="shortcut icon" href="{% static 'img/logo.jpeg' %}">
         <script src="{% static 'js/jquery-3.7.1.min.js' %}"></script>
@@ -27,8 +27,8 @@
             <header class="p-3 bg-primary text-white">
                 <div class="container">
                   <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-                    <img class="rounded-circle" src="{% static 'img/logo.jpeg' %}" alt="TourGPT" width="60" height="60">
-                    <a href="{% url 'home' %}"><span class="px-2 text-light fs-2 fw-bold ">TourGPT</span></a>
+                    <img class="rounded-circle" src="{% static 'img/logo.jpeg' %}" alt="GPTTP" width="60" height="60">
+                    <a href="{% url 'home' %}"><span class="px-2 text-light fs-2 fw-bold ">GPTTP</span></a>
                     <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                       <li><a href="{% url 'home' %}" class="nav-link px-2 text-white">{% trans 'Home' %}</a></li>
                       <li><a href="{% url 'country_list' %}" class="nav-link px-2 text-white">{% trans 'Countries' %}</a></li>
@@ -96,7 +96,7 @@
             <div class="container-fluid bg-primary d-flex justify-content-center">
                 <p class="text-light mb-0 p-2">
                     {% trans "ChatGPT-based system for personalized tourist trip planning." %} 
-                    &nbsp Elena Lucía González Sanz
+                    <!--&nbsp Elena Lucía González Sanz-->
                 </p>
             </div>
         {% endblock %}

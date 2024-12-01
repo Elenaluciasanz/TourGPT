@@ -44,6 +44,11 @@
             </a>
         </div>
         {% endif %}  
+        {% if poa.image_url %}
+        <div class="my-3">
+            <img src="{{ poa.image_url }}" class="img-fluid" alt="{{ poa.name }}">
+        </div>
+        {% endif %} 
     </div>
 </div>
 

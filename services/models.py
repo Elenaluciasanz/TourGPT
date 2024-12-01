@@ -201,6 +201,8 @@ class PointInfo(models.Model):
     price_avg = models.TextField(verbose_name=_('Price Average'))
     shedule_avg = models.TextField(verbose_name=_('Shedule Average'))
     
+    image_url = models.URLField(verbose_name=_('Image URL'), null = True, default=None)
+    
     @property
     def complete_name(self):
         return self.point_name + ", " + self.city.complete_name
