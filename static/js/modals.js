@@ -18,12 +18,12 @@ function loadData(url, point_type) {
     colorDark = "";
   }
 
-  console.log("modal_point_description_color", colorDark);
-  $("modal_point_description_color").css("background-color", colorDark);
-  $("modal_point_shedule_color").css("background-color", colorLight);
-  $("modal_point_price_color").css("background-color", colorDark);
-  $("modal_point_coord_color").css("background-color", colorLight);
-  $("modal_point_location_color").css("background-color", colorDark);
+  $("#modal_point_image_color").css("background-color", colorLight);
+  $("#modal_point_description_color").css("background-color", colorDark);
+  $("#modal_point_shedule_color").css("background-color", colorLight);
+  $("#modal_point_price_color").css("background-color", colorDark);
+  $("#modal_point_coord_color").css("background-color", colorLight);
+  $("#modal_point_location_color").css("background-color", colorDark);
 
   $.ajax({
     url: url,
@@ -33,20 +33,82 @@ function loadData(url, point_type) {
       $("#modalContent").attr("hidden", false);
 
       $("#modal_point_name").text(data.name);
-      $("#modal_point_presentation").text(data.presentation);
-      $("#modal_point_icon").attr("class", data.icon);
-      $("#modal_point_type").text(data.type);
-      if (point_type == "poi") {
-        $("#modal_point_description").text(data.history);
+
+      if (data.presentation && data.presentation !== "") {
+        $("#modal_point_presentation").attr("hidden", false);
+        $("#modal_point_presentation").text(data.presentation);
       } else {
-        $("#modal_point_description").text(data.description);
+        $("#modal_point_presentation").attr("hidden", true);
       }
-      $("#modal_point_shedule_avg").text(data.shedule_avg);
-      $("#modal_point_price_avg").text(data.price_avg);
-      $("#modal_point_latitude").text(data.latitude);
-      $("#modal_point_longitude").text(data.longitude);
-      $("#modal_point_location").text(data.location);
-      $("#modal_point_map").html(data.map);
+
+      if (data.icon && data.icon !== "" && data.type && data.type !== "") {
+        $("#modal_point_icon_type_div").attr("hidden", false);
+        $("#modal_point_icon").attr("class", data.icon);
+        $("#modal_point_type").text(data.type);
+      } else {
+        $("#modal_point_icon_type_div").attr("hidden", true);
+      }
+
+      if (data.image && data.image !== "") {
+        $("#modal_point_image_div").attr("hidden", false);
+        $("#modal_point_image_color").attr("hidden", false);
+        $("#modal_point_image").attr("src", data.image);
+        $("#modal_point_image").attr("alt", data.name);
+      } else {
+        $("#modal_point_image_div").attr("hidden", true);
+        $("#modal_point_image_color").attr("hidden", true);
+      }
+
+      if (point_type == "poi" && data.history && data.history !== "") {
+        $("#modal_point_description_div").attr("hidden", false);
+        $("#modal_point_description_color").attr("hidden", false);
+        $("#modal_point_description").text(data.history);
+      } else if (data.description && data.description !== "") {
+        $("#modal_point_description_div").attr("hidden", false);
+        $("#modal_point_description_color").attr("hidden", false);
+        $("#modal_point_description").text(data.description);
+      } else {
+        $("#modal_point_description_div").attr("hidden", true);
+        $("#modal_point_description_color").attr("hidden", true);
+      }
+
+      if (data.shedule_avg && data.shedule_avg !== "") {
+        $("#modal_point_shedule_div").attr("hidden", false);
+        $("#modal_point_shedule_color").attr("hidden", false);
+        $("#modal_point_shedule_avg").text(data.shedule_avg);
+      } else {
+        $("#modal_point_shedule_div").attr("hidden", true);
+        $("#modal_point_shedule_color").attr("hidden", true);
+      }
+
+      if (data.price_avg && data.price_avg !== "") {
+        $("#modal_point_price_div").attr("hidden", false);
+        $("#modal_point_price_color").attr("hidden", false);
+        $("#modal_point_price_avg").text(data.price_avg);
+      } else {
+        $("#modal_point_price_div").attr("hidden", true);
+        $("#modal_point_price_color").attr("hidden", true);
+      }
+
+      if (data.latitude && data.latitude !== "" && data.longitude && data.longitude !== "") {
+        $("#modal_point_coord_div").attr("hidden", false);
+        $("#modal_point_coord_color").attr("hidden", false);
+        $("#modal_point_latitude").text(data.latitude);
+        $("#modal_point_longitude").text(data.longitude);
+      } else {
+        $("#modal_point_coord_div").attr("hidden", true);
+        $("#modal_point_coord_color").attr("hidden", true);
+      }
+
+      if (data.location && data.location !== "" && data.map && data.map !== "") {
+        $("#modal_point_location_div").attr("hidden", false);
+        $("#modal_point_location_color").attr("hidden", false);
+        $("#modal_point_location").text(data.location);
+        $("#modal_point_map").html(data.map);
+      } else {
+        $("#modal_point_location_div").attr("hidden", true);
+        $("#modal_point_location_color").attr("hidden", true);
+      }
     },
 
     error: function (error) {
@@ -70,9 +132,10 @@ function loadData(url, point_type) {
 
 function resetModal() {
   $("#modalContentLoading").html(
-    "<p>Cargando información...</p> <div class='spinner-border text-primary mx-2' role='status'></div>"
+    "<p class='me-2'>Cargando información...</p> <div class='spinner-border text-primary' role='status'></div>"
   );
 
+  $("#modalContentLoading").attr("hidden", false);
   $("#modalContent").attr("hidden", true);
 
   $("#modal_point_name").text("");

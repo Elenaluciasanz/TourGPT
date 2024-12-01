@@ -47,6 +47,11 @@
             </a>
         </div>
         {% endif %}  
+        {% if poi.image_url %}
+        <div class="my-3">
+            <img src="{{ poi.image_url }}" class="img-fluid" alt="{{ poi.name }}">
+        </div>
+        {% endif %} 
     </div>
 </div>
 

@@ -1,0 +1,12 @@
+# created by virtualenv automatically
+
+migrations/
+
+envGPT/
+
+# Cache python
+__pycache__/
+
+.env 
+
+env.txt

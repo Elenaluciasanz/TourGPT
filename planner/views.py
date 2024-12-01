@@ -23,8 +23,12 @@ def route_new(request):
         origin = CityBase.objects.get(pk = origin)
         profile_id = request.POST.get('adventure_level')
         profile = None
+        
         if int(profile_id) > 0:
-            profile = TravelProfile.objects.get(pk = int(profile_id))
+            # Solo usuarios con id par entregan contexto del perfil de viaje a la ruta
+            if (request.user.id % 2 == 0):
+                profile = TravelProfile.objects.get(pk = int(profile_id))
+
         destination = int(request.POST.get('destination_id'))
         destination = CityBase.objects.get(pk = destination)
         start_date = request.POST.get('start_date') 
@@ -214,11 +218,12 @@ def route_details(request, pk):
             longitude2 = day[1][i + 1][1]
             distance+= geodesic((latitude1, longitude1), (latitude2, longitude2)).kilometers
         
-        folium.PolyLine(
-        locations=day[1],
-        color=colors[(day[0] - 1) % 5],
-        weight=5,
-        tooltip=_("Day") + " " + str(day[0]) + ". " + _("Distance") + " " + str(round(distance, 2)) + " " + "Km").add_to(map)
+        if (len(day[1]) > 0):
+            folium.PolyLine(
+            locations=day[1],
+            color=colors[(day[0] - 1) % 5],
+            weight=5,
+            tooltip=_("Day") + " " + str(day[0]) + ". " + _("Distance") + " " + str(round(distance, 2)) + " " + "Km").add_to(map)
         
         
     if get_language() == 'es':

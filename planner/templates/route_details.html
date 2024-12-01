@@ -562,11 +562,18 @@
                 </div>
                 <div id="modalContent" hidden>
                     <p class="lead fw-normal" id="modal_point_presentation"></p>
-                    <h6 class="card-header d-flex justify-content-center">
+                    <h6 class="card-header d-flex justify-content-center" id="modal_point_icon_type_div">
                         <i class="" id="modal_point_icon"></i>
                         <div id="modal_point_type"></div>
                     </h6>
-                    <div class="d-md-flex flex-md-equal w-100 my-md-3 ps-md-3"> 
+                    <div class="d-md-flex flex-md-equal w-100 my-md-3 ps-md-3" id="modal_point_image_div"> 
+                        <div class="me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden" id="modal_point_image_color" style="background-color: #63954A;">
+                            <div class="my-3 py-3">
+                                <img src="" class="img-fluid" alt="" id="modal_point_image">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-md-flex flex-md-equal w-100 my-md-3 ps-md-3" id="modal_point_description_div"> 
                         <div class="me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden" id="modal_point_description_color" style="background-color: #63954A;">
                             <div class="my-3 py-3">
                             <h2 class="display-5"><i class="fa-solid fa-landmark fa-xl m-2"></i>{% trans 'Description' %}</h2>
@@ -574,7 +581,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="d-md-flex flex-md-equal w-100 my-md-3 ps-md-3"> 
+                    <div class="d-md-flex flex-md-equal w-100 my-md-3 ps-md-3" id="modal_point_shedule_div"> 
                         <div class="me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden" id="modal_point_shedule_color" style="background-color: #B2F591;">
                             <div class="my-3 p-3">
                                 <h2 class="display-5"><i class="fa-solid fa-clock fa-xl"></i></h2>
@@ -583,7 +590,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="d-md-flex flex-md-equal w-100 my-md-3 ps-md-3"> 
+                    <div class="d-md-flex flex-md-equal w-100 my-md-3 ps-md-3" id="modal_point_price_div"> 
                         <div class="me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden" id="modal_point_price_color" style="background-color: #63954A;">
                             <div class="my-3 p-3">
                                 <h2 class="display-5"><i class="fa-solid fa-money-bill-wave fa-xl"></i></h2>
@@ -592,7 +599,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="d-md-flex flex-md-equal w-100 my-md-3 ps-md-3">
+                    <div class="d-md-flex flex-md-equal w-100 my-md-3 ps-md-3" id="modal_point_coord_div">
                         <div class="col me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden" id="modal_point_coord_color" style="background-color: #B2F591;">
                             <div class="my-3 py-3">
                                 <h2 class="display-5"><i class="fa-solid fa-globe fa-xl"></i></h2>
@@ -603,7 +610,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="d-md-flex flex-md-equal w-100 my-md-3 ps-md-3">
+                    <div class="d-md-flex flex-md-equal w-100 my-md-3 ps-md-3" id="modal_point_location_div">
                         <div class="col me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden" id="modal_point_location_color" style="background-color: #63954A;">
                             <div class="my-3 py-3">
                             <h2 class="display-5"><i class="fa-solid fa-map fa-xl"></i></h2>
