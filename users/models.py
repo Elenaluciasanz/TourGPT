@@ -167,3 +167,9 @@ class TravelProfile(models.Model):
             profile += "Observations: " + self.observations + "\n"
         
         return profile
+
+
+class UserLog (models.Model):
+    user = models.ForeignKey(User, on_delete = models.CASCADE, verbose_name=_('User'))
+    action = models.TextField(verbose_name=_('Action'), blank=True, null=True)
+    timestamp = models.DateTimeField(auto_now=True)

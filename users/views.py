@@ -8,10 +8,11 @@ from django.views.generic import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from .forms import SignUpForm, TravelProfileForm
-from .models import TravelProfile, User, REASON_LIST, ADVENTURE_LEVELS_LIST
+from .models import TravelProfile, User, REASON_LIST, ADVENTURE_LEVELS_LIST, UserLog
 from services.models import Country, City, Poi, Poe, Poa, Pog
 from services.models import POI_TYPES, POE_TYPES, POG_TYPES, POA_TYPES
 from django.utils.translation import get_language
+from django.contrib.auth.views import LogoutView, LoginView
 
 def signup(request):
     if request.method == 'POST':
@@ -22,11 +23,22 @@ def signup(request):
             password = form.cleaned_data.get('password1')
             user = authenticate(username = username, password = password)
             login(request, user)
+            UserLog(action="Login", user = user).save()
             return redirect('home')
     else:
         form = SignUpForm()
     return render(request, 'registration/signup.html', {'form': form})
 
+class CustomLoginView(LoginView):
+    def form_valid(self, form):
+        user = User.objects.filter(username = form.cleaned_data.get('username'))
+        if len(user) == 1:
+            UserLog(action="Login", user = user[0]).save()
+        return super().form_valid(form)
+class CustomLogoutView(LogoutView):
+    def dispatch(self, request, *args, **kwargs):
+        UserLog(action="Logout", user = request.user).save()
+        return super().dispatch(request, *args, **kwargs)
 
 def validate_username(request):
     username = request.GET.get('username', None)
