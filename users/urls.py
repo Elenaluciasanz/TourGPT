@@ -3,6 +3,8 @@ from . import views
 
 urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
+    path('logout/', views.CustomLogoutView.as_view(), name='logout'),
+    path('login/', views.CustomLoginView.as_view(), name='login'),
     path('accounts/signup/', views.signup, name='signup'),
     path('account_details/<int:pk>/', views.AccountView.as_view(), name='account_details'),
     path('account_details/<int:pk>/travel_profile_new/', views.travel_profile_new, name='travel_profile_new'),
