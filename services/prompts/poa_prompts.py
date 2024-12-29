@@ -62,17 +62,18 @@ def poa_recommendations(num: int, c_en, c_oth):
             resp = parser_recommendations.parse(output)
             for poa in resp:
                 poa_split = poa.split('??')
-                p = Poa(point_name = poa_split[0],name = poa_split[0], type = poa_split[1] , city = c_en, lang = 'en')
-                p.save()
-                hist_recommendations[c_en.id].append(poa_split[0])
-                
-                for c in c_oth:
-                    try:
-                        name = trans.translate(p.point_name, src = p.lang, dest = 'es').text
-                    except Exception as e:
-                        name = p.point_name
-                    p = Poa(point_name = poa_split[0], name = name, type = poa_split[1] , city = c, lang = c.lang)
+                if not Poa.objects.filter(point_name = poa_split[0], city = c_en).exists():
+                    p = Poa(point_name = poa_split[0],name = poa_split[0], type = poa_split[1] , city = c_en, lang = 'en')
                     p.save()
+                    hist_recommendations[c_en.id].append(poa_split[0])
+                    
+                    for c in c_oth:
+                        try:
+                            name = trans.translate(p.point_name, src = p.lang, dest = 'es').text
+                        except Exception as e:
+                            name = p.point_name
+                        p = Poa(point_name = poa_split[0], name = name, type = poa_split[1] , city = c, lang = c.lang)
+                        p.save()
         
         except Exception as e:
             print("Error while parsing poa_recommendations response")

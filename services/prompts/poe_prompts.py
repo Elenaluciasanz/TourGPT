@@ -63,17 +63,18 @@ def poe_recommendations(num: int, c_en, c_oth):
             resp = parser_recommendations.parse(output)
             for poe in resp:
                 poe_split = poe.split('??')
-                p = Poe(point_name = poe_split[0],name = poe_split[0], type = poe_split[1] , city = c_en, lang = 'en')
-                p.save()
-                hist_recommendations[c_en.id].append(poe_split[0])
-                
-                for c in c_oth:
-                    try:
-                        name = trans.translate(p.point_name, src = p.lang, dest = 'es').text
-                    except Exception as e:
-                        name = p.point_name
-                    p = Poe(point_name = poe_split[0], name = name, type = poe_split[1] , city = c, lang = c.lang)
+                if not Poe.objects.filter(point_name = poe_split[0], city = c_en).exists():
+                    p = Poe(point_name = poe_split[0],name = poe_split[0], type = poe_split[1] , city = c_en, lang = 'en')
                     p.save()
+                    hist_recommendations[c_en.id].append(poe_split[0])
+                    
+                    for c in c_oth:
+                        try:
+                            name = trans.translate(p.point_name, src = p.lang, dest = 'es').text
+                        except Exception as e:
+                            name = p.point_name
+                        p = Poe(point_name = poe_split[0], name = name, type = poe_split[1] , city = c, lang = c.lang)
+                        p.save()
                 
         except Exception as e:
             print("Error while parsing poe_recommendations response")
