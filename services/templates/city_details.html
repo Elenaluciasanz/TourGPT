@@ -183,6 +183,11 @@
                                                 <p class="card-text">{{ poi.presentation|linebreaks }}</p>
                                             </div>
                                             {% endif %}
+                                            {% if poi.image_url %}
+                                            <div class="my-3 d-flex justify-content-center">
+                                                <img src="{{ poi.image_url }}" class="img-fluid" alt="{{ poi.name }}">
+                                            </div>
+                                            {% endif %} 
                                             <div class="card-footer d-flex justify-content-center">  
                                                 <a href="{{ poi.get_absolute_url }}" class="card-link btn btn-success" role="button">{% trans "More about" %}&nbsp{{ poi.name }}</a>
                                             </div>
@@ -255,6 +260,11 @@
                                                 <p class="card-text">{{ poe.presentation|linebreaks }}</p>
                                             </div>
                                             {% endif %}
+                                            {% if poe.image_url %}
+                                            <div class="my-3 d-flex justify-content-center">
+                                                <img src="{{ poe.image_url }}" class="img-fluid" alt="{{ poe.name }}">
+                                            </div>
+                                            {% endif %} 
                                             <div class="card-footer d-flex justify-content-center">  
                                                 <a href="{{ poe.get_absolute_url }}" class="card-link btn btn-danger" role="button">{% trans "More about" %}&nbsp{{ poe.name }}</a>
                                             </div>
@@ -325,6 +335,11 @@
                                                 <p class="card-text">{{ pog.presentation|linebreaks }}</p>
                                             </div>
                                             {% endif %}
+                                            {% if pog.image_url %}
+                                            <div class="my-3 d-flex justify-content-center">
+                                                <img src="{{ pog.image_url }}" class="img-fluid" alt="{{ pog.name }}">
+                                            </div>
+                                            {% endif %} 
                                             <div class="card-footer d-flex justify-content-center">  
                                                 <a href="{{ pog.get_absolute_url }}" class="card-link btn btn-primary" role="button">{% trans "More about" %}&nbsp{{ pog.name }}</a>
                                             </div>
@@ -395,6 +410,11 @@
                                                 <p class="card-text">{{ poa.presentation|linebreaks }}</p>
                                             </div>
                                             {% endif %}
+                                            {% if poa.image_url %}
+                                            <div class="my-3 d-flex justify-content-center">
+                                                <img src="{{ poa.image_url }}" class="img-fluid" alt="{{ poa.name }}">
+                                            </div>
+                                            {% endif %} 
                                             <div class="card-footer d-flex justify-content-center">  
                                                 <a href="{{ poa.get_absolute_url }}" class="card-link btn btn-warning" role="button">{% trans "More about" %}&nbsp{{ poa.name }}</a>
                                             </div>
