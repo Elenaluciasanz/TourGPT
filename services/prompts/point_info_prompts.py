@@ -93,6 +93,7 @@ def point_info_image_url(p_en, p_oth):
     # Realizamos la consulta SPARQL
     response = requests.get(SPARQL_ENDPOINT, params=params)
         
+    image_url = None
     if response.status_code == 200:
         data = response.json()
         if data['results']['bindings']:
@@ -108,6 +109,13 @@ def point_info_image_url(p_en, p_oth):
                     p.image_url = image_url
                     p.save()
     
+    if image_url == None:
+        p_en.image_url = ""
+        p_en.save()
+    
+        for p in p_oth:
+            p.image_url = ""
+            p.save()
 
 def check_point_info_presentation(p_en, p_oth):
     if p_en.location == "":
@@ -116,7 +124,7 @@ def check_point_info_presentation(p_en, p_oth):
     if p_en.presentation == "":
         point_info_presentation(p_en, p_oth)
     
-    if p_en.image_url == None or p_en.image_url == "":
+    if p_en.image_url == None:
         point_info_image_url(p_en, p_oth)
 
    
