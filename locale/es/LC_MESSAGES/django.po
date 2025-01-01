@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-07 20:37+0000\n"
+"POT-Creation-Date: 2025-01-01 20:30+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1308,38 +1308,38 @@ msgstr "Finalizada"
 msgid "Cancelled"
 msgstr "Cancelada"
 
-#: planner/models.py:17 planner/templates/route_details.html:138
-#: planner/templates/route_details.html:267
+#: planner/models.py:17 planner/templates/route_details.html:174
+#: planner/templates/route_details.html:332
 msgid "Morning"
 msgstr "Mañana"
 
-#: planner/models.py:18 planner/templates/route_details.html:162
-#: planner/templates/route_details.html:289
+#: planner/models.py:18 planner/templates/route_details.html:205
+#: planner/templates/route_details.html:361
 msgid "Afternoon"
 msgstr "Medio Día"
 
-#: planner/models.py:19 planner/templates/route_details.html:186
-#: planner/templates/route_details.html:311
+#: planner/models.py:19 planner/templates/route_details.html:236
+#: planner/templates/route_details.html:391
 msgid "Evening"
 msgstr "Tarde"
 
-#: planner/models.py:20 planner/templates/route_details.html:210
-#: planner/templates/route_details.html:333
+#: planner/models.py:20 planner/templates/route_details.html:267
+#: planner/templates/route_details.html:421
 msgid "Night"
 msgstr "Noche"
 
 #: planner/models.py:24 services/templates/city_details.html:11
-#: templates/base.html:47
+#: templates/base.html:48
 msgid "Interest"
 msgstr "Interés"
 
 #: planner/models.py:25 services/templates/city_details.html:14
-#: templates/base.html:48
+#: templates/base.html:49
 msgid "Entertainment"
 msgstr "Entretenimiento"
 
 #: planner/models.py:26 services/templates/city_details.html:17
-#: templates/base.html:49 users/models.py:39
+#: templates/base.html:50 users/models.py:39
 msgid "Gastronomy"
 msgstr "Gastronomía"
 
@@ -1356,7 +1356,7 @@ msgstr "Otro"
 msgid "Title"
 msgstr "Título"
 
-#: planner/models.py:32 users/models.py:81
+#: planner/models.py:32 users/models.py:81 users/models.py:173
 msgid "User"
 msgstr "Usuario"
 
@@ -1365,8 +1365,9 @@ msgstr "Usuario"
 msgid "Travel Profile"
 msgstr "Perfil de Viaje"
 
-#: planner/models.py:34 planner/templates/route.html:23 services/models.py:244
-#: services/models.py:257 services/models.py:270 users/models.py:83
+#: planner/models.py:34 planner/templates/route.html:23
+#: planner/templates/route_details.html:616 services/models.py:246
+#: services/models.py:259 services/models.py:272 users/models.py:83
 #: users/templates/travel_profile_details.html:18
 #: users/templates/travel_profile_editor.html:24
 msgid "Description"
@@ -1426,8 +1427,8 @@ msgstr "Rutas"
 msgid "Date"
 msgstr "Fecha"
 
-#: planner/models.py:94 planner/templates/route_details.html:107
-#: planner/templates/route_details.html:242 planner/views.py:213
+#: planner/models.py:94 planner/templates/route_details.html:143
+#: planner/templates/route_details.html:307 planner/views.py:226
 msgid "Day"
 msgstr "Día"
 
@@ -1448,8 +1449,8 @@ msgstr "Día de Ruta"
 msgid "Route Days"
 msgstr "Días de Ruta"
 
-#: planner/models.py:113 planner/templates/route_details.html:126
-#: planner/templates/route_details.html:256
+#: planner/models.py:113 planner/templates/route_details.html:162
+#: planner/templates/route_details.html:321
 msgid "Activity"
 msgstr "Actividad"
 
@@ -1486,7 +1487,7 @@ msgstr "Actividad de Interés"
 msgid "Interest Activities"
 msgstr "Actividades de Interés"
 
-#: planner/models.py:135 services/models.py:253 users/models.py:98
+#: planner/models.py:135 services/models.py:255 users/models.py:98
 msgid "Point of Entertainment"
 msgstr "Punto de Entretenimiento"
 
@@ -1498,7 +1499,7 @@ msgstr "Actividad de Entretenimiento"
 msgid "Entertainment Activities"
 msgstr "Actividades de Entretenimiento"
 
-#: planner/models.py:143 services/models.py:266 users/models.py:99
+#: planner/models.py:143 services/models.py:268 users/models.py:99
 msgid "Point of Gastronomy"
 msgstr "Punto de Gastronomía"
 
@@ -1581,82 +1582,135 @@ msgstr "Día Inicio"
 msgid "End Day"
 msgstr "Día Finalización"
 
-#: planner/templates/route_details.html:86
+#: planner/templates/route_details.html:95 services/models.py:106
+#: services/models.py:146 services/models.py:232
+#: services/templates/city_details.html:55
+#: services/templates/country_details.html:43
+#: services/templates/poi_details.html:62
+msgid "History"
+msgstr "Historia"
+
+#: planner/templates/route_details.html:106 services/models.py:107
+#: services/models.py:147 services/templates/city_details.html:66
+#: services/templates/country_details.html:98
+msgid "Curiosities"
+msgstr "¿Sabías que...?"
+
+#: planner/templates/route_details.html:121
 msgid "Accomodation Point"
 msgstr "Punto de Alojamiento"
 
-#: planner/templates/route_details.html:92
+#: planner/templates/route_details.html:127
+#: planner/templates/route_details.html:128
 msgid "More Details"
 msgstr "Más Detalles"
 
-#: planner/templates/route_details.html:125
-#: planner/templates/route_details.html:255
+#: planner/templates/route_details.html:161
+#: planner/templates/route_details.html:320
 msgid "Moment"
 msgstr "Momento"
 
-#: planner/templates/route_details.html:127
+#: planner/templates/route_details.html:163
 msgid "Place"
 msgstr "Lugar"
 
-#: planner/templates/route_details.html:360
+#: planner/templates/route_details.html:456
 msgid "Why this route?"
 msgstr "¿Por qué esta ruta?"
 
-#: planner/templates/route_details.html:375
+#: planner/templates/route_details.html:472
 msgid "About the origin"
 msgstr "Sobre el origen"
 
-#: planner/templates/route_details.html:382
-#: planner/templates/route_details.html:439 services/models.py:182
-#: services/models.py:189 services/templates/poa_details.html:152
-#: services/templates/poe_details.html:155
-#: services/templates/pog_details.html:152
-#: services/templates/poi_details.html:155
+#: planner/templates/route_details.html:479
+#: planner/templates/route_details.html:537 services/models.py:182
+#: services/models.py:189 services/templates/poa_details.html:157
+#: services/templates/poe_details.html:160
+#: services/templates/pog_details.html:157
+#: services/templates/poi_details.html:160
 msgid "City"
 msgstr "Ciudad"
 
-#: planner/templates/route_details.html:398
-#: planner/templates/route_details.html:420
-#: planner/templates/route_details.html:455
-#: planner/templates/route_details.html:477
-#: services/templates/city_details.html:187
-#: services/templates/city_details.html:259
-#: services/templates/city_details.html:329
-#: services/templates/city_details.html:399
-#: services/templates/city_details.html:433
+#: planner/templates/route_details.html:495
+#: planner/templates/route_details.html:517
+#: planner/templates/route_details.html:553
+#: planner/templates/route_details.html:575
+#: services/templates/city_details.html:192
+#: services/templates/city_details.html:269
+#: services/templates/city_details.html:344
+#: services/templates/city_details.html:419
+#: services/templates/city_details.html:453
 #: services/templates/city_list.html:82
 #: services/templates/country_details.html:204
 #: services/templates/country_list.html:81 services/templates/home.html:105
-#: services/templates/home.html:193 services/templates/poa_details.html:144
-#: services/templates/poa_details.html:168
-#: services/templates/poe_details.html:147
-#: services/templates/poe_details.html:171
-#: services/templates/pog_details.html:144
-#: services/templates/pog_details.html:168
-#: services/templates/poi_details.html:147
-#: services/templates/poi_details.html:171 users/templates/fav_cities.html:50
+#: services/templates/home.html:193 services/templates/poa_details.html:149
+#: services/templates/poa_details.html:173
+#: services/templates/poe_details.html:152
+#: services/templates/poe_details.html:176
+#: services/templates/pog_details.html:149
+#: services/templates/pog_details.html:173
+#: services/templates/poi_details.html:152
+#: services/templates/poi_details.html:176 users/templates/fav_cities.html:50
 #: users/templates/fav_countries.html:50 users/templates/fav_poas.html:55
 #: users/templates/fav_poes.html:56 users/templates/fav_pogs.html:55
 #: users/templates/fav_pois.html:57
 msgid "More about"
 msgstr "Más sobre"
 
-#: planner/templates/route_details.html:404
-#: planner/templates/route_details.html:461 services/models.py:130
+#: planner/templates/route_details.html:501
+#: planner/templates/route_details.html:559 services/models.py:130
 #: services/models.py:137 services/templates/city_details.html:23
-#: services/templates/city_details.html:417
-#: services/templates/poa_details.html:128
-#: services/templates/poe_details.html:131
-#: services/templates/pog_details.html:128
-#: services/templates/poi_details.html:131
+#: services/templates/city_details.html:437
+#: services/templates/poa_details.html:133
+#: services/templates/poe_details.html:136
+#: services/templates/pog_details.html:133
+#: services/templates/poi_details.html:136
 msgid "Country"
 msgstr "País"
 
-#: planner/templates/route_details.html:433
-msgid "About the destination"
-msgstr "Sobre el destino"
+#: planner/templates/route_details.html:531
+msgid "Additional Information"
+msgstr "Información Adicional"
 
-#: planner/templates/route_list.html:6 templates/base.html:37
+#: planner/templates/route_details.html:625
+#: services/templates/poa_details.html:72
+#: services/templates/poe_details.html:75
+#: services/templates/pog_details.html:72
+#: services/templates/poi_details.html:75
+msgid "Schedule"
+msgstr "Horario Promedio"
+
+#: planner/templates/route_details.html:634
+#: services/templates/poa_details.html:83
+#: services/templates/poe_details.html:86
+#: services/templates/pog_details.html:83
+#: services/templates/poi_details.html:86
+msgid "Price"
+msgstr "Precio"
+
+#: planner/templates/route_details.html:643 services/models.py:198
+#: services/models.py:199 services/templates/city_details.html:91
+#: services/templates/poa_details.html:98
+#: services/templates/poe_details.html:101
+#: services/templates/pog_details.html:98
+#: services/templates/poi_details.html:101
+msgid "Latitude"
+msgstr "Latitud"
+
+#: planner/templates/route_details.html:645
+#: services/templates/city_details.html:95
+#: services/templates/poa_details.html:102
+#: services/templates/poe_details.html:105
+#: services/templates/pog_details.html:102
+#: services/templates/poi_details.html:105
+msgid "Longitude"
+msgstr "Longitud"
+
+#: planner/templates/route_details.html:662
+msgid "Cerrar"
+msgstr ""
+
+#: planner/templates/route_list.html:6 templates/base.html:38
 msgid "My Routes"
 msgstr "Mis rutas"
 
@@ -1680,95 +1734,117 @@ msgstr "Cancelar Ruta"
 msgid "No routes planned"
 msgstr "Sin rutas planeadas"
 
-#: planner/views.py:213
+#: planner/views.py:226
 msgid "Distance"
 msgstr "Distancia"
 
 #: services/models.py:12 services/templates/poi_details.html:14
+#: services/views.py:258
 msgid "Museum"
 msgstr "Museo"
 
 #: services/models.py:13 services/templates/poi_details.html:17
+#: services/views.py:261
 msgid "Emblematic Site"
 msgstr "Sitio Emblemático"
 
 #: services/models.py:14 services/templates/poi_details.html:20
+#: services/views.py:264
 msgid "Park/Garden"
 msgstr "Parque/Jardín"
 
 #: services/models.py:15 services/templates/poi_details.html:23
+#: services/views.py:267
 msgid "Theater"
 msgstr "Teatro"
 
 #: services/models.py:16 services/templates/poi_details.html:26
+#: services/views.py:270
 msgid "Church"
 msgstr "Iglesia"
 
 #: services/models.py:17 services/templates/poi_details.html:29
+#: services/views.py:273
 msgid "Street/Square"
 msgstr "Calle/Plaza"
 
 #: services/models.py:32 services/templates/poe_details.html:14
+#: services/views.py:307
 msgid "Cinema"
 msgstr "Cine"
 
 #: services/models.py:33 services/templates/poe_details.html:17
+#: services/views.py:310
 msgid "Bowling Alley"
 msgstr "Bolera"
 
 #: services/models.py:34 services/templates/poe_details.html:20
+#: services/views.py:313
 msgid "Nightclub"
 msgstr "Discoteca"
 
 #: services/models.py:35 services/templates/poe_details.html:23
+#: services/views.py:316
 msgid "Mall/Shop"
 msgstr "Centro Comercial/Tienda"
 
 #: services/models.py:36 services/templates/poe_details.html:26
+#: services/views.py:319
 msgid "Theme Park"
 msgstr "Parque Temático"
 
 #: services/models.py:37 services/templates/poe_details.html:29
+#: services/views.py:322
 msgid "Beach"
 msgstr "Playa"
 
 #: services/models.py:52 services/templates/pog_details.html:14
+#: services/views.py:356
 msgid "Restaurant"
 msgstr "Restaurante"
 
 #: services/models.py:53 services/templates/pog_details.html:17
+#: services/views.py:359
 msgid "Bar"
 msgstr "Bar"
 
 #: services/models.py:54 services/templates/pog_details.html:20
+#: services/views.py:362
 msgid "Cafeteria"
 msgstr "Cafeteria"
 
 #: services/models.py:55 services/templates/pog_details.html:23
+#: services/views.py:365
 msgid "Fast Food"
 msgstr "Comida Rápida"
 
 #: services/models.py:56 services/templates/pog_details.html:26
+#: services/views.py:368
 msgid "Tabern"
 msgstr "Taberna"
 
 #: services/models.py:70 services/templates/poa_details.html:14
+#: services/views.py:402
 msgid "Hotel"
 msgstr "Hotel"
 
 #: services/models.py:71 services/templates/poa_details.html:17
+#: services/views.py:405
 msgid "Hostel"
 msgstr "Hostal"
 
 #: services/models.py:72 services/templates/poa_details.html:20
+#: services/views.py:408
 msgid "Camping"
 msgstr "Camping"
 
 #: services/models.py:73 services/templates/poa_details.html:23
+#: services/views.py:411
 msgid "Rural House"
 msgstr "Casa Rural"
 
 #: services/models.py:74 services/templates/poa_details.html:26
+#: services/views.py:414
 msgid "Shelter"
 msgstr "Albergue"
 
@@ -1824,22 +1900,9 @@ msgstr "Bomberos"
 msgid "Ambulance"
 msgstr "Ambulancia"
 
-#: services/models.py:106 services/models.py:146 services/models.py:230
-#: services/templates/city_details.html:55
-#: services/templates/country_details.html:43
-#: services/templates/poi_details.html:57
-msgid "History"
-msgstr "Historia"
-
-#: services/models.py:107 services/models.py:147
-#: services/templates/city_details.html:66
-#: services/templates/country_details.html:98
-msgid "Curiosities"
-msgstr "¿Sabías que...?"
-
 #: services/models.py:131 services/templates/country_list.html:6
 #: services/templates/home.html:9 services/templates/home.html:30
-#: templates/base.html:33 templates/base.html:45
+#: templates/base.html:34 templates/base.html:46
 msgid "Countries"
 msgstr "Países"
 
@@ -1849,8 +1912,8 @@ msgstr "Ciudad Base"
 
 #: services/models.py:183 services/templates/city_list.html:6
 #: services/templates/country_details.html:11 services/templates/home.html:12
-#: services/templates/home.html:117 templates/base.html:34
-#: templates/base.html:46
+#: services/templates/home.html:117 templates/base.html:35
+#: templates/base.html:47
 msgid "Cities"
 msgstr "Ciudades"
 
@@ -1862,15 +1925,6 @@ msgstr "Nombre Identificador del Punto"
 msgid "Location"
 msgstr "Localización"
 
-#: services/models.py:198 services/models.py:199
-#: services/templates/city_details.html:91
-#: services/templates/poa_details.html:93
-#: services/templates/poe_details.html:96
-#: services/templates/pog_details.html:93
-#: services/templates/poi_details.html:96
-msgid "Latitude"
-msgstr "Latitud"
-
 #: services/models.py:201
 msgid "Price Average"
 msgstr "Precio Promedio"
@@ -1879,40 +1933,44 @@ msgstr "Precio Promedio"
 msgid "Shedule Average"
 msgstr "Horario Promedio"
 
-#: services/models.py:224
+#: services/models.py:204
+msgid "Image URL"
+msgstr ""
+
+#: services/models.py:226
 msgid "Point Information"
 msgstr "Informacion del Punto"
 
-#: services/models.py:225
+#: services/models.py:227
 msgid "Points Information"
 msgstr "Informacion de los Puntos"
 
-#: services/models.py:232 services/models.py:246 services/models.py:259
-#: services/models.py:272
+#: services/models.py:234 services/models.py:248 services/models.py:261
+#: services/models.py:274
 msgid "Type"
 msgstr "Tipo"
 
-#: services/models.py:239
+#: services/models.py:241
 msgid "Point of Information"
 msgstr "Punto de Información"
 
-#: services/models.py:240
+#: services/models.py:242
 msgid "Points of Information"
 msgstr "Puntos de Información"
 
-#: services/models.py:254
+#: services/models.py:256
 msgid "Points of Entertainment"
 msgstr "Puntos de Entretenimiento"
 
-#: services/models.py:267
+#: services/models.py:269
 msgid "Points of Gastronomy"
 msgstr "Puntos de Gastronomía"
 
-#: services/models.py:279 users/models.py:100
+#: services/models.py:281 users/models.py:100
 msgid "Point of Accommodation"
 msgstr "Punto de Alojamiento"
 
-#: services/models.py:280
+#: services/models.py:282
 msgid "Points of Accommodation"
 msgstr "Puntos de alojamiento"
 
@@ -1921,17 +1979,9 @@ msgstr "Puntos de alojamiento"
 msgid "Information"
 msgstr "Información"
 
-#: services/templates/city_details.html:20 templates/base.html:50
+#: services/templates/city_details.html:20 templates/base.html:51
 msgid "Accommodation"
 msgstr "Alojamiento"
-
-#: services/templates/city_details.html:95
-#: services/templates/poa_details.html:97
-#: services/templates/poe_details.html:100
-#: services/templates/pog_details.html:97
-#: services/templates/poi_details.html:100
-msgid "Longitude"
-msgstr "Longitud"
 
 #: services/templates/city_details.html:132
 msgid "Interest Points"
@@ -1945,43 +1995,43 @@ msgstr "Buscar puntos de interés"
 msgid "Check new interest points"
 msgstr "Consultar nuevos puntos de interés"
 
-#: services/templates/city_details.html:204
+#: services/templates/city_details.html:209
 #: users/templates/travel_profile_details.html:115
 #: users/templates/travel_profile_editor.html:153
 msgid "Entertainment Points"
 msgstr "Punto de Entretenimiento"
 
-#: services/templates/city_details.html:211 users/templates/fav_poes.html:10
+#: services/templates/city_details.html:216 users/templates/fav_poes.html:10
 msgid "Search entertainment point"
 msgstr "Buscar punto de entretenimiento"
 
-#: services/templates/city_details.html:212
+#: services/templates/city_details.html:217
 msgid "Check new entertainment points"
 msgstr "Consultar nuevos puntos de entretenimiento"
 
-#: services/templates/city_details.html:276
+#: services/templates/city_details.html:286
 #: users/templates/travel_profile_details.html:130
 #: users/templates/travel_profile_editor.html:171
 msgid "Gastronomy Points"
 msgstr "Puntos de Gastronomía"
 
-#: services/templates/city_details.html:283 users/templates/fav_pogs.html:10
+#: services/templates/city_details.html:293 users/templates/fav_pogs.html:10
 msgid "Search gastronomy point"
 msgstr "Buscar punto de gastronomía"
 
-#: services/templates/city_details.html:284
+#: services/templates/city_details.html:294
 msgid "Check new gastronomy points"
 msgstr "Consultar nuevos puntos de gastronomía"
 
-#: services/templates/city_details.html:346
+#: services/templates/city_details.html:361
 msgid "Accommodation Points"
 msgstr "Puntos de Alojamiento"
 
-#: services/templates/city_details.html:353 users/templates/fav_poas.html:10
+#: services/templates/city_details.html:368 users/templates/fav_poas.html:10
 msgid "Search accommodation point"
 msgstr "Buscar punto de alojamiento"
 
-#: services/templates/city_details.html:354
+#: services/templates/city_details.html:369
 msgid "Check new accommodation points"
 msgstr "Consultar nuevos puntos de alojamiento"
 
@@ -2052,33 +2102,19 @@ msgstr "Atrévete a Soñar, Planifica Viajar"
 msgid "Welcome"
 msgstr "¡Bienvenido/a"
 
-#: services/templates/poa_details.html:29
+#: services/templates/poa_details.html:29 services/views.py:417
 msgid "Accommodation Point"
 msgstr "Punto de Alojamiento"
 
-#: services/templates/poa_details.html:67
-#: services/templates/poe_details.html:70
-#: services/templates/pog_details.html:67
-#: services/templates/poi_details.html:70
-msgid "Schedule"
-msgstr "Horario Promedio"
-
-#: services/templates/poa_details.html:78
-#: services/templates/poe_details.html:81
-#: services/templates/pog_details.html:78
-#: services/templates/poi_details.html:81
-msgid "Price"
-msgstr "Precio"
-
-#: services/templates/poe_details.html:32
+#: services/templates/poe_details.html:32 services/views.py:325
 msgid "Entertainment Point"
 msgstr "Punto de Entretenimiento"
 
-#: services/templates/pog_details.html:29
+#: services/templates/pog_details.html:29 services/views.py:371
 msgid "Gastronomy Point"
 msgstr "Punto Gastronómico"
 
-#: services/templates/poi_details.html:32
+#: services/templates/poi_details.html:32 services/views.py:276
 msgid "Interest Point"
 msgstr "Punto de Interés"
 
@@ -2103,8 +2139,8 @@ msgid "You don’t have permission to access"
 msgstr "No tiene permisos para acceder"
 
 #: templates/403.html:14 templates/404.html:14
-msgid "Return to TourGPT"
-msgstr "Volver a TourGPT"
+msgid "Return to GPTTP"
+msgstr "Volver a GPTTP"
 
 #: templates/404.html:4
 msgid "Error 404"
@@ -2122,49 +2158,49 @@ msgstr "Page Not Found"
 msgid "The requested page does not exist"
 msgstr "La página solicitada no existe"
 
-#: templates/base.html:32
+#: templates/base.html:33
 msgid "Home"
 msgstr "Inicio"
 
-#: templates/base.html:36
+#: templates/base.html:37
 msgid "Planner"
 msgstr "Planificador"
 
-#: templates/base.html:38
+#: templates/base.html:39
 msgid "My Profiles"
 msgstr "Mis Perfiles"
 
-#: templates/base.html:42
+#: templates/base.html:43
 msgid "Favourites"
 msgstr "Favoritos"
 
-#: templates/base.html:75
+#: templates/base.html:76
 msgid "My Account"
 msgstr "Mi Cuenta"
 
-#: templates/base.html:76
+#: templates/base.html:77
 msgid "Log Out"
 msgstr "Cerrar Sesión"
 
-#: templates/base.html:78
+#: templates/base.html:79
 msgid "Log In"
 msgstr "Iniciar Sesión"
 
-#: templates/base.html:79 users/templates/registration/signup.html:6
+#: templates/base.html:80 users/templates/registration/signup.html:6
 msgid "Sign Up"
 msgstr "Crear Cuenta"
 
-#: templates/base.html:97
+#: templates/base.html:98
 msgid "ChatGPT-based system for personalized tourist trip planning."
 msgstr ""
 "Sistema basado en ChatGPT para planificación personalizada de viajes "
 "turísticos."
 
-#: tourGPT/settings.py:152
+#: tourGPT/settings.py:153
 msgid "English"
 msgstr "Inglés"
 
-#: tourGPT/settings.py:153
+#: tourGPT/settings.py:154
 msgid "Spanish"
 msgstr "Español"
 
@@ -2352,6 +2388,10 @@ msgstr "Restricciones Alimenticias"
 #: users/templates/travel_profile_editor.html:216
 msgid "Observations"
 msgstr "Observaciones"
+
+#: users/models.py:174
+msgid "Action"
+msgstr "Accion"
 
 #: users/templates/account_details.html:6
 msgid "Account Details"
@@ -2553,3 +2593,6 @@ msgstr ""
 #: users/templates/travel_profile_list.html:27
 msgid "No registered travel profiles"
 msgstr "No existen perfiles de viaje registrados"
+
+#~ msgid "About the destination"
+#~ msgstr "Sobre el destino"
