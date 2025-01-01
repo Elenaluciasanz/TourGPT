@@ -76,6 +76,41 @@
     </p>
 </div>
 
+
+{% if destination.presentation %}
+<div class="flex-md-equal w-100 my-md-3 ps-md-3">
+    <div class="bg-dark me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
+        <div class="my-3 py-3">
+            <h1 class="display-4 fw-normal">{{ destination.name }}</h1>
+            <p class="lead">{{ destination.presentation|linebreaks }}</p>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% if destination.history %}
+<div class="flex-md-equal w-100 my-md-3 ps-md-3">
+    <div class="bg-light  me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
+        <div class="my-3 py-3">
+        <h2 class="display-5"><i class="fa-solid fa-landmark fa-xl m-2"></i>{% trans 'History' %}</h2>
+        <p class="lead">{{ destination.history|linebreaks }}</p>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% if destination.curiosities %}
+<div class="flex-md-equal w-100 my-md-3 ps-md-3">
+    <div class="bg-dark me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
+        <div class="my-3 py-3">
+        <h2 class="display-5"><i class="fa-solid fa-book-open fa-xl m-2"></i></i>{% trans 'Curiosities' %}</h2>
+        <p class="lead">{{ destination.curiosities|linebreaks }}</p>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+
 {% if poa %}
 <div class="mt-4">
     <table class="table">
@@ -432,6 +467,7 @@
 {% endif %}
 
 <!-- Start Origin Info -->
+<!--
 <div class="d-flex justify-content-center m-2 my-4">
     <h1> {% trans 'About the origin' %}</h1>
 </div>
@@ -484,6 +520,7 @@
     {% endif %}
 </div>
 {% endif %}
+-->
 <!-- End Origin Info -->
 
 
@@ -491,7 +528,7 @@
 <!-- Start Destination Info -->
 {% if destination %}
 <div class="d-flex justify-content-center m-2 my-4">
-    <h1> {% trans 'About the destination' %}</h1>
+    <h1> {% trans 'Additional Information' %}</h1>
 </div>
 
 <div class="d-md-flex flex-md-equal w-100 my-md-3 ps-md-3">
