@@ -231,6 +231,7 @@ def planner_route(route: Route):
                                 RouteDayActivity(route_day = d, activity = act, moment = moment[1], type = 'O', lang = 'es').save()
                 
                 if "explanation" in resp:
+                    route.explanation_en = resp["explanation"]
                     try:
                         route.explanation_es = trans.translate(resp["explanation"], src = 'en', dest = 'es').text
                     except Exception as e:
@@ -242,7 +243,12 @@ def planner_route(route: Route):
             print(e)
             route.delete()
             return False
-        
+     
+    f = open("logs.txt", "a")
+    f.write("PROMPT RUTA" + str(route.id) + "\n")
+    f.write(input.to_string() + "\n")
+    f.write("OUTPUT RUTA" + str(route.id) + "\n")
+    f.write(output + "\n")
     return True
      
 # Inicializar plantilla
