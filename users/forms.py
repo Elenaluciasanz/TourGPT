@@ -64,7 +64,7 @@ class TravelProfileForm(forms.ModelForm):
         model = TravelProfile
         fields = ['title', 'description','n_adults','n_teenagers', 'n_children', 'n_babies','n_elderly',
                   'reduced_mobility','food_restrictions','animals', 'reason_selection',
-                  'poi_selection', 'poe_selection', 'pog_selection', 'poa_selection',
+                  'poi_selection', 'poe_selection', 'pog_selection', 'poa_selection', 'budget',
                   'adventure_level', 'observations']
     
     def clean_reason_selection(self):

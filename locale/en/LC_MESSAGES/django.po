@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-01 20:30+0000\n"
+"POT-Creation-Date: 2025-02-17 23:04+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1348,7 +1348,7 @@ msgstr ""
 msgid "Other"
 msgstr ""
 
-#: planner/models.py:31 planner/templates/route.html:18 users/models.py:82
+#: planner/models.py:31 planner/templates/route.html:18 users/models.py:98
 #: users/templates/account_details.html:49
 #: users/templates/travel_profile_details.html:11
 #: users/templates/travel_profile_editor.html:16
@@ -1356,7 +1356,7 @@ msgstr ""
 msgid "Title"
 msgstr ""
 
-#: planner/models.py:32 users/models.py:81 users/models.py:173
+#: planner/models.py:32 users/models.py:97 users/models.py:199
 msgid "User"
 msgstr ""
 
@@ -1367,7 +1367,7 @@ msgstr ""
 
 #: planner/models.py:34 planner/templates/route.html:23
 #: planner/templates/route_details.html:616 services/models.py:246
-#: services/models.py:259 services/models.py:272 users/models.py:83
+#: services/models.py:259 services/models.py:272 users/models.py:99
 #: users/templates/travel_profile_details.html:18
 #: users/templates/travel_profile_editor.html:24
 msgid "Description"
@@ -1428,7 +1428,7 @@ msgid "Date"
 msgstr ""
 
 #: planner/models.py:94 planner/templates/route_details.html:143
-#: planner/templates/route_details.html:307 planner/views.py:226
+#: planner/templates/route_details.html:307 planner/views.py:229
 msgid "Day"
 msgstr ""
 
@@ -1475,7 +1475,7 @@ msgstr ""
 msgid "Generic Activities"
 msgstr ""
 
-#: planner/models.py:127 users/models.py:97
+#: planner/models.py:127 users/models.py:114
 msgid "Point of Interest"
 msgstr ""
 
@@ -1487,7 +1487,7 @@ msgstr ""
 msgid "Interest Activities"
 msgstr ""
 
-#: planner/models.py:135 services/models.py:255 users/models.py:98
+#: planner/models.py:135 services/models.py:255 users/models.py:115
 msgid "Point of Entertainment"
 msgstr ""
 
@@ -1499,7 +1499,7 @@ msgstr ""
 msgid "Entertainment Activities"
 msgstr ""
 
-#: planner/models.py:143 services/models.py:268 users/models.py:99
+#: planner/models.py:143 services/models.py:268 users/models.py:116
 msgid "Point of Gastronomy"
 msgstr ""
 
@@ -1554,7 +1554,7 @@ msgid "Search destination"
 msgstr ""
 
 #: planner/templates/route.html:99 users/templates/registration/signup.html:89
-#: users/templates/travel_profile_editor.html:228
+#: users/templates/travel_profile_editor.html:236
 msgid "Confirm"
 msgstr ""
 
@@ -1734,7 +1734,7 @@ msgstr ""
 msgid "No routes planned"
 msgstr ""
 
-#: planner/views.py:226
+#: planner/views.py:229
 msgid "Distance"
 msgstr ""
 
@@ -1966,7 +1966,7 @@ msgstr ""
 msgid "Points of Gastronomy"
 msgstr ""
 
-#: services/models.py:281 users/models.py:100
+#: services/models.py:281 users/models.py:117
 msgid "Point of Accommodation"
 msgstr ""
 
@@ -1996,8 +1996,8 @@ msgid "Check new interest points"
 msgstr ""
 
 #: services/templates/city_details.html:209
-#: users/templates/travel_profile_details.html:115
-#: users/templates/travel_profile_editor.html:153
+#: users/templates/travel_profile_details.html:123
+#: users/templates/travel_profile_editor.html:161
 msgid "Entertainment Points"
 msgstr ""
 
@@ -2010,8 +2010,8 @@ msgid "Check new entertainment points"
 msgstr ""
 
 #: services/templates/city_details.html:286
-#: users/templates/travel_profile_details.html:130
-#: users/templates/travel_profile_editor.html:171
+#: users/templates/travel_profile_details.html:138
+#: users/templates/travel_profile_editor.html:179
 msgid "Gastronomy Points"
 msgstr ""
 
@@ -2298,96 +2298,121 @@ msgstr ""
 msgid "Conferences/Conventions"
 msgstr ""
 
-#: users/models.py:66 users/templates/account_details.html:34
+#: users/models.py:66
+msgid "Budget (Low)"
+msgstr ""
+
+#: users/models.py:67
+msgid "Standard (Mid-Low)"
+msgstr ""
+
+#: users/models.py:68
+msgid "Comfort (Mid-High)"
+msgstr ""
+
+#: users/models.py:69
+msgid "Luxury (High)"
+msgstr ""
+
+#: users/models.py:70
+msgid "Not specified"
+msgstr ""
+
+#: users/models.py:82 users/templates/account_details.html:34
 #: users/templates/registration/signup.html:28
 msgid "Birth Date"
 msgstr ""
 
-#: users/models.py:67 users/templates/account_details.html:38
+#: users/models.py:83 users/templates/account_details.html:38
 #: users/templates/registration/signup.html:35
 msgid "Phone Number"
 msgstr ""
 
-#: users/models.py:68
+#: users/models.py:84
 msgid "Favorite Countries"
 msgstr ""
 
-#: users/models.py:69
+#: users/models.py:85
 msgid "Favorite Cities"
 msgstr ""
 
-#: users/models.py:70
+#: users/models.py:86
 msgid "Favorite Interest Points"
 msgstr ""
 
-#: users/models.py:71
+#: users/models.py:87
 msgid "Favorite Entertainment Points"
 msgstr ""
 
-#: users/models.py:72
+#: users/models.py:88
 msgid "Favorite Gastronomy Points"
 msgstr ""
 
-#: users/models.py:73
+#: users/models.py:89
 msgid "Favorite Accommodation Points"
 msgstr ""
 
-#: users/models.py:85 users/templates/travel_profile_details.html:26
+#: users/models.py:101 users/templates/travel_profile_details.html:26
 #: users/templates/travel_profile_editor.html:37
 msgid "Number of Adults"
 msgstr ""
 
-#: users/models.py:86 users/templates/travel_profile_details.html:31
+#: users/models.py:102 users/templates/travel_profile_details.html:31
 #: users/templates/travel_profile_editor.html:45
 msgid "Number of Teenagers"
 msgstr ""
 
-#: users/models.py:87 users/templates/travel_profile_details.html:38
+#: users/models.py:103 users/templates/travel_profile_details.html:38
 #: users/templates/travel_profile_editor.html:55
 msgid "Number of Children"
 msgstr ""
 
-#: users/models.py:88 users/templates/travel_profile_details.html:43
+#: users/models.py:104 users/templates/travel_profile_details.html:43
 #: users/templates/travel_profile_editor.html:63
 msgid "Number of Babies"
 msgstr ""
 
-#: users/models.py:89 users/templates/travel_profile_details.html:50
+#: users/models.py:105 users/templates/travel_profile_details.html:50
 #: users/templates/travel_profile_editor.html:73
 msgid "Number of Elderly"
 msgstr ""
 
-#: users/models.py:91 users/templates/travel_profile_details.html:57
+#: users/models.py:107 users/templates/travel_profile_details.html:57
 #: users/templates/travel_profile_editor.html:83
 msgid "Reason"
 msgstr ""
 
-#: users/models.py:92 users/templates/travel_profile_details.html:76
-#: users/templates/travel_profile_editor.html:105
+#: users/models.py:108 users/templates/travel_profile_details.html:84
+#: users/templates/travel_profile_editor.html:113
 msgid "Adventure Level"
 msgstr ""
 
-#: users/models.py:94 users/templates/travel_profile_details.html:85
-#: users/templates/travel_profile_editor.html:114
+#: users/models.py:109 users/templates/travel_profile_details.html:76
+#: users/templates/travel_profile_editor.html:105
+msgid "Budget"
+msgstr ""
+
+#: users/models.py:111 users/templates/travel_profile_details.html:93
+#: users/templates/travel_profile_editor.html:122
 msgid "Reduced Mobility"
 msgstr ""
 
-#: users/models.py:95 users/templates/travel_profile_details.html:92
-#: users/templates/travel_profile_editor.html:124
+#: users/models.py:112 users/templates/travel_profile_details.html:100
+#: users/templates/travel_profile_editor.html:132
 msgid "Animals"
 msgstr ""
 
-#: users/models.py:102 users/templates/travel_profile_details.html:159
-#: users/templates/travel_profile_editor.html:204
+#: users/models.py:119 users/templates/travel_profile_details.html:167
+#: users/templates/travel_profile_editor.html:212
 msgid "Food Restrictions"
 msgstr ""
 
-#: users/models.py:103 users/templates/travel_profile_details.html:167
-#: users/templates/travel_profile_editor.html:216
+#: users/models.py:120 users/templates/travel_profile_details.html:175
+#: users/templates/travel_profile_editor.html:224
 msgid "Observations"
 msgstr ""
 
-#: users/models.py:174
+#: users/models.py:200
 msgid "Action"
 msgstr ""
 
@@ -2531,13 +2556,13 @@ msgstr ""
 msgid "Travel Profile Details"
 msgstr ""
 
-#: users/templates/travel_profile_details.html:102
-#: users/templates/travel_profile_editor.html:137
+#: users/templates/travel_profile_details.html:110
+#: users/templates/travel_profile_editor.html:145
 msgid "Points of Interest"
 msgstr ""
 
-#: users/templates/travel_profile_details.html:144
-#: users/templates/travel_profile_editor.html:186
+#: users/templates/travel_profile_details.html:152
+#: users/templates/travel_profile_editor.html:194
 msgid "Accomodation Points"
 msgstr ""
 
@@ -2562,13 +2587,13 @@ msgid ""
 "gastronomy around the world, for leisure trips"
 msgstr ""
 
-#: users/templates/travel_profile_editor.html:206
+#: users/templates/travel_profile_editor.html:214
 msgid ""
 "Food restrictions that must be taken into account when selecting gastronomy "
 "points.&#10Ex.: celiac, nut allergy."
 msgstr ""
 
-#: users/templates/travel_profile_editor.html:218
+#: users/templates/travel_profile_editor.html:226
 msgid ""
 "Plans, places or anything you want to take into account to generate a route."
 "&#10Ex.: We love spending time outdoors and enjoying nature &#10I want to "

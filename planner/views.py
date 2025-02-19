@@ -25,9 +25,12 @@ def route_new(request):
         profile = None
         
         if int(profile_id) > 0:
+            """
             # Solo usuarios con id par entregan contexto del perfil de viaje a la ruta
             if (request.user.id % 2 == 0):
                 profile = TravelProfile.objects.get(pk = int(profile_id))
+            """
+            profile = TravelProfile.objects.get(pk = int(profile_id))
 
         destination = int(request.POST.get('destination_id'))
         destination = CityBase.objects.get(pk = destination)

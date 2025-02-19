@@ -8,7 +8,7 @@ from django.views.generic import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from .forms import SignUpForm, TravelProfileForm
-from .models import TravelProfile, User, REASON_LIST, ADVENTURE_LEVELS_LIST, UserLog
+from .models import TravelProfile, User, REASON_LIST, ADVENTURE_LEVELS_LIST, UserLog, BUDGET_LIST
 from services.models import Country, City, Poi, Poe, Poa, Pog
 from services.models import POI_TYPES, POE_TYPES, POG_TYPES, POA_TYPES
 from django.utils.translation import get_language
@@ -85,6 +85,7 @@ def travel_profile_new(request, pk):
         'POG_TYPES': POG_TYPES,
         'POA_TYPES': POA_TYPES,
         'ADVENTURE_LEVELS_LIST': ADVENTURE_LEVELS_LIST,
+        'BUDGET_LIST': BUDGET_LIST
     }
     
     return render(request, 'travel_profile_editor.html', context=context)
@@ -126,6 +127,7 @@ def travel_profile_view(request, pk, acc):
     ctx['POG_TYPES'] = POG_TYPES
     ctx['POA_TYPES'] = POA_TYPES
     ctx['ADVENTURE_LEVELS_LIST'] = ADVENTURE_LEVELS_LIST
+    ctx['BUDGET_LIST'] =  BUDGET_LIST
         
     return render(request, 'travel_profile_details.html', context = ctx)
     
@@ -166,6 +168,7 @@ def travel_profile_update(request, acc, pk):
         'POG_TYPES': POG_TYPES,
         'POA_TYPES': POA_TYPES,
         'ADVENTURE_LEVELS_LIST': ADVENTURE_LEVELS_LIST,
+        'BUDGET_LIST': BUDGET_LIST,
     }
     
     return render(request, 'travel_profile_editor.html', context=context)

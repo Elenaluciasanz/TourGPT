@@ -197,7 +197,7 @@ def country_security(c_en, c_oth):
 
 def country_presentation(c_en, c_oth): 
     global trans
-    presentation = chat_gpt(f"Brief presentation of {c_en.name} of 200 characters")
+    presentation = chat_gpt(f"Provide a brief presentation of {c_en.name}, highlighting its unique charm, top attractions, cultural heritage, and what makes it a must-visit destination. Keep the description within 200 characters.")
     c_en.presentation = presentation
     c_en.save()
     
