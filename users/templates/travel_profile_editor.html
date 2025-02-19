@@ -101,7 +101,15 @@
         <br>
         <hr>
         <div class="form-group row" style="background-color:azure;"> 
-            <div class="col-md-6">
+            <div class="col-md-3">
+                <label class="form-check-label h4" for="id_budget">{% trans 'Budget' %}&nbsp</label>
+                <select name="budget" id="id_budget" class="form-select form-select-md mb-3" aria-label=".form-select-md example" required>
+                    {% for value, descr in BUDGET_LIST reversed %}
+                        <option value="{{ value }}" {% if form.budget.value and form.budget.value == value %}selected{% endif %}>{{ descr }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-3">
                 <label class="form-check-label h4" for="id_adventure_level">{% trans 'Adventure Level' %}&nbsp</label>
                 <select name="adventure_level" id="id_adventure_level" class="form-select form-select-md mb-3" aria-label=".form-select-md example" required>
                     {% for value, descr in ADVENTURE_LEVELS_LIST reversed %}

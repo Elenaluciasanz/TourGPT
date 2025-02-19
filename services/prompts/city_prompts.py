@@ -22,7 +22,7 @@ def city_languages(c_en, c_oth):
 
 def city_presentation(c_en, c_oth):
     global trans
-    presentation = chat_gpt(f"Brief presentation of {c_en.complete_name} of 200 characters")
+    presentation = chat_gpt(f"Provide a brief presentation of {c_en.complete_name}, highlighting its unique charm, top attractions, cultural gems, and what makes it a must-visit destination. Keep the description within 200 characters.")
     c_en.presentation = presentation
     c_en.save()
     

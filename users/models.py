@@ -62,6 +62,22 @@ REASON_DICT = {
     'OT': 'Other',
 }
 
+BUDGET_LIST = [
+    ('B',_('Budget (Low)')),
+    ('S',_('Standard (Mid-Low)')),
+    ('C',_('Comfort (Mid-High)')),
+    ('L',_('Luxury (High)')),
+    ('N',_('Not specified')),  
+]
+
+BUDGET_DICT = {
+    'B': 'Budget (Low)',
+    'S': 'Standard (Mid-Low)',
+    'C': 'Comfort (Mid-High)',
+    'L': 'Luxury (High)',
+    'N': 'None',  
+}
+
 class User(AbstractUser):
     birth = models.DateField(default = timezone.now, null=True, blank=True, verbose_name=_('Birth Date'))
     number = models.CharField(max_length = 9, null = True, blank = True, verbose_name=_('Phone Number'))
@@ -90,6 +106,7 @@ class TravelProfile(models.Model):
     
     reason = models.CharField(verbose_name=_('Reason'), default='[]')
     adventure_level = models.CharField(choices = ADVENTURE_LEVELS_LIST, default = 'N', verbose_name=_('Adventure Level'))
+    budget = models.CharField(choices = BUDGET_LIST, default = 'N', verbose_name=_('Budget'))
     
     reduced_mobility = models.BooleanField(default = False, verbose_name=_('Reduced Mobility'))
     animals = models.BooleanField(default = False, verbose_name=_('Animals'))
@@ -104,68 +121,77 @@ class TravelProfile(models.Model):
  
 
     def __str__(self):
-        profile = ""
+        profile = "{\n"
         
         if self.n_adults > 0:
-            profile += "Adults: " + str(self.n_adults) + "\n"
+            profile += "adults: " + str(self.n_adults) + ",\n"
         
         if self.n_teenagers > 0:
-            profile += "Teenagers: " + str(self.n_teenagers) + "\n"
+            profile += "teenagers: " + str(self.n_teenagers) + ",\n"
             
         if self.n_children > 0:
-            profile += "Children: " + str(self.n_children) + "\n"
+            profile += "children: " + str(self.n_children) + ",\n"
             
         if self.n_babies > 0:
-            profile += "Babies: " + str(self.n_babies) + "\n"
+            profile += "babies: " + str(self.n_babies) + ",\n"
                 
         if self.n_elderly > 0:
-            profile += "Elderly: " + str(self.n_elderly) + "\n"
+            profile += "elderly: " + str(self.n_elderly) + ",\n"
               
-        if self.reduced_mobility:
-            profile += "With Reduced Mobility\n"
-                        
-        if self.animals:
-            profile += "With Animals. Search accommodation and activities where animals are admitted\n"
-                
         reasons = ""
         list_reason = ast.literal_eval(self.reason)
         for reason in list_reason:
             reasons += REASON_DICT[reason] + ", "
-        profile += "Reason: " + reasons + "\n"
+        profile += "purposes: " + reasons + ",\n"
         
+        if self.budget:
+            profile += "budget: " + BUDGET_DICT[self.budget] + ",\n"
+               
         if self.adventure_level:
-            profile += "Adventure Level: " + ADVENTURE_LEVELS_DICT[self.adventure_level] + "\n"
+            profile += "adventure level: " + ADVENTURE_LEVELS_DICT[self.adventure_level] + ",\n"
                  
         pois = ""
         list_poi = ast.literal_eval(self.pref_poi)
         for poi in list_poi:
             pois += POI_TYPES_DICT[poi] + ", "
-        profile += "Favorite interest points: " + pois + "\n"
+        profile += "favorite interest points: " + pois + ",\n"
         
         poes = ""
         list_poe = ast.literal_eval(self.pref_poe)
         for poe in list_poe:
             poes += POE_TYPES_DICT[poe] + ", "
-        profile += "Favorite entertainment points: " + poes + "\n"
+        profile += "favorite entertainment points: " + poes + ",\n"
         
         pogs = ""
         list_pog = ast.literal_eval(self.pref_pog)
         for pog in list_pog:
             pogs += POG_TYPES_DICT[pog] + ", "
-        profile += "Favorite gastronomy points: " + pogs + "\n"
+        profile += "favorite gastronomy points: " + pogs + ",\n"
         
         if self.food_restrictions != "":
-            profile += "Consider these food restrictions when suggesting gastronomy points: " + self.food_restrictions + "\n"
+            profile += "food restrictions: " + self.food_restrictions + ",\n"
         
         poas = ""
         list_poa = ast.literal_eval(self.pref_poa)
         for poa in list_poa:
             poas += POA_TYPES_DICT[poa] + ", "
-        profile += "Favorite accommodation points: " + poas + "\n"
+        profile += "favorite accommodation points: " + poas + ",\n"
         
-        if self.observations != "":
-            profile += "Observations: " + self.observations + "\n"
-        
+        if self.reduced_mobility or self.animals or self.observations != "":
+            profile += "Observations: "
+            
+            if self.reduced_mobility:
+                profile += "With Reduced Mobility\n"
+                        
+            if self.animals:
+                profile += "With Animals. Search accommodation and activities where animals are admitted\n"
+                
+            if self.observations != "":
+                profile += "Other: " + self.observations + "\n"
+                
+            profile += ",\n"
+                
+        profile += "}"
         return profile
 
 
